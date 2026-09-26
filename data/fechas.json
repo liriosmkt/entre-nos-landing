@@ -1,0 +1,41 @@
+{
+  "_instrucciones": "Editá esta lista para actualizar las próximas fechas. 'disponibles' define el estado: 0 = agotado, 1-2 = últimos lugares, 3+ = disponible. 'precio' en pesos, o null para mostrar [COMPLETAR]. Borrá 'ejemplo': true cuando cargues fechas reales. Las fechas pasadas se ocultan solas. Después de editar, volvé a hacer el build.",
+  "fechas": [
+    {
+      "id": "teanner-italia-ejemplo",
+      "ejemplo": true,
+      "tipo": "Teanner",
+      "destino": "Italia",
+      "fecha": "2026-10-10",
+      "horario": "[COMPLETAR]",
+      "cupos": 8,
+      "disponibles": 5,
+      "precio": null,
+      "nota": "Con café de @rito.tostadores"
+    },
+    {
+      "id": "workshop-puglia-ejemplo",
+      "ejemplo": true,
+      "tipo": "Workshop",
+      "destino": "Puglia",
+      "fecha": "2026-10-17",
+      "horario": "[COMPLETAR]",
+      "cupos": 8,
+      "disponibles": 0,
+      "precio": null,
+      "nota": "Orecchiette, taralli, vino y recetas para llevarte"
+    },
+    {
+      "id": "teanner-mexico-ejemplo",
+      "ejemplo": true,
+      "tipo": "Teanner",
+      "destino": "México",
+      "fecha": "2026-10-24",
+      "horario": "[COMPLETAR]",
+      "cupos": 8,
+      "disponibles": 2,
+      "precio": null,
+      "nota": "Junto a @taquitos.mexa"
+    }
+  ]
+}

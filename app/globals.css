@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+/* ---------- Tokens de marca ---------- */
+@theme {
+  --color-espresso: #3a2a22;
+  --color-carbon: #1c1715;
+  --color-cacao: #5a4032;
+  --color-crema: #f3eee6;
+  --color-hueso: #e8e0d3;
+  --color-caramelo: #b7834f;
+  --color-ambar: #e6b866;
+  --color-oliva: #6f7447;
+  --color-salvia: #a3a88a;
+  /* Variantes de texto con contraste AA sobre crema/hueso */
+  --color-tinta: #2b1f19;
+  --color-tinta-suave: #5a4032;
+  --color-oliva-oscuro: #4f5332;
+
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-jost), "Jost", system-ui, sans-serif;
+  --font-hand: var(--font-caveat), "Caveat", cursive;
+
+  --tracking-eyebrow: 0.2em;
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  background: var(--color-crema);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--color-ambar); color: var(--color-carbon); }
+
+:focus-visible {
+  outline: 2px solid var(--color-ambar);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- Utilidades de marca ---------- */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+@utility display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+
+@utility hand {
+  font-family: var(--font-hand);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+@utility container-x {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) { padding-inline: 2rem; }
+}
+
+@utility section-y {
+  padding-block: 5rem;
+  @media (width >= 48rem) { padding-block: 7.5rem; }
+}
+
+/* Botones */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.8rem 1.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s, transform 0.25s;
+  &:hover { transform: translateY(-1px); }
+}
+@utility btn-ambar {
+  background: var(--color-ambar);
+  color: var(--color-carbon);
+  &:hover { background: #f0c97f; }
+}
+@utility btn-espresso {
+  background: var(--color-espresso);
+  color: var(--color-crema);
+  &:hover { background: var(--color-cacao); }
+}
+@utility btn-linea-clara {
+  border: 1px solid rgb(243 238 230 / 0.45);
+  color: var(--color-crema);
+  &:hover { border-color: var(--color-ambar); color: var(--color-ambar); }
+}
+@utility btn-linea-oscura {
+  border: 1px solid var(--color-espresso);
+  color: var(--color-espresso);
+  &:hover { background: var(--color-espresso); color: var(--color-crema); }
+}
+
+/* Placeholder visible para datos pendientes del cliente */
+.pendiente {
+  display: inline;
+  padding: 0.05em 0.4em;
+  border: 1px dashed currentColor;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-style: italic;
+  opacity: 0.8;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Grano sutil para fondos oscuros */
+.grano::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Troquel de la tarjeta de embarque */
+.troquel {
+  background-image: radial-gradient(circle, var(--color-carbon) 0 5px, transparent 5.5px);
+  background-size: 100% 18px;
+  background-repeat: repeat-y;
+  background-position: center;
+}
+
+/* Carrusel */
+.carrusel { scrollbar-width: none; }
+.carrusel::-webkit-scrollbar { display: none; }
+
+/* Entrada del hero en CSS puro (no espera a que cargue JS) */
+@keyframes subir {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+.subir { animation: subir 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.subir-1 { animation-delay: 0.1s; }
+.subir-2 { animation-delay: 0.2s; }
+.subir-3 { animation-delay: 0.3s; }
+.subir-4 { animation-delay: 0.45s; }
