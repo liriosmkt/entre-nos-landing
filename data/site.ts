@@ -6,6 +6,8 @@ export const site = {
   ciudad: "Córdoba Capital",
   instagram: "entrenos.sabores",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://entrenos.com.ar",
+  // Prefijo de rutas cuando el sitio no está en la raíz del dominio (ej: GitHub Pages)
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   // Número de WhatsApp: se configura en .env (NEXT_PUBLIC_WHATSAPP)
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP || "549XXXXXXXXXX",
 

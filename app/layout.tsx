@@ -19,17 +19,17 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: site.seo.title,
   description: site.seo.description,
-  alternates: { canonical: "/" },
+  alternates: { canonical: `${site.url}/` },
   openGraph: {
     type: "website",
     locale: "es_AR",
     siteName: site.nombreCompleto,
     title: site.seo.title,
     description: site.seo.description,
-    images: [{ url: site.seo.ogImage, width: 1200, height: 630, alt: "La mesa de Entre Nos con las lámparas encendidas" }],
+    images: [{ url: `${site.url}${site.seo.ogImage}`, width: 1200, height: 630, alt: "La mesa de Entre Nos con las lámparas encendidas" }],
   },
-  twitter: { card: "summary_large_image", title: site.seo.title, description: site.seo.description, images: [site.seo.ogImage] },
-  icons: { icon: "/favicon.svg" },
+  twitter: { card: "summary_large_image", title: site.seo.title, description: site.seo.description, images: [`${site.url}${site.seo.ogImage}`] },
+  icons: { icon: `${site.basePath}/favicon.svg` },
 };
 
 export const viewport: Viewport = { themeColor: "#1C1715" };

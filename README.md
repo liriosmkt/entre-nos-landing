@@ -144,6 +144,16 @@ Se ven en la web con borde punteado para que sea fácil encontrarlos. Buscar `CO
 
 ## Deploy
 
+### GitHub Pages (link para compartir)
+El repo incluye `.github/workflows/pages.yml`: cada push a `main` construye el sitio y lo publica en
+**https://liriosmkt.github.io/entre-nos-landing/**
+
+Activación (una sola vez):
+1. En el plan gratis, el repo tiene que ser público: *Settings → General → Danger Zone → Change visibility*.
+2. *Settings → Pages → Build and deployment → Source*: elegir **GitHub Actions**.
+3. *Actions* → "Publicar en GitHub Pages" → *Run workflow* (o hacer cualquier push).
+4. Número de WhatsApp: *Settings → Secrets and variables → Actions → Variables → New variable*, nombre `WHATSAPP`, valor `5493511234567`. Volver a correr el workflow.
+
 ### Vercel
 1. Subir el proyecto a un repo de GitHub.
 2. En vercel.com → *Add New Project* → importar el repo (detecta Next.js solo).

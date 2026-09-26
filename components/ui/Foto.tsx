@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import Image from "next/image";
+import { site } from "@/data/site";
 
 type Props = {
   src: string; // nombre del archivo dentro de /public/images
@@ -24,7 +25,7 @@ export function Foto({ src, alt, className = "", priority, sizes = "100vw", tono
     return (
       <div className={`relative overflow-hidden ${className}`}>
         <Image
-          src={`/images/${src}`}
+          src={`${site.basePath}/images/${src}`}
           alt={alt}
           fill
           sizes={sizes}
