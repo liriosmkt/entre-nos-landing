@@ -1,24 +1,35 @@
 @import "tailwindcss";
 
-/* ---------- Tokens de marca ---------- */
+/* ---------- Tokens de marca (Brandbook Entre Nos) ----------
+   Paleta oficial: 3A2D26 · CDAB98 · EBE2DA · F0ECE5 · E2E2E2
+   Tipografías oficiales: Playfair Display (títulos) + Roboto (textos).
+   Los nombres de uso (espresso, crema, ambar…) apuntan a la paleta oficial,
+   así los componentes no dependen de los hex. */
 @theme {
-  --color-espresso: #3a2a22;
-  --color-carbon: #1c1715;
-  --color-cacao: #5a4032;
-  --color-crema: #f3eee6;
-  --color-hueso: #e8e0d3;
-  --color-caramelo: #b7834f;
-  --color-ambar: #e6b866;
-  --color-oliva: #6f7447;
-  --color-salvia: #a3a88a;
-  /* Variantes de texto con contraste AA sobre crema/hueso */
-  --color-tinta: #2b1f19;
-  --color-tinta-suave: #5a4032;
-  --color-oliva-oscuro: #4f5332;
+  --color-cafe: #3a2d26;
+  --color-nude: #cdab98;
+  --color-arena: #ebe2da;
+  --color-marfil: #f0ece5;
+  --color-niebla: #e2e2e2;
 
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  --font-sans: var(--font-jost), "Jost", system-ui, sans-serif;
-  --font-hand: var(--font-caveat), "Caveat", cursive;
+  --color-espresso: var(--color-cafe);
+  --color-carbon: var(--color-cafe);
+  --color-cacao: #5c4a40; /* café aclarado: líneas y texto secundario sobre fondos oscuros */
+  --color-crema: var(--color-marfil);
+  --color-hueso: var(--color-arena);
+  --color-caramelo: var(--color-nude);
+  --color-ambar: var(--color-nude);
+  --color-oliva: var(--color-nude);
+  --color-salvia: var(--color-nude);
+  /* Variantes de texto con contraste AA sobre marfil/arena */
+  --color-tinta: var(--color-cafe);
+  --color-tinta-suave: #6b5a50;
+  --color-oliva-oscuro: #7a5e4e; /* nude oscurecido para textos chicos */
+
+  --font-serif: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-roboto), "Roboto", system-ui, sans-serif;
+  /* Los detalles "manuscritos" usan la itálica de Playfair: el manual define solo dos familias */
+  --font-hand: var(--font-playfair), "Playfair Display", Georgia, serif;
 
   --tracking-eyebrow: 0.2em;
 }
@@ -42,7 +53,7 @@ body {
   overflow-x: hidden;
 }
 
-::selection { background: var(--color-ambar); color: var(--color-carbon); }
+::selection { background: var(--color-nude); color: var(--color-cafe); }
 
 :focus-visible {
   outline: 2px solid var(--color-ambar);
@@ -61,15 +72,16 @@ body {
 
 @utility display {
   font-family: var(--font-serif);
-  font-weight: 500;
-  line-height: 1.02;
+  font-weight: 400;
+  line-height: 1.08;
   letter-spacing: -0.01em;
 }
 
 @utility hand {
   font-family: var(--font-hand);
-  font-weight: 500;
-  line-height: 1.1;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.25;
 }
 
 @utility container-x {
@@ -105,7 +117,7 @@ body {
 @utility btn-ambar {
   background: var(--color-ambar);
   color: var(--color-carbon);
-  &:hover { background: #f0c97f; }
+  &:hover { background: #d9bfb0; }
 }
 @utility btn-espresso {
   background: var(--color-espresso);
@@ -113,7 +125,7 @@ body {
   &:hover { background: var(--color-cacao); }
 }
 @utility btn-linea-clara {
-  border: 1px solid rgb(243 238 230 / 0.45);
+  border: 1px solid rgb(240 236 229 / 0.45);
   color: var(--color-crema);
   &:hover { border-color: var(--color-ambar); color: var(--color-ambar); }
 }

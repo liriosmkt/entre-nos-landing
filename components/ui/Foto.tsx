@@ -10,15 +10,16 @@ type Props = {
   priority?: boolean;
   sizes?: string;
   tono?: "oscuro" | "claro";
-  etiqueta?: string; // posición de la etiqueta del placeholder
+  etiqueta?: string; // (sin uso: se conserva por compatibilidad)
+  posicion?: string; // object-position de la foto, ej: "50% 60%"
 };
 
 /**
  * Si la foto existe en /public/images la muestra; si no, dibuja un bloque con
- * degradado de la paleta y la etiqueta del archivo que va ahí.
+ * los colores de la marca y la hoja del isologo (el archivo esperado queda en data-foto).
  * (Se resuelve en el build: al agregar fotos, volver a buildear.)
  */
-export function Foto({ src, alt, className = "", priority, sizes = "100vw", tono = "oscuro", etiqueta = "top-3" }: Props) {
+export function Foto({ src, alt, className = "", priority, sizes = "100vw", tono = "oscuro", posicion }: Props) {
   const existe = fs.existsSync(path.join(process.cwd(), "public", "images", src));
 
   if (existe) {
@@ -32,6 +33,7 @@ export function Foto({ src, alt, className = "", priority, sizes = "100vw", tono
           priority={priority}
           loading={priority ? undefined : "lazy"}
           className="object-cover"
+          style={posicion ? { objectPosition: posicion } : undefined}
         />
       </div>
     );
@@ -39,23 +41,31 @@ export function Foto({ src, alt, className = "", priority, sizes = "100vw", tono
 
   const fondo =
     tono === "oscuro"
-      ? "radial-gradient(120% 90% at 30% 20%, rgba(230,184,102,.28), transparent 55%), linear-gradient(160deg, #5a4032 0%, #3a2a22 45%, #1c1715 100%)"
-      : "radial-gradient(120% 90% at 70% 20%, rgba(230,184,102,.35), transparent 60%), linear-gradient(160deg, #e8e0d3 0%, #d9c9b2 60%, #b7834f 140%)";
+      ? "radial-gradient(120% 90% at 30% 20%, rgba(205,171,152,.35), transparent 55%), linear-gradient(160deg, #5c4a40 0%, #3a2d26 60%)"
+      : "radial-gradient(120% 90% at 70% 20%, rgba(240,236,229,.8), transparent 60%), linear-gradient(160deg, #ebe2da 0%, #e2e2e2 50%, #cdab98 130%)";
 
   return (
     <div
       role="img"
       aria-label={alt}
-      className={`relative overflow-hidden ${className}`}
+      data-foto={`/images/${src}`}
+      className={`relative flex items-center justify-center overflow-hidden ${className}`}
       style={{ background: fondo }}
     >
       <span
-        className={`absolute left-3 ${etiqueta} max-w-[85%] rounded-sm px-2 py-1 font-mono text-[10px] leading-tight ${
-          tono === "oscuro" ? "bg-carbon/60 text-crema/85" : "bg-crema/70 text-tinta"
-        }`}
-      >
-        FOTO · /images/{src}
-      </span>
+        aria-hidden
+        className={`block h-14 w-14 ${tono === "oscuro" ? "bg-nude/40" : "bg-cafe/15"}`}
+        style={{
+          WebkitMaskImage: `url(${site.basePath}/marca/hoja.png)`,
+          maskImage: `url(${site.basePath}/marca/hoja.png)`,
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+        }}
+      />
     </div>
   );
 }

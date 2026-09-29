@@ -1,36 +1,33 @@
-// Recursos gráficos de la marca: ramita de olivo, sello ovalado, estrellita, flechas a mano.
+import { site } from "@/data/site";
 
+// Recursos gráficos de la marca: logotipo, hoja del isologo, sello ovalado, estrellita, flechas a mano.
+
+/**
+ * Hoja del isologo (Brandbook). Se pinta con el color del texto (currentColor)
+ * usando la hoja como máscara; el ancho sale de la altura para no deformarla.
+ */
 export function Ramita({ className = "", title }: { className?: string; title?: string }) {
+  const url = `url(${site.basePath}/marca/hoja.png)`;
   return (
-    <svg
-      viewBox="0 0 120 40"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.1"
-      strokeLinecap="round"
-      className={className}
+    <span
+      className={`block ${className}`}
       role={title ? "img" : undefined}
       aria-hidden={title ? undefined : true}
       aria-label={title}
-    >
-      <path d="M4 26 C 30 22, 62 18, 116 12" />
-      {[
-        [22, 23.5, -1],
-        [38, 21.5, 1],
-        [54, 19.5, -1],
-        [70, 17.5, 1],
-        [86, 15.5, -1],
-        [100, 14, 1],
-      ].map(([x, y, s], i) => (
-        <path
-          key={i}
-          d={`M${x} ${y} q ${6} ${s * -9} ${14} ${s * -9} q ${-4} ${s * 7} ${-14} ${s * 9} z`}
-          fill="currentColor"
-          fillOpacity="0.12"
-        />
-      ))}
-      <path d="M116 12 q 3 -1 2 -4" />
-    </svg>
+      style={{
+        width: "auto",
+        aspectRatio: "240 / 214",
+        backgroundColor: "currentColor",
+        WebkitMaskImage: url,
+        maskImage: url,
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+      }}
+    />
   );
 }
 
@@ -106,12 +103,9 @@ export function FlechaMano({ className = "" }: { className?: string }) {
   );
 }
 
-/** Logo tipográfico "entre nos" con ramita */
-export function Logo({ className = "" }: { className?: string }) {
-  return (
-    <span className={`inline-flex flex-col items-start leading-none ${className}`}>
-      <span className="display text-[1.7rem] font-medium italic tracking-tight">entre nos</span>
-      <Ramita className="-mt-1 ml-6 h-3 w-14 text-oliva" />
-    </span>
-  );
+/** Logotipo oficial (versión horizontal). `claro` para fondos oscuros. */
+export function Logo({ className = "h-9", tono = "claro" }: { className?: string; tono?: "claro" | "oscuro" }) {
+  const archivo = tono === "claro" ? "logo-horizontal-claro.png" : "logo-horizontal.png";
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={`${site.basePath}/marca/${archivo}`} alt="Entre Nos · Sabores del mundo" className={`w-auto ${className}`} />;
 }

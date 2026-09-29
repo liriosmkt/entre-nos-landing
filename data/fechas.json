@@ -8,8 +8,8 @@
       "destino": "Italia",
       "fecha": "2026-10-10",
       "horario": "[COMPLETAR]",
-      "cupos": 8,
-      "disponibles": 5,
+      "cupos": 10,
+      "disponibles": 6,
       "precio": null,
       "nota": "Con café de @rito.tostadores"
     },
@@ -32,7 +32,7 @@
       "destino": "México",
       "fecha": "2026-10-24",
       "horario": "[COMPLETAR]",
-      "cupos": 8,
+      "cupos": 10,
       "disponibles": 2,
       "precio": null,
       "nota": "Junto a @taquitos.mexa"

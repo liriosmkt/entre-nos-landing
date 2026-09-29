@@ -5,14 +5,13 @@ import { site } from "@/data/site";
 import { destinos } from "@/data/destinos";
 import { waLink } from "@/lib/whatsapp";
 import { trackCta } from "@/lib/track";
-import { Estrellita, Ramita } from "./ui/Ornamentos";
-import { Txt } from "./ui/Txt";
+import { Ramita } from "./ui/Ornamentos";
 
 type Canal = "whatsapp" | "email";
 type Errores = Partial<Record<"nombre" | "contacto", string>>;
 
 export function ListaEspera() {
-  const { listaEspera: l, pasaporte: p } = site;
+  const { listaEspera: l } = site;
   const [canal, setCanal] = useState<Canal>("whatsapp");
   const [errores, setErrores] = useState<Errores>({});
   const [estado, setEstado] = useState<"idle" | "enviando" | "ok" | "error">("idle");
@@ -59,8 +58,8 @@ export function ListaEspera() {
 
   return (
     <section id="lista-de-espera" className="section-y bg-crema">
-      <div className="container-x grid gap-10 lg:grid-cols-[1.4fr_1fr]">
-        <div className="relative overflow-hidden rounded-3xl bg-espresso p-8 text-crema md:p-14">
+      <div className="container-x">
+        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl bg-espresso p-8 text-crema md:p-14">
           <p className="eyebrow text-ambar">Lista de espera</p>
           <h2 className="display mt-4 text-4xl md:text-5xl">{l.titulo}</h2>
           <p className="mt-4 max-w-lg text-crema/80">{l.texto}</p>
@@ -173,33 +172,6 @@ export function ListaEspera() {
           <Ramita className="absolute -right-4 bottom-6 h-10 w-40 text-cacao" />
         </div>
 
-        {/* Pasaporte Entre Nos */}
-        <aside className="relative flex flex-col justify-between rounded-3xl border border-caramelo/50 bg-hueso p-8 md:p-10">
-          <div>
-            <p className="eyebrow text-oliva-oscuro">Fidelidad</p>
-            <h3 className="display mt-3 text-4xl text-espresso">{p.titulo}</h3>
-            <p className="mt-3 text-tinta-suave">{p.texto}</p>
-          </div>
-          <ul className="my-8 grid grid-cols-3 gap-3" aria-label="Sellos del pasaporte">
-            {[...destinos.map((d) => d.nombre), "?", "?", "?"].map((n, i) => (
-              <li
-                key={i}
-                className={`flex aspect-square items-center justify-center rounded-full border text-center ${
-                  n === "?" ? "border-dashed border-caramelo/60 text-caramelo" : "border-oliva text-oliva-oscuro"
-                }`}
-                style={{ transform: `rotate(${(i % 2 ? 1 : -1) * (6 + i * 2)}deg)` }}
-              >
-                <span className={n === "?" ? "display text-3xl italic" : "hand text-lg leading-none"}>{n}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="flex items-start gap-2 text-sm text-tinta-suave">
-            <Estrellita className="mt-1 h-3 w-3 shrink-0 text-caramelo" />
-            <span>
-              <Txt>{p.beneficio}</Txt>
-            </span>
-          </p>
-        </aside>
       </div>
     </section>
   );

@@ -7,6 +7,7 @@ export type Experiencia = {
   bajada: string;
   texto: string;
   datos: string[];
+  incluye?: string[]; // lista de lo que incluye, opcional
   cta: string;
   mensaje: string;
   imagen: string;
@@ -15,26 +16,21 @@ export type Experiencia = {
 
 export const experiencias: Experiencia[] = [
   {
-    id: "teanner",
-    eyebrow: "Tea + Dinner",
-    titulo: "Teanner",
-    bajada: "Una merienda-cena de cinco pasos que viaja a un destino.",
-    texto:
-      "Sabores dulces y salados de un lugar del mundo, servidos en una mesa compartida. Cada fecha tiene su destino y su menú, cocinado en casa.",
-    datos: ["5 pasos", "8 invitados", "Opción veggie"],
-    cta: "Reservar un teanner",
-    mensaje: mensajes.teanner(),
-    imagen: "teanner-mesa.jpg",
-    imagenAlt: "Teanner servido en la mesa larga",
-  },
-  {
     id: "workshop",
     eyebrow: "Workshop",
     titulo: "Workshop Puglia",
-    bajada: "Pasta hecha con nuestras propias manos, vino y recetas para llevarse.",
+    bajada: "Más que una clase de cocina, es una experiencia para regalar, vivir y recordar.",
     texto:
-      "Un taller de pastas artesanales del sur de Italia: orecchiette y otras variedades, además de taralli. Después compartimos todo lo cocinado con vinos seleccionados y postre.",
-    datos: ["8 lugares", "Vinos y postre", "Recetas para llevarte"],
+      "Inspirado en la cocina artesanal de Puglia, al sur de Italia, y reinterpretado con el espíritu de Entre Nos: cocinar, compartir y disfrutar alrededor de una mesa. Elaboramos pastas tradicionales y preparaciones típicas para luego compartir la comida con vinos seleccionados y un postre de cierre.",
+    datos: ["Pasta artesanal", "Vinos seleccionados", "Recetas para llevarte"],
+    incluye: [
+      "Workshop guiado de pasta artesanal de la cocina tradicional de Puglia",
+      "Elaboración de 2 o 3 tipos de pasta típica y preparación de taralli",
+      "Degustación de las pastas con salsas y acompañamientos",
+      "Mesa compartida con vinos seleccionados",
+      "Postre de cierre: tiramisù",
+      "Delantal, tabla de amasado e ingredientes incluidos",
+    ],
     cta: "Reservar el workshop",
     mensaje: mensajes.workshop(),
     imagen: "workshop-puglia.jpg",

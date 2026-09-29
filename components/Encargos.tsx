@@ -1,4 +1,4 @@
-import { encargos, encargosIntro } from "@/data/encargos";
+import { creaciones, encargos, encargosIntro } from "@/data/encargos";
 import { mensajes, waLink } from "@/lib/whatsapp";
 import { Foto } from "./ui/Foto";
 import { IconoWhatsApp } from "./ui/Iconos";
@@ -59,6 +59,24 @@ export function Encargos() {
             </Reveal>
           ))}
         </ul>
+
+        {/* Galería de la pastelería de la casa */}
+        <div className="mt-20">
+          <p className="eyebrow text-center text-oliva-oscuro">De nuestra cocina</p>
+          <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-6">
+            {creaciones.map((c, i) => (
+              <Reveal as="li" key={c.src} delay={i * 0.05} className="overflow-hidden rounded-lg">
+                <Foto
+                  src={c.src}
+                  alt={c.alt}
+                  tono="claro"
+                  sizes="(min-width: 1024px) 16vw, (min-width: 640px) 33vw, 50vw"
+                  className="aspect-square w-full transition-transform duration-700 hover:scale-105"
+                />
+              </Reveal>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

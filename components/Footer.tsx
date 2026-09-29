@@ -1,6 +1,6 @@
 import { site } from "@/data/site";
 import { mensajes } from "@/lib/whatsapp";
-import { IconoInstagram } from "./ui/Iconos";
+import { IconoInstagram, IconoWhatsApp } from "./ui/Iconos";
 import { Logo, Ramita } from "./ui/Ornamentos";
 import { WaButton } from "./ui/WaButton";
 
@@ -22,7 +22,7 @@ export function Footer() {
 
         <div className="grid gap-10 border-t border-cacao pt-12 md:grid-cols-3 md:items-start">
           <div>
-            <Logo />
+            <Logo className="h-11" />
             <p className="eyebrow mt-4 text-crema/75">Sabores del mundo · {site.ciudad}</p>
           </div>
 
@@ -43,7 +43,19 @@ export function Footer() {
             </ul>
           </nav>
 
-          <div className="md:justify-self-end md:text-right">
+          <div className="flex flex-col gap-3 md:items-end md:justify-self-end md:text-right">
+            {site.contactos.map((c) => (
+              <a
+                key={c.numero}
+                href={`https://wa.me/${c.numero}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cta={`footer:whatsapp-${c.nombre.toLowerCase()}`}
+                className="inline-flex items-center gap-2 text-crema hover:text-ambar"
+              >
+                <IconoWhatsApp className="h-5 w-5" /> {c.nombre} · {c.visible}
+              </a>
+            ))}
             <a
               href={`https://instagram.com/${site.instagram}`}
               target="_blank"

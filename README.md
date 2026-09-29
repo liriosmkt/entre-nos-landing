@@ -111,8 +111,8 @@ Se ven en la web con borde punteado para que sea fácil encontrarlos. Buscar `CO
 - Qué incluye el precio / si hay alcohol.
 - Precio oficial por destino, Workshop y reserva privada (`fechas.json` → `precio`; tarjetas de destino).
 - Horario de cada fecha (`fechas.json` → `horario`).
-- Menú de 5 pasos y bebidas de **Nueva York** y **México** (`destinos.ts`).
-- Confirmar cupo definitivo por experiencia (hoy: Teanner y Workshop 8, privada hasta 10).
+- Foto del Teanner **Chicago**, del Workshop Puglia y de la tarta vasca (hoy muestran un bloque con la hoja de la marca).
+- Confirmar cupo del Workshop (hoy: Teanner y privada, 10 personas).
 
 **Marca**
 - Anécdota fundacional, primer teanner y significado de "Entre Nos" (`site.ts` → nosotras).
@@ -130,7 +130,7 @@ Se ven en la web con borde punteado para que sea fácil encontrarlos. Buscar `CO
 - Links de reels de Instagram con permiso de cada creador.
 
 **Técnico**
-- Número de WhatsApp Business (`NEXT_PUBLIC_WHATSAPP`).
+- WhatsApp: por defecto se usa el de Vero; los dos contactos (Vero y Pili) están en `site.ts` → `contactos`.
 - Dominio definitivo (`NEXT_PUBLIC_SITE_URL`).
 - Link a políticas de reserva (`site.ts` → footer.politicasHref).
 - Endpoint de la lista de espera (opcional).

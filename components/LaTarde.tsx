@@ -1,9 +1,7 @@
 import { site } from "@/data/site";
-import { mensajes } from "@/lib/whatsapp";
+import { CartaDestinos } from "./CartaDestinos";
 import { Reveal } from "./ui/Motion";
-import { Estrellita, Sello } from "./ui/Ornamentos";
 import { Txt } from "./ui/Txt";
-import { WaButton } from "./ui/WaButton";
 
 export function LaTarde() {
   const t = site.laTarde;
@@ -40,35 +38,9 @@ export function LaTarde() {
           </dl>
         </Reveal>
 
-        {/* Menú de ejemplo como carta */}
+        {/* La carta: una tarjeta por destino */}
         <Reveal delay={0.15}>
-          <div className="relative bg-crema px-7 py-12 shadow-[0_30px_60px_-30px_rgba(58,42,34,.35)] md:px-14">
-            <div className="absolute inset-3 border border-caramelo/40" aria-hidden />
-            <div className="relative text-center">
-              <p className="eyebrow text-oliva-oscuro">Teanner</p>
-              <p className="display mt-2 text-6xl italic text-espresso">Italia</p>
-              <Sello className="mt-3 text-oliva-oscuro" rotar={-4}>
-                menú renovado!
-              </Sello>
-            </div>
-            <ol className="relative mt-10 space-y-6">
-              {t.pasosEjemplo.map((p, i) => (
-                <li key={p} className="flex gap-5">
-                  <span className="display w-8 shrink-0 text-3xl italic text-caramelo">{i + 1}</span>
-                  <span className="border-b border-dotted border-espresso/25 pb-4 text-lg leading-snug text-tinta">{p}</span>
-                </li>
-              ))}
-            </ol>
-            <p className="relative mt-10 flex items-start gap-3 text-sm leading-relaxed text-tinta-suave">
-              <Estrellita className="mt-1 h-3 w-3 shrink-0 text-caramelo" />
-              {t.notaMesa}
-            </p>
-            <div className="relative mt-8 text-center">
-              <WaButton mensaje={mensajes.teanner()} cta="la-tarde:quiero-vivirlo">
-                Quiero vivirlo
-              </WaButton>
-            </div>
-          </div>
+          <CartaDestinos nota={t.notaMesa} />
         </Reveal>
       </div>
     </section>

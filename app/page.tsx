@@ -10,6 +10,7 @@ import { LaTarde } from "@/components/LaTarde";
 import { ListaEspera } from "@/components/ListaEspera";
 import { Navbar } from "@/components/Navbar";
 import { Nosotras } from "@/components/Nosotras";
+import { PorQue } from "@/components/PorQue";
 import { ProximasFechas } from "@/components/ProximasFechas";
 import { Regalos } from "@/components/Regalos";
 import { Testimonios } from "@/components/Testimonios";
@@ -22,6 +23,7 @@ export default function Home() {
       <Navbar />
       <main id="contenido">
         <Hero />
+        <PorQue />
         <ComoFunciona />
         <LaTarde />
         <Nosotras />
