@@ -113,7 +113,7 @@ export function Destinos() {
       <div className="container-x">
         <Reveal>
           <SectionHead
-            eyebrow="Agenda de viajes"
+            eyebrow="Itinerario"
             titulo={
               <>
                 Próximas <em>fechas</em>
