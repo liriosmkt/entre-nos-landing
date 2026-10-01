@@ -24,10 +24,10 @@ export function Viajes() {
             eyebrow="Destinos · Cartas · Fechas"
             titulo={
               <>
-                Conocé los <em className="text-ambar">destinos</em>
+                Elegí tu <em className="text-ambar">experiencia</em>
               </>
             }
-            bajada="Seleccioná un país en el mapa y descubrí su carta en cinco pasos."
+            bajada="Seleccioná un país y mirá qué sabores trae a la mesa."
           />
         </Reveal>
 
