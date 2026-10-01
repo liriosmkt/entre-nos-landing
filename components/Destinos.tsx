@@ -14,7 +14,7 @@ function TarjetaDestino({ d }: { d: Destino }) {
   const mensaje = proxima && estado !== "agotado" ? mensajes.destino(d.nombre) : mensajes.avisarDestino(d.nombre);
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl bg-crema shadow-[0_20px_50px_-30px_rgba(58,45,38,.45)] transition-shadow duration-500 hover:shadow-[0_30px_60px_-25px_rgba(205,171,152,.7)]">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-crema shadow-[0_20px_50px_-30px_rgba(58,45,38,.45)] transition-shadow duration-500 hover:shadow-[0_30px_60px_-25px_rgba(205,171,152,.7)]">
       <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[4/3]">
         <Foto
           src={d.imagen}
@@ -129,29 +129,6 @@ export function Destinos() {
               <TarjetaDestino d={d} />
             </Reveal>
           ))}
-
-          {/* Próximo destino */}
-          <Reveal delay={0.3} className="md:col-span-2">
-            <article className="relative flex flex-col items-center gap-x-10 overflow-hidden rounded-2xl border border-dashed border-caramelo bg-hueso p-8 text-center md:flex-row md:px-12 md:text-left">
-              <span className="display text-[9rem] italic leading-none text-caramelo/70" aria-hidden>
-                ?
-              </span>
-              <div className="md:flex-1">
-                <p className="eyebrow text-oliva-oscuro">Próximo destino</p>
-                <h3 className="display mt-3 text-3xl text-espresso md:text-4xl">¿A dónde querés viajar con nosotras?</h3>
-                <p className="mt-3 text-sm text-tinta-suave">Sugerí o votá el próximo teanner.</p>
-              </div>
-              <a
-                href={waLink(mensajes.sugerirDestino())}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cta="destinos:sugerir"
-                className="btn btn-linea-oscura mt-6 md:mt-0"
-              >
-                Sugerir destino
-              </a>
-            </article>
-          </Reveal>
         </div>
       </div>
     </section>
