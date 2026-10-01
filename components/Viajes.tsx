@@ -75,7 +75,7 @@ export function Viajes() {
                     sizes="(min-width: 768px) 22vw, 45vw"
                     className={`aspect-[3/4] w-full rounded-t-full shadow-[0_25px_40px_-25px_rgba(58,45,38,.6)] ${i % 2 ? "md:mt-10" : ""}`}
                   />
-                  <span className="display absolute -bottom-6 left-3 text-7xl italic leading-none text-caramelo drop-shadow-[0_2px_0_#f3eee6] md:text-8xl">
+                  <span className="display absolute -bottom-7 left-3 flex h-14 w-14 items-center justify-center rounded-full bg-espresso text-3xl italic leading-none text-crema shadow-lg ring-4 ring-crema md:h-16 md:w-16 md:text-4xl">
                     {i + 1}
                   </span>
                 </div>
