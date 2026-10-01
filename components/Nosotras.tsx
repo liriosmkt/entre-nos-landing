@@ -27,7 +27,7 @@ export function Nosotras() {
                   alt={bio.fotoAlt}
                   tono="claro"
                   sizes="(min-width: 640px) 40vw, 90vw"
-                  className="mx-auto aspect-square w-full max-w-xs rounded-full"
+                  className="mx-auto aspect-square w-60 rounded-full sm:w-full sm:max-w-xs"
                   posicion="50% 30%"
                 />
                 <h3 className="display mt-6 text-center text-4xl text-espresso">{bio.nombre}</h3>

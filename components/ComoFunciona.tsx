@@ -25,10 +25,10 @@ export function ComoFunciona() {
                   src={e.src}
                   alt={e.alt}
                   tono="claro"
-                  sizes={i === 2 ? "(min-width: 768px) 32vw, 75vw" : "(min-width: 768px) 26vw, 42vw"}
+                  sizes={i === 2 ? "(min-width: 768px) 32vw, 60vw" : "(min-width: 768px) 26vw, 42vw"}
                   className={`mx-auto aspect-square rounded-full ${
                     i === 2
-                      ? "w-[75vw] max-w-sm ring-1 ring-caramelo ring-offset-4 ring-offset-crema md:w-full"
+                      ? "w-[60vw] max-w-sm ring-1 ring-caramelo ring-offset-4 ring-offset-crema md:w-full"
                       : "w-full"
                   }`}
                 />
