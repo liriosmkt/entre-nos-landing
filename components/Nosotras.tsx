@@ -27,10 +27,10 @@ export function Nosotras() {
                   alt={bio.fotoAlt}
                   tono="claro"
                   sizes="(min-width: 640px) 40vw, 90vw"
-                  className="aspect-[4/5] w-full rounded-t-full"
+                  className="mx-auto aspect-square w-full max-w-xs rounded-full"
                   posicion="50% 30%"
                 />
-                <h3 className="display mt-6 text-4xl text-espresso">{bio.nombre}</h3>
+                <h3 className="display mt-6 text-center text-4xl text-espresso">{bio.nombre}</h3>
                 <p className="display mt-3 text-lg italic leading-snug text-cacao">“{bio.destacado}”</p>
                 <p className="mt-3 leading-relaxed text-tinta-suave">{bio.texto}</p>
               </article>
