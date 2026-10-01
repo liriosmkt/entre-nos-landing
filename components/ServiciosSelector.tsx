@@ -41,7 +41,7 @@ export function ServiciosSelector({ servicios, fotos }: { servicios: Experiencia
               aria-controls="servicio-detalle"
               onClick={() => setActivo(i)}
               data-cta={`experiencias:ver:${s.id}`}
-              className={`group relative w-[78%] shrink-0 snap-center overflow-hidden rounded-3xl text-left transition-all duration-500 md:w-auto ${
+              className={`group relative w-[78%] shrink-0 cursor-pointer snap-center overflow-hidden rounded-3xl text-left transition-all duration-500 md:w-auto ${
                 sel ? "shadow-[0_30px_50px_-25px_rgba(58,45,38,.6)] ring-2 ring-espresso ring-offset-4 ring-offset-hueso" : "opacity-80 hover:opacity-100"
               }`}
             >
@@ -77,7 +77,7 @@ export function ServiciosSelector({ servicios, fotos }: { servicios: Experiencia
             className="grid gap-8 rounded-3xl bg-crema p-6 md:grid-cols-[1.1fr_1fr] md:gap-12 md:p-10"
           >
             <div>
-              <p className="display text-2xl leading-snug text-espresso md:text-3xl">{e.resumen}</p>
+              <p className="display text-lg leading-snug text-espresso md:text-xl">{e.resumen}</p>
               <ul className="mt-6 grid grid-cols-3 gap-3">
                 {e.claves.map((c) => {
                   const I = iconos[c.icono];
