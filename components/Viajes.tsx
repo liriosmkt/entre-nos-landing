@@ -1,5 +1,6 @@
 import { site } from "@/data/site";
 import { proximasFechas } from "@/lib/fechas";
+import { Calendario } from "./Calendario";
 import { MapaDestinos } from "./MapaDestinos";
 import { Reveal } from "./ui/Motion";
 import { Estrellita } from "./ui/Ornamentos";
@@ -14,8 +15,6 @@ export function Viajes() {
 
   return (
     <section id="destinos" className="grano section-y relative bg-carbon text-crema">
-      {/* Anclas de las secciones anteriores, para que los links viejos sigan andando */}
-      <span id="fechas" className="absolute top-0" aria-hidden />
       <div className="container-x relative">
         <Reveal>
           <SectionHead
@@ -24,14 +23,28 @@ export function Viajes() {
             eyebrow="Destinos · Cartas · Fechas"
             titulo={
               <>
-                Elegí tu próximo <em className="text-ambar">viaje</em>
+                Conocé los <em className="text-ambar">destinos</em>
               </>
             }
-            bajada="Seleccioná un país en el mapa y viví tu próxima experiencia gastronómica: su carta en cinco pasos, sus fotos y los pasajes disponibles."
+            bajada="Seleccioná un país en el mapa y descubrí su carta en cinco pasos."
           />
         </Reveal>
 
         <MapaDestinos fechas={fechas} />
+
+        {/* Próximas fechas: calendario con las banderas de cada destino */}
+        <div id="fechas" className="mt-20 scroll-mt-24">
+          <Reveal className="text-center">
+            <p className="eyebrow text-ambar">Itinerario</p>
+            <h3 className="display mt-4 text-4xl md:text-6xl">
+              Próximas <em className="text-ambar">fechas</em>
+            </h3>
+            <p className="mx-auto mt-4 max-w-xl text-crema/75">Tocá una bandera del calendario para ver el detalle de esa fecha y reservar tu lugar.</p>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-10">
+            <Calendario fechas={fechas} />
+          </Reveal>
+        </div>
 
         <p className="mt-8 flex items-center justify-center gap-3 text-center text-sm text-crema/70">
           <Estrellita className="h-3 w-3 shrink-0 text-ambar" />

@@ -30,7 +30,7 @@ export function Hero() {
           <WaButton mensaje={mensajes.general()} cta="hero:reservar" variante="ambar" className="whitespace-nowrap">
             Reservá tu lugar
           </WaButton>
-          <a href="#destinos" className="btn btn-linea-clara whitespace-nowrap" data-cta="hero:ver-fechas">
+          <a href="#fechas" className="btn btn-linea-clara whitespace-nowrap" data-cta="hero:ver-fechas">
             Ver próximas fechas
           </a>
         </div>

@@ -8,7 +8,6 @@ import { paises, type Opcion, type Pais } from "@/data/paises";
 import { site } from "@/data/site";
 import type { Fecha } from "@/lib/fechas";
 import { mensajes } from "@/lib/whatsapp";
-import { BoardingPass } from "./BoardingPass";
 import { banderas } from "./ui/Banderas";
 import { IconoCerrar, IconoHoja, IconoTaza } from "./ui/Iconos";
 import { COSTAS, MAPA, proyectar } from "./ui/mapa-datos";
@@ -18,6 +17,11 @@ import { WaButton } from "./ui/WaButton";
 
 const ORIGEN = proyectar(-31.4, -64.2);
 const pct = ([x, y]: [number, number]) => ({ left: `${(x / MAPA.ancho) * 100}%`, top: `${(y / MAPA.alto) * 100}%` });
+const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const fechaTexto = (iso: string) => {
+  const [, m, d] = iso.split("-").map(Number);
+  return `${d} de ${MESES[m - 1]}`;
+};
 const fechasTexto = (n: number) => (n ? `${n} ${n === 1 ? "fecha" : "fechas"}` : "sin fecha");
 
 function arco([x1, y1]: [number, number], [x2, y2]: [number, number]) {
@@ -224,24 +228,27 @@ function Panel({ pais, fechas, onClose }: { pais: Pais; fechas: Fecha[]; onClose
         >
           {d ? <Carta d={d} /> : <CartaWorkshop />}
 
-          <p className="eyebrow mt-10 text-center text-ambar">Próximas fechas · {op.etiqueta}</p>
-          <div className="mt-5">
+          <div className="mt-6 flex flex-col items-center gap-4 rounded-2xl border border-cacao px-6 py-6 text-center text-crema sm:flex-row sm:justify-between sm:text-left">
             {delLugar.length > 0 ? (
-              <ul className="grid gap-5">
-                {delLugar.map((f) => (
-                  <li key={f.id}>
-                    <BoardingPass f={f} />
-                  </li>
-                ))}
-              </ul>
+              <>
+                <p>
+                  <span className="eyebrow block text-ambar">Próximas fechas</span>
+                  <span className="display mt-1 block text-2xl italic">{delLugar.map((f) => fechaTexto(f.fecha)).join(" · ")}</span>
+                </p>
+                <a href="#fechas" className="btn btn-ambar shrink-0" data-cta={`destinos:ver-calendario:${op.nombre}`}>
+                  Ver en el calendario
+                </a>
+              </>
             ) : (
-              <div className="rounded-2xl border border-cacao p-8 text-center text-crema">
-                <p className="display text-3xl">{op.etiqueta}: sin fecha por ahora</p>
-                <p className="mt-3 text-crema/75">Te avisamos apenas abramos la próxima salida.</p>
-                <WaButton mensaje={mensajes.avisarDestino(op.nombre)} cta={`fechas:avisar:${op.nombre}`} variante="ambar" className="mt-6">
+              <>
+                <p>
+                  <span className="eyebrow block text-ambar">Próximas fechas</span>
+                  <span className="display mt-1 block text-2xl italic">Sin fecha por ahora</span>
+                </p>
+                <WaButton mensaje={mensajes.avisarDestino(op.nombre)} cta={`fechas:avisar:${op.nombre}`} variante="ambar" className="shrink-0">
                   Avisame cuando vuelva
                 </WaButton>
-              </div>
+              </>
             )}
           </div>
         </motion.div>
@@ -337,7 +344,7 @@ export function MapaDestinos({ fechas }: { fechas: Fecha[] }) {
                 data-cta={`destinos:mapa:${p.id}`}
                 aria-expanded={activo}
                 aria-controls="caja-destino"
-                aria-label={`${p.nombre}: ${n ? fechasTexto(n) : "sin fecha por ahora"}. Ver carta y pasajes`}
+                aria-label={`${p.nombre}: ${n ? fechasTexto(n) : "sin fecha por ahora"}. Ver la carta`}
                 className="group absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
                 style={pct(proyectar(p.lat, p.lon))}
               >

@@ -20,7 +20,7 @@ lib/            helpers: whatsapp.ts (waLink + mensajes), fechas.ts, track.ts (a
 public/images/  fotos (ver lista abajo)
 ```
 
-Orden de la página (según el documento de estructura): Navbar · Hero · Por qué Entre Nos · Qué es un teanner · Nosotras · **Elegí tu próximo viaje** (mapa → caja con carta de 5 pasos, fotos y pasajes de cada destino; debajo, cómo es la tarde) · Experiencias · Regalá una experiencia · Encargos · La casa · Invitados · Preguntas frecuentes · Lista de espera + Pasaporte · Footer · Botón flotante de WhatsApp.
+Orden de la página (según el documento de estructura): Navbar · Hero · Por qué Entre Nos · Qué es un teanner · Nosotras · **Conocé los destinos** (mapa → caja con carta de 5 pasos y fotos de cada destino; calendario de Próximas fechas con banderas; cómo es la tarde) · Experiencias · Regalá una experiencia · Encargos · La casa · Invitados · Preguntas frecuentes · Lista de espera + Pasaporte · Footer · Botón flotante de WhatsApp.
 
 ## Cómo editar el contenido
 
@@ -32,7 +32,7 @@ Orden de la página (según el documento de estructura): Navbar · Hero · Por q
 | Encargos de pastelería | `data/encargos.ts` |
 | Preguntas frecuentes | `data/faqs.ts` |
 | Testimonios y reels | `data/testimonios.ts` |
-| Hero, cómo funciona, cómo es la tarde (dentro de Elegí tu próximo viaje), regalos, nosotras, la casa, pasaporte, lista de espera, footer, SEO | `data/site.ts` |
+| Hero, cómo funciona, cómo es la tarde (dentro de Conocé los destinos), regalos, nosotras, la casa, pasaporte, lista de espera, footer, SEO | `data/site.ts` |
 | Mensajes precargados de WhatsApp | `lib/whatsapp.ts` |
 
 ### Fechas (`data/fechas.json`)
