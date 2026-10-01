@@ -46,7 +46,6 @@ Orden de la página (según el documento de estructura): Navbar · Hero · Por q
   "horario": "17:00 hs",
   "cupos": 8,
   "disponibles": 5,           // 0 = AGOTADO · 1-2 = últimos lugares · 3+ = disponible
-  "precio": 75000,            // en pesos, o null para "[COMPLETAR]"
   "nota": "Con café de @rito.tostadores"
 }
 ```
@@ -54,6 +53,7 @@ Orden de la página (según el documento de estructura): Navbar · Hero · Por q
 - El estado sale de `disponibles`, así la web nunca muestra una escasez que no existe.
 - Las fechas pasadas se ocultan solas **al hacer el build** → después de editar, volver a buildear y subir.
 - Las 3 fechas actuales tienen `"ejemplo": true` (se ven con la etiqueta EJEMPLO y no se publican como `Event` en el JSON-LD). Borrarlas o quitar esa línea al cargar fechas reales.
+- La página no muestra precios en ningún lado: se consultan por WhatsApp.
 - El hero muestra automáticamente la próxima fecha con lugares.
 - Destino y colaboración: si el destino no tiene fecha, la tarjeta de "Elegí tu destino" cambia a "Avisame cuando vuelva".
 
@@ -108,8 +108,7 @@ Se ven en la web con borde punteado para que sea fácil encontrarlos. Buscar `CO
 
 **Experiencia**
 - Horario de llegada y duración del teanner (`site.ts` → laTarde; caja de cada destino).
-- Qué incluye el precio / si hay alcohol.
-- Precio oficial por destino, Workshop y reserva privada (`fechas.json` → `precio`; tarjetas de destino).
+- Qué incluye la experiencia / si hay alcohol.
 - Horario de cada fecha (`fechas.json` → `horario`).
 - Foto del Teanner **Chicago**, del Workshop Puglia y de la tarta vasca (hoy muestran un bloque con la hoja de la marca).
 - Confirmar cupo del Workshop (hoy: Teanner y privada, 10 personas).
@@ -121,7 +120,7 @@ Se ven en la web con borde punteado para que sea fácil encontrarlos. Buscar `CO
 
 **Regalos y encargos**
 - Formato, vigencia y canje de las invitaciones de regalo.
-- Anticipación mínima y retiro/envío de encargos; precios (hoy "Precio a consultar").
+- Anticipación mínima y retiro/envío de encargos.
 
 **Preguntas frecuentes** (`faqs.ts`): duración/horario, qué incluye, frecuencia de fechas, celiaquía/alergias, chicos, cómo pagar (seña/total), cancelación y cesión de lugar, qué pasa si suspenden, si hace falta saber cocinar para el workshop, invitación de regalo, anticipación y envíos de encargos.
 

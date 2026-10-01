@@ -268,11 +268,11 @@ const AVION =
   "M13 0L5-1.8L-1-10.5H-4L-.8-1.8L-7.5-1.5L-10.5-5.5H-12.5L-10.5 0L-12.5 5.5H-10.5L-7.5 1.5L-.8 1.8L-4 10.5H-1L5 1.8Z";
 const VUELO_MS = 1700;
 
-/** Avión que vuela de Córdoba al destino, dejando la estela. */
+/** Avión que trae los sabores del destino a Córdoba, dejando la estela. */
 function Vuelo({ d, onLlegada }: { d: string; onLlegada: () => void }) {
   const ruta = useRef<SVGPathElement>(null);
   const reduce = useReducedMotion();
-  const [estado, setEstado] = useState({ t: 0, x: ORIGEN[0], y: ORIGEN[1], a: 0, largo: 0 });
+  const [estado, setEstado] = useState<{ t: number; x: number; y: number; a: number; largo: number } | null>(null);
 
   useEffect(() => {
     const path = ruta.current;
@@ -313,12 +313,14 @@ function Vuelo({ d, onLlegada }: { d: string; onLlegada: () => void }) {
         className="stroke-ambar"
         strokeWidth={1.8}
         strokeLinecap="round"
-        strokeDasharray={estado.largo ? `${estado.largo * estado.t} ${estado.largo}` : "0 1"}
+        strokeDasharray={estado ? `${estado.largo * estado.t} ${estado.largo}` : "0 1"}
         opacity={0.9}
       />
-      <g transform={`translate(${estado.x} ${estado.y}) rotate(${estado.a})`}>
-        <path d={AVION} className="fill-crema" stroke="#3a2d26" strokeWidth={1} />
-      </g>
+      {estado && (
+        <g transform={`translate(${estado.x} ${estado.y}) rotate(${estado.a})`}>
+          <path d={AVION} className="fill-crema" stroke="#3a2d26" strokeWidth={1} />
+        </g>
+      )}
     </g>
   );
 }
@@ -359,7 +361,7 @@ export function MapaDestinos({ fechas }: { fechas: Fecha[] }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [abierto]);
 
-  // Cuando el avión aterriza, llevar la vista a la caja del destino
+  // Cuando el avión aterriza en Córdoba, llevar la vista a la caja del destino
   const alAterrizar = () => {
     const el = caja.current;
     if (!el) return;
@@ -410,7 +412,7 @@ export function MapaDestinos({ fechas }: { fechas: Fecha[] }) {
                   />
                 );
               })}
-              {pais && <Vuelo key={pais.id} d={arco(ORIGEN, proyectar(pais.lat, pais.lon))} onLlegada={alAterrizar} />}
+              {pais && <Vuelo key={pais.id} d={arco(proyectar(pais.lat, pais.lon), ORIGEN)} onLlegada={alAterrizar} />}
             </svg>
 
             {/* Origen: la hoja de la marca */}

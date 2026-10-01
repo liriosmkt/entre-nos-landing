@@ -41,10 +41,7 @@ export function Encargos() {
                     className="aspect-square w-full transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <div className="mt-5 flex items-baseline justify-between gap-4">
-                  <h3 className="display text-3xl text-espresso">{e.nombre}</h3>
-                  <p className="eyebrow shrink-0 text-[0.65rem] text-tinta-suave">{e.precio ?? "Precio a consultar"}</p>
-                </div>
+                <h3 className="display mt-5 text-3xl text-espresso">{e.nombre}</h3>
                 <p className="mt-2 leading-relaxed text-tinta-suave">{e.descripcion}</p>
                 <a
                   href={waLink(mensajes.encargo(e.nombre.toLowerCase()))}

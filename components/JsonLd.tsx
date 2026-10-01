@@ -40,16 +40,11 @@ export function JsonLd() {
         address: { "@type": "PostalAddress", addressLocality: "Córdoba", addressCountry: "AR" },
       },
       organizer: { "@type": "Organization", name: site.nombreCompleto, url: site.url },
-      ...(f.precio != null && {
-        offers: {
-          "@type": "Offer",
-          price: f.precio,
-          priceCurrency: "ARS",
-          availability:
-            estadoDe(f) === "agotado" ? "https://schema.org/SoldOut" : "https://schema.org/LimitedAvailability",
-          url: site.url + "/#destinos",
-        },
-      }),
+      offers: {
+        "@type": "Offer",
+        availability: estadoDe(f) === "agotado" ? "https://schema.org/SoldOut" : "https://schema.org/LimitedAvailability",
+        url: site.url + "/#fechas",
+      },
     }));
 
   return (

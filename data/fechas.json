@@ -1,5 +1,5 @@
 {
-  "_instrucciones": "Editá esta lista para actualizar las próximas fechas. 'disponibles' define el estado: 0 = agotado, 1-2 = últimos lugares, 3+ = disponible. 'precio' en pesos, o null para mostrar [COMPLETAR]. Borrá 'ejemplo': true cuando cargues fechas reales. Las fechas pasadas se ocultan solas. Después de editar, volvé a hacer el build.",
+  "_instrucciones": "Editá esta lista para actualizar las próximas fechas. 'disponibles' define el estado: 0 = agotado, 1-2 = últimos lugares, 3+ = disponible. Borrá 'ejemplo': true cuando cargues fechas reales. Las fechas pasadas se ocultan solas. Después de editar, volvé a hacer el build.",
   "fechas": [
     {
       "id": "teanner-italia-ejemplo",
@@ -10,7 +10,6 @@
       "horario": "[COMPLETAR]",
       "cupos": 10,
       "disponibles": 6,
-      "precio": null,
       "nota": "Con café de @rito.tostadores"
     },
     {
@@ -22,7 +21,6 @@
       "horario": "[COMPLETAR]",
       "cupos": 8,
       "disponibles": 0,
-      "precio": null,
       "nota": "Orecchiette, taralli, vino y recetas para llevarte"
     },
     {
@@ -34,7 +32,6 @@
       "horario": "[COMPLETAR]",
       "cupos": 10,
       "disponibles": 2,
-      "precio": null,
       "nota": "Junto a @taquitos.mexa"
     }
   ]

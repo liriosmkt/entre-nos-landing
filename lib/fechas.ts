@@ -11,7 +11,6 @@ export type Fecha = {
   horario: string;
   cupos: number;
   disponibles: number;
-  precio: number | null;
   nota?: string;
 };
 
@@ -55,10 +54,6 @@ export function fechaCorta(iso: string): string {
   return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`;
 }
 
-export function precioTexto(precio: number | null): string {
-  if (precio == null) return "[COMPLETAR: precio]";
-  return `$${precio.toLocaleString("es-AR")}`;
-}
 
 export function cuposTexto(f: Fecha): string {
   const e = estadoDe(f);

@@ -2,7 +2,6 @@ export type Encargo = {
   id: string;
   nombre: string;
   descripcion: string;
-  precio: string | null; // null = "Precio a consultar"
   imagen: string;
   imagenAlt: string;
 };
@@ -31,7 +30,6 @@ export const encargos: Encargo[] = [
     id: "carrot-cake",
     nombre: "Carrot cake",
     descripcion: "Húmeda y especiada. También la hacemos personalizada para tu celebración.",
-    precio: null,
     imagen: "encargo-carrot-cake.jpg",
     imagenAlt: "Carrot cake entera con frosting y nueces caramelizadas",
   },
@@ -39,7 +37,6 @@ export const encargos: Encargo[] = [
     id: "tarta-vasca",
     nombre: "Tarta vasca",
     descripcion: "Cremosa por dentro, bien tostada por fuera.",
-    precio: null,
     imagen: "encargo-tarta-vasca.jpg",
     imagenAlt: "Tarta vasca con la superficie tostada",
   },
@@ -47,7 +44,6 @@ export const encargos: Encargo[] = [
     id: "baci-di-dama",
     nombre: "Baci di dama",
     descripcion: "Los besitos italianos: dos galletitas unidas por chocolate.",
-    precio: null,
     imagen: "italia-2-crostata.jpg",
     imagenAlt: "Baci di dama junto a una crostata de limón",
   },

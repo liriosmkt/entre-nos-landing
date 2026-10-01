@@ -5,7 +5,6 @@ import {
   estadoLabel,
   fechaCorta,
   fechaLarga,
-  precioTexto,
   type Fecha,
 } from "@/lib/fechas";
 import { mensajes, waLink } from "@/lib/whatsapp";
@@ -19,6 +18,12 @@ const codigo: Record<string, string> = {
   Puglia: "PUG",
   Chicago: "CHI",
 };
+
+const recomendaciones = [
+  { titulo: "Vení con hambre.", texto: "Te esperan cinco pasos dulces y salados, sin apuro." },
+  { titulo: "Traé ganas de compartir.", texto: "La mesa es una sola y la conversación también." },
+  { titulo: "Dejate llevar.", texto: "Es una experiencia completa y distinta, para vivirla junto a otras personas." },
+];
 
 export function BoardingPass({ f }: { f: Fecha }) {
   const estado = estadoDe(f);
@@ -63,7 +68,7 @@ export function BoardingPass({ f }: { f: Fecha }) {
         <h3 className="display mt-4 text-5xl italic text-espresso md:text-6xl">{f.destino}</h3>
         {f.nota && <p className="mt-2 text-sm text-tinta-suave">{f.nota}</p>}
 
-        <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-espresso/15 pt-5 sm:grid-cols-4">
+        <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-espresso/15 pt-5 sm:grid-cols-3">
           <div>
             <dt className="eyebrow text-[0.62rem] text-tinta-suave">Fecha</dt>
             <dd className="mt-1 text-sm text-espresso">
@@ -80,13 +85,24 @@ export function BoardingPass({ f }: { f: Fecha }) {
             <dt className="eyebrow text-[0.62rem] text-tinta-suave">Mesa</dt>
             <dd className="mt-1 text-sm text-espresso">{f.cupos} invitados</dd>
           </div>
-          <div>
-            <dt className="eyebrow text-[0.62rem] text-tinta-suave">Precio</dt>
-            <dd className="mt-1 text-sm text-espresso">
-              <Txt>{precioTexto(f.precio)}</Txt>
-            </dd>
-          </div>
         </dl>
+
+        {/* Recomendaciones para el viaje */}
+        <div className="mt-6 border-t border-dashed border-espresso/20 pt-5">
+          <p className="eyebrow text-[0.62rem] text-oliva-oscuro">Recomendaciones para el viaje</p>
+          <ul className="mt-3 space-y-2 text-sm leading-snug text-tinta">
+            {recomendaciones.map((r) => (
+              <li key={r.titulo} className="flex gap-3">
+                <span className="display text-lg leading-none text-caramelo" aria-hidden>
+                  ✦
+                </span>
+                <span>
+                  <strong className="font-medium text-espresso">{r.titulo}</strong> {r.texto}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       {/* Troquel */}
