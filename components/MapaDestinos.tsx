@@ -257,114 +257,210 @@ function Panel({ pais, fechas, onClose }: { pais: Pais; fechas: Fecha[]; onClose
   );
 }
 
+// Paralelos y meridianos cada 30°, como en un atlas
+const GRILLA = [
+  ...[-30, 0, 30, 60].map((lat) => `M0 ${proyectar(lat, 0)[1]}H${MAPA.ancho}`),
+  ...[-150, -120, -90, -60, -30, 0, 30, 60, 90, 120, 150].map((lon) => `M${proyectar(0, lon)[0]} 0V${MAPA.alto}`),
+].join("");
+
+// Silueta de avión mirando hacia +x (rota sola según la dirección del vuelo)
+const AVION =
+  "M13 0L5-1.8L-1-10.5H-4L-.8-1.8L-7.5-1.5L-10.5-5.5H-12.5L-10.5 0L-12.5 5.5H-10.5L-7.5 1.5L-.8 1.8L-4 10.5H-1L5 1.8Z";
+const VUELO_MS = 2200;
+
+/** Avión que vuela de Córdoba al destino, dejando la estela. */
+function Vuelo({ d, onLlegada }: { d: string; onLlegada: () => void }) {
+  const ruta = useRef<SVGPathElement>(null);
+  const reduce = useReducedMotion();
+  const [estado, setEstado] = useState({ t: 0, x: ORIGEN[0], y: ORIGEN[1], a: 0, largo: 0 });
+
+  useEffect(() => {
+    const path = ruta.current;
+    if (!path) return;
+    const largo = path.getTotalLength();
+    const punto = (t: number) => {
+      const p = path.getPointAtLength(largo * t);
+      const q = path.getPointAtLength(Math.min(largo, largo * t + 0.5));
+      const r = path.getPointAtLength(Math.max(0, largo * t - 0.5));
+      return { t, x: p.x, y: p.y, a: (Math.atan2(q.y - r.y, q.x - r.x) * 180) / Math.PI, largo };
+    };
+    if (reduce) {
+      setEstado(punto(1));
+      onLlegada();
+      return;
+    }
+    let raf = 0;
+    const inicio = performance.now();
+    const paso = (ahora: number) => {
+      const lineal = Math.min(1, (ahora - inicio) / VUELO_MS);
+      const t = lineal < 0.5 ? 2 * lineal * lineal : 1 - (-2 * lineal + 2) ** 2 / 2; // ease in-out
+      setEstado(punto(t));
+      if (lineal < 1) raf = requestAnimationFrame(paso);
+      else onLlegada();
+    };
+    raf = requestAnimationFrame(paso);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [d, reduce]);
+
+  return (
+    <g>
+      <path ref={ruta} d={d} fill="none" stroke="none" />
+      {/* Estela: se va dibujando detrás del avión */}
+      <path
+        d={d}
+        fill="none"
+        className="stroke-ambar"
+        strokeWidth={1.8}
+        strokeLinecap="round"
+        strokeDasharray={estado.largo ? `${estado.largo * estado.t} ${estado.largo}` : "0 1"}
+        opacity={0.9}
+      />
+      <g transform={`translate(${estado.x} ${estado.y}) rotate(${estado.a})`}>
+        <path d={AVION} className="fill-crema" stroke="#3a2d26" strokeWidth={1} />
+      </g>
+    </g>
+  );
+}
+
+// Bordes del mapa que se funden con el fondo (sin marco ni recorte)
+const fundido = {
+  WebkitMaskImage:
+    "linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent)",
+  maskImage:
+    "linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent)",
+  WebkitMaskComposite: "source-in",
+  maskComposite: "intersect",
+} as const;
+
 export function MapaDestinos({ fechas }: { fechas: Fecha[] }) {
   const [abierto, setAbierto] = useState<string | null>(null);
   const [hover, setHover] = useState<string | null>(null);
   const caja = useRef<HTMLDivElement>(null);
+  const deslizable = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const cantidad = (p: Pais) => fechas.filter((f) => p.opciones.some((o) => o.nombre === f.destino)).length;
   const pais = paises.find((p) => p.id === abierto);
 
-  // Al elegir un país, llevar la vista a la caja (después de que termina de abrirse)
+  // En pantallas chicas el mapa se desliza: arrancar centrado en los destinos
+  useEffect(() => {
+    const el = deslizable.current;
+    if (!el || el.scrollWidth <= el.clientWidth) return;
+    const xs = [ORIGEN[0], ...paises.map((p) => proyectar(p.lat, p.lon)[0])];
+    const centro = ((Math.min(...xs) + Math.max(...xs)) / 2 / MAPA.ancho) * el.scrollWidth;
+    el.scrollLeft = centro - el.clientWidth / 2;
+  }, []);
+
+  // Escape cierra la caja
   useEffect(() => {
     if (!abierto) return;
-    let respaldo: ReturnType<typeof setTimeout>;
-    const t = setTimeout(() => {
-      const el = caja.current;
-      if (!el) return;
-      const desde = window.scrollY;
-      const y = el.getBoundingClientRect().top + desde - 80;
-      window.scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" });
-      // Algunos navegadores cortan el scroll suave si la página todavía se está acomodando
-      respaldo = setTimeout(() => {
-        if (Math.abs(window.scrollY - desde) < 2) window.scrollTo({ top: y });
-      }, 600);
-    }, 450);
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setAbierto(null);
     window.addEventListener("keydown", onKey);
-    return () => {
-      clearTimeout(t);
-      clearTimeout(respaldo);
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [abierto, reduce]);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [abierto]);
+
+  // Cuando el avión aterriza, llevar la vista a la caja del destino
+  const alAterrizar = () => {
+    const el = caja.current;
+    if (!el) return;
+    const desde = window.scrollY;
+    const y = el.getBoundingClientRect().top + desde - 80;
+    window.scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" });
+    // Algunos navegadores cortan el scroll suave si la página todavía se está acomodando
+    setTimeout(() => {
+      if (Math.abs(window.scrollY - desde) < 2) window.scrollTo({ top: y });
+    }, 600);
+  };
 
   return (
     <div>
-      <div className="relative mx-auto mt-12 max-w-5xl p-3 sm:p-6">
-        <div className="pointer-events-none absolute inset-2 border border-caramelo/30 sm:inset-3" aria-hidden />
-        <div className="relative">
-          <svg viewBox={`0 0 ${MAPA.ancho} ${MAPA.alto}`} className="h-auto w-full" aria-hidden>
-            <defs>
-              {/* Trazo fino, apenas irregular, como dibujado con pluma */}
-              <filter id="pluma" x="-5%" y="-5%" width="110%" height="110%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4" />
-                <feDisplacementMap in="SourceGraphic" scale="3" />
-              </filter>
-            </defs>
-            <path d={COSTAS} filter="url(#pluma)" className="fill-crema/[0.05] stroke-crema/45" strokeWidth={0.9} strokeLinejoin="round" />
-            <path d={COSTAS} transform="translate(1.8 1.4)" className="fill-none stroke-nude/30" strokeWidth={0.6} strokeLinejoin="round" />
+      {/* El mapa sale del contenedor y ocupa casi todo el ancho de la pantalla */}
+      <div className="relative left-1/2 mt-10 w-screen max-w-[1800px] -translate-x-1/2 md:w-[96vw]">
+        <div ref={deslizable} className="overflow-x-auto [scrollbar-width:none] md:overflow-visible [&::-webkit-scrollbar]:hidden">
+          <div className="relative w-[240%] sm:w-[160%] md:w-full">
+            <svg viewBox={`0 0 ${MAPA.ancho} ${MAPA.alto}`} className="h-auto w-full" aria-hidden style={fundido}>
+              <defs>
+                {/* Trazo fino, apenas irregular, como dibujado con pluma */}
+                <filter id="pluma" x="-2%" y="-2%" width="104%" height="104%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4" />
+                  <feDisplacementMap in="SourceGraphic" scale="2.5" />
+                </filter>
+                <radialGradient id="luz" cx="40%" cy="55%" r="60%">
+                  <stop offset="0%" stopColor="#cdab98" stopOpacity="0.14" />
+                  <stop offset="100%" stopColor="#cdab98" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              <rect width={MAPA.ancho} height={MAPA.alto} fill="url(#luz)" />
+              <path d={GRILLA} fill="none" className="stroke-crema/10" strokeWidth={0.6} strokeDasharray="1 5" />
+              <path d={COSTAS} filter="url(#pluma)" className="fill-crema/[0.06] stroke-crema/40" strokeWidth={0.8} strokeLinejoin="round" />
+              <path d={COSTAS} transform="translate(1.6 1.2)" className="fill-none stroke-nude/25" strokeWidth={0.5} strokeLinejoin="round" />
+              {paises.map((p) => {
+                if (p.id === abierto) return null;
+                const activo = p.id === hover;
+                return (
+                  <path
+                    key={p.id}
+                    d={arco(ORIGEN, proyectar(p.lat, p.lon))}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={activo ? 1.4 : 1}
+                    strokeDasharray="2 6"
+                    strokeLinecap="round"
+                    className={`transition-colors duration-300 ${activo ? "text-ambar" : "text-nude/50"}`}
+                  />
+                );
+              })}
+              {pais && <Vuelo key={pais.id} d={arco(ORIGEN, proyectar(pais.lat, pais.lon))} onLlegada={alAterrizar} />}
+            </svg>
+
+            {/* Origen: la hoja de la marca */}
+            <span className="pointer-events-none absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={pct(ORIGEN)}>
+              <Ramita className="h-5 text-ambar sm:h-7" />
+              <span className="display mt-0.5 text-sm italic text-crema sm:text-base">Córdoba</span>
+            </span>
+
+            {/* Banderas de cada país (HTML encima del mapa, así el texto siempre se lee) */}
             {paises.map((p) => {
-              const activo = p.id === hover || p.id === abierto;
+              const Bandera = banderas[p.id];
+              const n = cantidad(p);
+              const activo = p.id === abierto;
               return (
-                <path
+                <button
                   key={p.id}
-                  d={arco(ORIGEN, proyectar(p.lat, p.lon))}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={activo ? 1.4 : 1}
-                  strokeDasharray="2 6"
-                  strokeLinecap="round"
-                  className={`transition-colors duration-300 ${activo ? "text-ambar" : "text-nude/60"}`}
-                />
+                  type="button"
+                  onClick={() => setAbierto(activo ? null : p.id)}
+                  onMouseEnter={() => setHover(p.id)}
+                  onMouseLeave={() => setHover(null)}
+                  onFocus={() => setHover(p.id)}
+                  onBlur={() => setHover(null)}
+                  data-cta={`destinos:mapa:${p.id}`}
+                  aria-expanded={activo}
+                  aria-controls="caja-destino"
+                  aria-label={`${p.nombre}: ${n ? fechasTexto(n) : "sin fecha por ahora"}. Ver la carta`}
+                  className="group absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
+                  style={pct(proyectar(p.lat, p.lon))}
+                >
+                  <span className="relative">
+                    {(n > 0 || activo) && (
+                      <span
+                        className={`absolute -inset-2 rounded-full border border-ambar ${activo ? "bg-ambar/20" : "animate-ping [animation-duration:2.6s]"}`}
+                        aria-hidden
+                      />
+                    )}
+                    {Bandera && (
+                      <Bandera className="relative h-4 w-6 shadow-sm ring-1 ring-crema/70 transition-transform duration-300 group-hover:-translate-y-0.5 sm:h-5 sm:w-7" />
+                    )}
+                  </span>
+                  <span className={`display mt-1 whitespace-nowrap text-sm italic sm:text-lg ${activo ? "text-ambar" : "text-crema"}`}>
+                    {p.nombre}
+                  </span>
+                  <span className="eyebrow text-[0.5rem] text-ambar/80 sm:text-[0.58rem]">{fechasTexto(n)}</span>
+                </button>
               );
             })}
-          </svg>
-
-          {/* Origen: la hoja de la marca */}
-          <span className="pointer-events-none absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={pct(ORIGEN)}>
-            <Ramita className="h-5 text-ambar sm:h-7" />
-            <span className="display mt-0.5 text-xs italic text-crema sm:text-base">Córdoba</span>
-          </span>
-
-          {/* Banderas de cada país (HTML encima del mapa, así el texto siempre se lee) */}
-          {paises.map((p) => {
-            const Bandera = banderas[p.id];
-            const n = cantidad(p);
-            const activo = p.id === abierto;
-            return (
-              <button
-                key={p.id}
-                type="button"
-                onClick={() => setAbierto(activo ? null : p.id)}
-                onMouseEnter={() => setHover(p.id)}
-                onMouseLeave={() => setHover(null)}
-                onFocus={() => setHover(p.id)}
-                onBlur={() => setHover(null)}
-                data-cta={`destinos:mapa:${p.id}`}
-                aria-expanded={activo}
-                aria-controls="caja-destino"
-                aria-label={`${p.nombre}: ${n ? fechasTexto(n) : "sin fecha por ahora"}. Ver la carta`}
-                className="group absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
-                style={pct(proyectar(p.lat, p.lon))}
-              >
-                <span className="relative">
-                  {(n > 0 || activo) && (
-                    <span
-                      className={`absolute -inset-2 rounded-full border border-ambar ${activo ? "bg-ambar/20" : "animate-ping [animation-duration:2.6s]"}`}
-                      aria-hidden
-                    />
-                  )}
-                  {Bandera && (
-                    <Bandera className="relative h-4 w-6 shadow-sm ring-1 ring-crema/70 transition-transform duration-300 group-hover:-translate-y-0.5 sm:h-5 sm:w-7" />
-                  )}
-                </span>
-                <span className={`display mt-1 whitespace-nowrap text-xs italic sm:text-lg ${activo ? "text-ambar" : "text-crema"}`}>{p.nombre}</span>
-                <span className="eyebrow text-[0.5rem] text-ambar/80 sm:text-[0.58rem]">{fechasTexto(n)}</span>
-              </button>
-            );
-          })}
+          </div>
         </div>
+        <p className="eyebrow mt-3 text-center text-[0.6rem] text-crema/50 md:hidden">‹ Deslizá para recorrer el mapa ›</p>
       </div>
 
       <div id="caja-destino" ref={caja} className="mx-auto max-w-5xl scroll-mt-24">

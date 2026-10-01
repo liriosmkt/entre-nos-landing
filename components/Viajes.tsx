@@ -14,7 +14,7 @@ export function Viajes() {
   const t = site.laTarde;
 
   return (
-    <section id="destinos" className="grano section-y relative bg-carbon text-crema">
+    <section id="destinos" className="grano section-y relative overflow-x-clip bg-carbon text-crema">
       <div className="container-x relative">
         <Reveal>
           <SectionHead

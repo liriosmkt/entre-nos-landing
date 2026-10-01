@@ -1,22 +1,23 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { paises } from "@/data/paises";
 import { cuposTexto, estadoDe, estadoLabel, fechaCorta, precioTexto, type Fecha } from "@/lib/fechas";
 import { mensajes, waLink } from "@/lib/whatsapp";
 import { banderas } from "./ui/Banderas";
-import { IconoWhatsApp } from "./ui/Iconos";
+import { IconoCerrar, IconoWhatsApp } from "./ui/Iconos";
 import { Txt } from "./ui/Txt";
 
 const MESES = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
   "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
 ];
-const DIAS = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sá", "Do"];
+const DIAS = ["L", "M", "M", "J", "V", "S", "D"];
 const DIAS_LARGO = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
 
-// destino de fechas.json → bandera del país
+// destino de fechas.json → país (bandera) y cómo se muestra
 const paisDe = (destino: string) => paises.find((p) => p.opciones.some((o) => o.nombre === destino));
 const etiquetaDe = (f: Fecha) =>
   paisDe(f.destino)?.opciones.find((o) => o.nombre === f.destino)?.etiqueta ?? `${f.tipo} ${f.destino}`;
@@ -29,8 +30,9 @@ function Bandera({ destino, className }: { destino: string; className: string })
   return B ? <B className={className} /> : <span className={`${className} bg-nude`} />;
 }
 
-/** Detalle de la fecha elegida. */
-function Detalle({ f }: { f: Fecha }) {
+/** Ventana emergente con el detalle de la fecha. */
+function Popup({ f, onClose }: { f: Fecha; onClose: () => void }) {
+  const cerrar = useRef<HTMLButtonElement>(null);
   const [y, m, d] = partes(f.fecha);
   const dia = DIAS_LARGO[new Date(y, m - 1, d).getDay()];
   const estado = estadoDe(f);
@@ -38,69 +40,98 @@ function Detalle({ f }: { f: Fecha }) {
   const corta = fechaCorta(f.fecha);
   const mensaje = agotado ? mensajes.avisarLugar(f.tipo, f.destino, corta) : mensajes.fecha(f.tipo, f.destino, corta);
 
+  useEffect(() => {
+    const anterior = document.activeElement as HTMLElement | null;
+    cerrar.current?.focus();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+      anterior?.focus();
+    };
+  }, [onClose]);
+
   return (
-    <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-      <div className="flex gap-4">
-        <Bandera destino={f.destino} className="mt-1.5 h-6 w-9 shrink-0 shadow-sm ring-1 ring-espresso/10" />
-        <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <p className="display text-3xl italic text-espresso">{etiquetaDe(f)}</p>
-            {f.ejemplo && (
-              <span className="eyebrow rounded-sm border border-dashed border-cacao px-1.5 py-0.5 text-[0.6rem] text-cacao">Ejemplo</span>
-            )}
-          </div>
-          <p className="eyebrow mt-1 text-oliva-oscuro">
+    <motion.div
+      className="fixed inset-0 z-[60] flex items-end justify-center bg-carbon/60 backdrop-blur-sm sm:items-center sm:p-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${etiquetaDe(f)}, ${dia} ${d} de ${MESES[m - 1].toLowerCase()}`}
+        className="relative w-full max-w-md rounded-t-3xl bg-crema px-7 pb-8 pt-7 text-tinta shadow-2xl sm:rounded-3xl"
+        initial={{ y: 30, opacity: 0, scale: 0.98 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 20, opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          ref={cerrar}
+          type="button"
+          onClick={onClose}
+          aria-label="Cerrar"
+          className="absolute right-4 top-4 rounded-full p-2 text-espresso hover:bg-hueso"
+        >
+          <IconoCerrar className="h-5 w-5" />
+        </button>
+
+        <div className="flex items-center gap-3">
+          <Bandera destino={f.destino} className="h-5 w-7 shadow-sm ring-1 ring-espresso/10" />
+          <p className="eyebrow text-oliva-oscuro">
             {dia} {d} de {MESES[m - 1].toLowerCase()}
           </p>
-          {f.nota && <p className="mt-2 text-sm text-tinta-suave">{f.nota}</p>}
-          <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-4">
-            <div>
-              <dt className="eyebrow text-[0.6rem] text-tinta-suave">Horario</dt>
-              <dd className="mt-1 text-espresso">
-                <Txt>{f.horario}</Txt>
-              </dd>
-            </div>
-            <div>
-              <dt className="eyebrow text-[0.6rem] text-tinta-suave">Mesa</dt>
-              <dd className="mt-1 text-espresso">{f.cupos} invitados</dd>
-            </div>
-            <div>
-              <dt className="eyebrow text-[0.6rem] text-tinta-suave">Precio</dt>
-              <dd className="mt-1 text-espresso">
-                <Txt>{precioTexto(f.precio)}</Txt>
-              </dd>
-            </div>
-            <div>
-              <dt className="eyebrow text-[0.6rem] text-tinta-suave">Estado</dt>
-              <dd className={`mt-1 ${agotado ? "text-tinta-suave" : "text-espresso"}`}>
-                {estadoLabel[estado]}
-                <span className="block text-xs text-tinta-suave">{cuposTexto(f)}</span>
-              </dd>
-            </div>
-          </dl>
         </div>
-      </div>
-      <a
-        href={waLink(mensaje)}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-cta={agotado ? `calendario:avisarme:${f.id}` : `calendario:reservar:${f.id}`}
-        className={`btn shrink-0 ${agotado ? "btn-linea-oscura" : "btn-espresso"}`}
-      >
-        <IconoWhatsApp className="h-4 w-4 shrink-0" />
-        {agotado ? "Avisarme si se libera" : "Reservar"}
-      </a>
-    </div>
+        <div className="mt-3 flex flex-wrap items-center gap-2 pr-8">
+          <p className="display text-4xl italic text-espresso">{etiquetaDe(f)}</p>
+          {f.ejemplo && (
+            <span className="eyebrow rounded-sm border border-dashed border-cacao px-1.5 py-0.5 text-[0.6rem] text-cacao">Ejemplo</span>
+          )}
+        </div>
+        {f.nota && <p className="mt-2 text-sm text-tinta-suave">{f.nota}</p>}
+
+        <dl className="mt-6 divide-y divide-espresso/10 border-y border-espresso/10 text-sm">
+          {[
+            ["Horario", <Txt key="h">{f.horario}</Txt>],
+            ["Mesa", `${f.cupos} invitados`],
+            ["Precio", <Txt key="p">{precioTexto(f.precio)}</Txt>],
+            ["Lugares", `${estadoLabel[estado]} · ${cuposTexto(f)}`],
+          ].map(([label, valor]) => (
+            <div key={label as string} className="flex items-baseline justify-between gap-6 py-3">
+              <dt className="eyebrow text-[0.6rem] text-tinta-suave">{label}</dt>
+              <dd className="text-right text-espresso">{valor}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <a
+          href={waLink(mensaje)}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cta={agotado ? `calendario:avisarme:${f.id}` : `calendario:reservar:${f.id}`}
+          className={`btn mt-7 w-full ${agotado ? "btn-linea-oscura" : "btn-espresso"}`}
+        >
+          <IconoWhatsApp className="h-4 w-4 shrink-0" />
+          {agotado ? "Avisarme si se libera un lugar" : "Reservar mi lugar"}
+        </a>
+      </motion.div>
+    </motion.div>
   );
 }
 
 export function Calendario({ fechas }: { fechas: Fecha[] }) {
   // Meses que tienen fechas (de la primera a la última)
   const hoy = new Date();
-  const inicio = fechas.length ? clave(partes(fechas[0].fecha)[0], partes(fechas[0].fecha)[1] - 1) : clave(hoy.getFullYear(), hoy.getMonth());
-  const fin = fechas.length
-    ? clave(partes(fechas[fechas.length - 1].fecha)[0], partes(fechas[fechas.length - 1].fecha)[1] - 1)
-    : inicio;
+  const primera = fechas[0] ? partes(fechas[0].fecha) : null;
+  const ultima = fechas.length ? partes(fechas[fechas.length - 1].fecha) : null;
+  const inicio = primera ? clave(primera[0], primera[1] - 1) : clave(hoy.getFullYear(), hoy.getMonth());
+  const fin = ultima ? clave(ultima[0], ultima[1] - 1) : inicio;
   const [mes, setMes] = useState(inicio);
   const [elegida, setElegida] = useState<string | null>(null);
 
@@ -118,128 +149,112 @@ export function Calendario({ fechas }: { fechas: Fecha[] }) {
   const diasEnMes = new Date(y, m + 1, 0).getDate();
   const vacios = (new Date(y, m, 1).getDay() + 6) % 7; // la semana arranca el lunes
   const f = fechas.find((x) => x.id === elegida);
-  const cambiarMes = (n: number) => {
-    setMes(mes + n);
-    setElegida(null);
-  };
-
-  // Banderas que aparecen en el calendario, como referencia
   const enCalendario = Array.from(new Set(fechas.map((x) => x.destino)));
+  const cerrar = useCallback(() => setElegida(null), []);
+  const [montado, setMontado] = useState(false);
+  useEffect(() => setMontado(true), []);
+
+  if (!fechas.length) {
+    return (
+      <div className="mx-auto max-w-xl border-y border-crema/15 py-12 text-center">
+        <p className="display text-3xl italic">Estamos armando las próximas fechas.</p>
+        <a href="#lista-de-espera" className="btn btn-ambar mt-6" data-cta="calendario:sin-fechas-lista">
+          Anotarme en la lista de espera
+        </a>
+      </div>
+    );
+  }
 
   return (
-    <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl bg-crema text-tinta shadow-[0_30px_60px_-30px_rgba(0,0,0,.6)]">
-      <div className="flex items-center justify-between border-b border-espresso/10 px-4 py-4 sm:px-8">
+    <div className="mx-auto max-w-2xl">
+      {/* Mes */}
+      <div className="flex items-center justify-between">
         <button
           type="button"
-          onClick={() => cambiarMes(-1)}
+          onClick={() => setMes(mes - 1)}
           disabled={mes <= inicio}
           aria-label="Mes anterior"
-          className="flex h-10 w-10 items-center justify-center rounded-full text-2xl text-espresso hover:bg-hueso disabled:opacity-25"
+          className="flex h-10 w-10 items-center justify-center rounded-full text-2xl text-crema/80 transition-colors hover:text-ambar disabled:opacity-20"
         >
           ‹
         </button>
-        <p className="display text-3xl text-espresso" aria-live="polite">
-          {MESES[m]} <span className="text-caramelo">{y}</span>
+        <p className="display text-3xl italic md:text-4xl" aria-live="polite">
+          {MESES[m]} <span className="not-italic text-crema/40">{y}</span>
         </p>
         <button
           type="button"
-          onClick={() => cambiarMes(1)}
+          onClick={() => setMes(mes + 1)}
           disabled={mes >= fin}
           aria-label="Mes siguiente"
-          className="flex h-10 w-10 items-center justify-center rounded-full text-2xl text-espresso hover:bg-hueso disabled:opacity-25"
+          className="flex h-10 w-10 items-center justify-center rounded-full text-2xl text-crema/80 transition-colors hover:text-ambar disabled:opacity-20"
         >
           ›
         </button>
       </div>
 
-      <div className="px-3 pb-4 pt-4 sm:px-8 sm:pb-6">
+      <div className="mt-8 border-t border-crema/15 pt-6">
         <div className="grid grid-cols-7 text-center">
-          {DIAS.map((d) => (
-            <span key={d} className="eyebrow pb-2 text-[0.6rem] text-tinta-suave">
+          {DIAS.map((d, i) => (
+            <span key={i} className="eyebrow pb-4 text-[0.6rem] text-crema/40">
               {d}
             </span>
           ))}
         </div>
-        <div className="grid grid-cols-7 gap-1 sm:gap-2">
+        <div className="grid grid-cols-7 gap-y-2">
           {Array.from({ length: vacios }, (_, i) => (
             <span key={`v${i}`} />
           ))}
           {Array.from({ length: diasEnMes }, (_, i) => {
             const dia = i + 1;
             const delDia = delMes.get(dia) ?? [];
+            if (!delDia.length) {
+              return (
+                <span key={dia} className="flex h-14 items-start justify-center pt-1 text-sm text-crema/30 sm:h-16">
+                  {dia}
+                </span>
+              );
+            }
             return (
-              <div
-                key={dia}
-                className={`flex aspect-square flex-col items-center justify-center gap-1 rounded-xl text-sm sm:aspect-[1.15] ${
-                  delDia.length ? "bg-hueso" : "text-tinta-suave/70"
-                }`}
-              >
-                <span className={delDia.length ? "font-medium text-espresso" : ""}>{dia}</span>
-                {delDia.length > 0 && (
-                  <span className="flex gap-1">
-                    {delDia.map((x) => {
-                      const activo = x.id === elegida;
-                      const agotado = estadoDe(x) === "agotado";
-                      return (
-                        <button
-                          key={x.id}
-                          type="button"
-                          onClick={() => setElegida(activo ? null : x.id)}
-                          aria-pressed={activo}
-                          aria-label={`${etiquetaDe(x)}, ${dia} de ${MESES[m].toLowerCase()}: ${estadoLabel[estadoDe(x)]}`}
-                          data-cta={`calendario:fecha:${x.id}`}
-                          className={`rounded-sm p-0.5 transition-transform hover:-translate-y-0.5 ${
-                            activo ? "ring-2 ring-espresso" : "ring-1 ring-transparent"
-                          } ${agotado ? "opacity-45 grayscale" : ""}`}
-                        >
-                          <Bandera destino={x.destino} className="block h-4 w-6 sm:h-5 sm:w-7" />
-                        </button>
-                      );
-                    })}
-                  </span>
-                )}
+              <div key={dia} className="flex h-14 flex-col items-center gap-1.5 pt-1 sm:h-16">
+                <span className="text-sm font-medium text-crema">{dia}</span>
+                <span className="flex gap-1">
+                  {delDia.map((x) => {
+                    const agotado = estadoDe(x) === "agotado";
+                    return (
+                      <button
+                        key={x.id}
+                        type="button"
+                        onClick={() => setElegida(x.id)}
+                        aria-haspopup="dialog"
+                        aria-label={`${etiquetaDe(x)}, ${dia} de ${MESES[m].toLowerCase()}: ${estadoLabel[estadoDe(x)]}. Ver detalle`}
+                        data-cta={`calendario:fecha:${x.id}`}
+                        className={`rounded-[3px] transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ambar ${
+                          agotado ? "opacity-40 grayscale" : ""
+                        }`}
+                      >
+                        <Bandera destino={x.destino} className="block h-4 w-6 ring-1 ring-crema/40 sm:h-[18px] sm:w-[27px]" />
+                      </button>
+                    );
+                  })}
+                </span>
               </div>
             );
           })}
         </div>
-
-        {/* Referencias */}
-        {enCalendario.length > 0 && (
-          <ul className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2">
-            {enCalendario.map((d) => (
-              <li key={d} className="flex items-center gap-2 text-xs text-tinta-suave">
-                <Bandera destino={d} className="h-3 w-[18px]" />
-                {paisDe(d)?.opciones.find((o) => o.nombre === d)?.etiqueta ?? d}
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
 
-      <div className="border-t border-espresso/10 bg-hueso/60 px-5 py-6 sm:px-8" aria-live="polite">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={f?.id ?? "nada"}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
-          >
-            {f ? (
-              <Detalle f={f} />
-            ) : fechas.length ? (
-              <p className="text-center text-sm text-tinta-suave">Elegí una bandera para ver horario, precio y lugares disponibles.</p>
-            ) : (
-              <div className="text-center">
-                <p className="display text-2xl text-espresso">Estamos armando las próximas fechas.</p>
-                <a href="#lista-de-espera" className="btn btn-espresso mt-4" data-cta="calendario:sin-fechas-lista">
-                  Anotarme en la lista de espera
-                </a>
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      {/* Referencias */}
+      <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 border-t border-crema/15 pt-6">
+        {enCalendario.map((d) => (
+          <li key={d} className="eyebrow flex items-center gap-2 text-[0.58rem] text-crema/55">
+            <Bandera destino={d} className="h-2.5 w-[15px]" />
+            {paisDe(d)?.opciones.find((o) => o.nombre === d)?.etiqueta ?? d}
+          </li>
+        ))}
+      </ul>
+
+      {/* La ventana va al body: así ningún contenedor animado la recorta */}
+      {montado && createPortal(<AnimatePresence>{f && <Popup key={f.id} f={f} onClose={cerrar} />}</AnimatePresence>, document.body)}
     </div>
   );
 }
