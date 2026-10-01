@@ -19,7 +19,7 @@ export function Experiencias() {
             centrado
             eyebrow="Más allá del teanner"
             titulo="Otras formas de vivir Entre Nos"
-            bajada="Cocinar con nuestras manos, una mesa solo para tu grupo o una tarde de temporada. Elegí la tuya."
+            bajada="Tres maneras más de sentarte a nuestra mesa."
           />
         </Reveal>
         <Reveal delay={0.1} className="mt-12 md:mt-14">
