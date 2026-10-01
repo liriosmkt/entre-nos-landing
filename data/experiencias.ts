@@ -1,17 +1,19 @@
 import { mensajes } from "@/lib/whatsapp";
 
-// Servicios de "Más allá del teanner". Textos tomados de "TEXTOS PARA WEB" y del brief.
+// Servicios de "Más allá del teanner". Textos tomados de "TEXTOS PARA WEB" y del brief,
+// en versión corta para que se lean de un vistazo.
+
+export type Icono = "mesa" | "destino" | "taza" | "sobre" | "hoja" | "reloj";
 
 export type Experiencia = {
   id: string;
   eyebrow: string;
   titulo: string;
-  bajada: string;
-  parrafos: string[];
-  datos: string[]; // datos clave, en etiquetas
+  bajada: string; // frase de la tarjeta
+  resumen: string; // una o dos líneas
+  claves: { icono: Icono; texto: string }[]; // los datos más importantes
   incluyeTitulo: string;
-  incluye: string[];
-  nota?: string; // aclaración final, en chico
+  incluye: string[]; // ítems cortos
   cta: string;
   mensaje: string;
   imagen: string;
@@ -23,23 +25,24 @@ export const experiencias: Experiencia[] = [
     id: "workshop",
     eyebrow: "Workshop",
     titulo: "Workshop Puglia",
-    bajada: "Más que una clase de cocina, es una experiencia para regalar, vivir y recordar.",
-    parrafos: [
-      "Una experiencia gastronómica inspirada en la cocina artesanal de Puglia, al sur de Italia, reinterpretada en Argentina con el espíritu de Entre Nos: cocinar, compartir y disfrutar alrededor de una mesa.",
-      "Elaboramos pastas tradicionales y preparaciones típicas para luego compartir la comida con vinos seleccionados y un postre de cierre.",
+    bajada: "Más que una clase de cocina: una experiencia para regalar, vivir y recordar.",
+    resumen:
+      "Cocinamos pastas artesanales del sur de Italia y después compartimos todo en la mesa, con vinos seleccionados y postre.",
+    claves: [
+      { icono: "mesa", texto: "8 lugares" },
+      { icono: "taza", texto: "Con vinos" },
+      { icono: "sobre", texto: "Recetas para llevar" },
     ],
-    datos: ["8 lugares", "Pasta artesanal", "Vinos seleccionados", "Recetas para llevar"],
-    incluyeTitulo: "¿Qué incluye la experiencia?",
+    incluyeTitulo: "Incluye",
     incluye: [
-      "Workshop guiado de pasta artesanal inspirada en la cocina tradicional de Puglia",
-      "Elaboración de 2 o 3 tipos de pasta típica",
+      "Workshop guiado de pasta artesanal",
+      "2 o 3 tipos de pasta típica",
       "Preparación de taralli",
-      "Degustación de las pastas elaboradas, con salsas y acompañamientos preparados para la experiencia",
-      "Mesa compartida para disfrutar lo cocinado",
-      "Vinos seleccionados para acompañar la comida",
-      "Postre de cierre: tiramisù",
+      "Degustación con salsas y acompañamientos",
+      "Mesa compartida con vinos",
+      "Tiramisù de cierre",
       "Recetas finales para llevar",
-      "Uso de delantal, tabla de amasado y todos los ingredientes incluidos",
+      "Delantal, tabla e ingredientes",
     ],
     cta: "Reservar el workshop",
     mensaje: mensajes.workshop(),
@@ -51,20 +54,14 @@ export const experiencias: Experiencia[] = [
     eyebrow: "Reserva privada",
     titulo: "Tu mesa, tu destino",
     bajada: "Hasta 10 personas: elegí el destino para tu ocasión especial.",
-    parrafos: [
-      "Cumpleaños, aniversarios, una reunión de amigos o un encuentro con tu equipo de trabajo: tu grupo elige uno de nuestros destinos y la mesa es toda de ustedes.",
-      "Preparamos la experiencia completa, con la misma dedicación de cada fecha: platos típicos servidos en pasos, aromas, ambientación pensada al detalle y nosotras como anfitrionas.",
+    resumen: "Tu grupo elige un destino y la mesa es toda de ustedes, con la experiencia completa y nosotras como anfitrionas.",
+    claves: [
+      { icono: "mesa", texto: "Hasta 10 personas" },
+      { icono: "destino", texto: "Elegís el destino" },
+      { icono: "hoja", texto: "Opción veggie" },
     ],
-    datos: ["Hasta 10 personas", "Elegís el destino", "Celebraciones y empresas"],
-    incluyeTitulo: "Cómo es",
-    incluye: [
-      "La mesa exclusiva para tu grupo, de hasta 10 personas",
-      "El destino que elijan: Italia, México, Nueva York o Chicago",
-      "El recorrido completo de ese destino, en cinco pasos dulces y salados",
-      "Limonadas, aguas, té o café de especialidad y tragos típicos del destino",
-      "Opción veggie en los destinos que la tienen, avisando al reservar",
-      "Para cumpleaños, aniversarios, celebraciones y encuentros empresariales",
-    ],
+    incluyeTitulo: "Ideal para",
+    incluye: ["Cumpleaños", "Aniversarios", "Reuniones de amigos", "Encuentros empresariales"],
     cta: "Consultar reserva privada",
     mensaje: mensajes.privada(),
     imagen: "privada-grupo.jpg",
@@ -75,16 +72,17 @@ export const experiencias: Experiencia[] = [
     eyebrow: "De temporada",
     titulo: "Eventos especiales",
     bajada: "Varios destinos en una sola tarde.",
-    parrafos: [
-      "Algunas fechas del año piden algo más. Para ellas armamos eventos especiales con un recorrido que pasa por más de un destino en la misma tarde.",
-      "Como “Recibí la Primavera”, que viajó por Nueva York, España, Reino Unido e Italia.",
+    resumen: "Fechas especiales del año con un recorrido por más de un destino, como “Recibí la Primavera”: Nueva York, España, Reino Unido e Italia.",
+    claves: [
+      { icono: "destino", texto: "Varios destinos" },
+      { icono: "mesa", texto: "Cupo propio" },
+      { icono: "sobre", texto: "Aviso anticipado" },
     ],
-    datos: ["Varios destinos", "Cupo propio", "Fechas especiales"],
     incluyeTitulo: "Cómo funcionan",
     incluye: [
-      "Un recorrido por varios destinos en una misma tarde",
-      "Cada evento tiene su propio cupo (“Recibí la Primavera” fue para 20 personas)",
-      "Se anuncian primero a quienes están en la lista de espera",
+      "Un recorrido por varios destinos en la misma tarde",
+      "Cada evento tiene su cupo (Primavera fue para 20)",
+      "Se avisa primero a la lista de espera",
     ],
     cta: "Quiero enterarme",
     mensaje: mensajes.evento(),
