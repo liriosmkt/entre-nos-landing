@@ -16,25 +16,33 @@ export function ComoFunciona() {
           <p className="eyebrow mt-4 text-oliva-oscuro">{c.definicion}</p>
         </Reveal>
 
-        <div className="mx-auto mt-12 grid max-w-5xl grid-cols-[1fr_auto_1fr_auto_1.15fr] items-end gap-x-2 sm:gap-x-5 md:mt-16 md:gap-x-8">
+        {/* Mobile: Tea + Dinner en una fila y Teanner grande debajo. Desktop: todo en una línea. */}
+        <div className="mx-auto mt-12 grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-x-3 gap-y-2 md:mt-16 md:grid-cols-[1fr_auto_1fr_auto_1.2fr] md:gap-x-6">
           {c.ecuacion.map((e, i) => (
             <Fragment key={e.palabra}>
-              <Reveal delay={i * 0.15} className="text-center">
+              <Reveal delay={i * 0.15} className={`text-center ${i === 2 ? "col-span-3 md:col-span-1" : ""}`}>
                 <Foto
                   src={e.src}
                   alt={e.alt}
                   tono="claro"
-                  sizes="(min-width: 768px) 28vw, 30vw"
-                  className={`w-full rounded-t-full ${i === 2 ? "aspect-[3/4] ring-1 ring-caramelo ring-offset-4 ring-offset-crema" : "aspect-[3/4]"}`}
+                  sizes={i === 2 ? "(min-width: 768px) 32vw, 75vw" : "(min-width: 768px) 26vw, 42vw"}
+                  className={`mx-auto aspect-square rounded-full ${
+                    i === 2
+                      ? "w-[75vw] max-w-sm ring-1 ring-caramelo ring-offset-4 ring-offset-crema md:w-full"
+                      : "w-full"
+                  }`}
                 />
-                <p className={`display mt-3 italic text-espresso md:mt-5 ${i === 2 ? "text-2xl sm:text-4xl md:text-5xl" : "text-xl sm:text-3xl md:text-4xl"}`}>
+                <p className={`display mt-3 italic text-espresso md:mt-5 ${i === 2 ? "text-4xl md:text-5xl" : "text-2xl sm:text-3xl md:text-4xl"}`}>
                   {e.palabra}
                 </p>
-                <p className="eyebrow mt-1 hidden text-[0.6rem] text-tinta-suave sm:block">{e.detalle}</p>
+                <p className="eyebrow mt-1 text-[0.6rem] text-tinta-suave">{e.detalle}</p>
               </Reveal>
               {i < 2 && (
-                <Reveal delay={i * 0.15 + 0.1} className="self-center pb-10 md:pb-16">
-                  <span className="display block text-3xl text-caramelo sm:text-5xl md:text-6xl" aria-hidden>
+                <Reveal
+                  delay={i * 0.15 + 0.1}
+                  className={`self-center text-center ${i === 1 ? "col-span-3 md:col-span-1 md:pb-16" : "pb-12 md:pb-16"}`}
+                >
+                  <span className="display block text-4xl text-caramelo sm:text-5xl md:text-6xl" aria-hidden>
                     {signos[i]}
                   </span>
                 </Reveal>
