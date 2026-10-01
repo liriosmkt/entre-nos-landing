@@ -20,7 +20,7 @@ export function ProximasFechas() {
                 Elegí tu <em className="text-ambar">destino</em>
               </>
             }
-            bajada="Seleccioná un país en el mapa y descubrí las fechas disponibles para tu próximo viaje."
+            bajada="Seleccioná un país en el mapa y viví tu próxima experiencia gastronómica."
           />
         </Reveal>
 
