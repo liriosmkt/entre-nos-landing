@@ -20,19 +20,19 @@ lib/            helpers: whatsapp.ts (waLink + mensajes), fechas.ts, track.ts (a
 public/images/  fotos (ver lista abajo)
 ```
 
-Orden de la página (según el documento de estructura): Navbar · Hero · Qué es un teanner · Cómo es la tarde · Nosotras · **Próximas fechas** · Elegí tu destino · Experiencias · Regalá una experiencia · Encargos · La casa · Invitados · Preguntas frecuentes · Lista de espera + Pasaporte · Footer · Botón flotante de WhatsApp.
+Orden de la página (según el documento de estructura): Navbar · Hero · Por qué Entre Nos · Qué es un teanner · Nosotras · **Elegí tu próximo viaje** (mapa → caja con carta de 5 pasos, fotos y pasajes de cada destino; debajo, cómo es la tarde) · Experiencias · Regalá una experiencia · Encargos · La casa · Invitados · Preguntas frecuentes · Lista de espera + Pasaporte · Footer · Botón flotante de WhatsApp.
 
 ## Cómo editar el contenido
 
 | Qué | Archivo |
 |---|---|
 | **Próximas fechas** | `data/fechas.json` |
-| Destinos del teanner (menús, sellos, colaboraciones) | `data/destinos.ts` |
+| Destinos del teanner (menús, fotos, sellos, colaboraciones) | `data/destinos.ts` · países y banderas del mapa en `data/paises.ts` |
 | Experiencias (Teanner, Workshop, Privada, Eventos) | `data/experiencias.ts` |
 | Encargos de pastelería | `data/encargos.ts` |
 | Preguntas frecuentes | `data/faqs.ts` |
 | Testimonios y reels | `data/testimonios.ts` |
-| Hero, cómo funciona, la tarde, regalos, nosotras, la casa, pasaporte, lista de espera, footer, SEO | `data/site.ts` |
+| Hero, cómo funciona, cómo es la tarde (dentro de Elegí tu próximo viaje), regalos, nosotras, la casa, pasaporte, lista de espera, footer, SEO | `data/site.ts` |
 | Mensajes precargados de WhatsApp | `lib/whatsapp.ts` |
 
 ### Fechas (`data/fechas.json`)
@@ -107,7 +107,7 @@ El hero admite reemplazarse por un video corto (8–15 s, sin sonido, comprimido
 Se ven en la web con borde punteado para que sea fácil encontrarlos. Buscar `COMPLETAR` en `/data` para listarlos.
 
 **Experiencia**
-- Horario de llegada y duración del teanner (`site.ts` → laTarde; tarjetas de destino).
+- Horario de llegada y duración del teanner (`site.ts` → laTarde; caja de cada destino).
 - Qué incluye el precio / si hay alcohol.
 - Precio oficial por destino, Workshop y reserva privada (`fechas.json` → `precio`; tarjetas de destino).
 - Horario de cada fecha (`fechas.json` → `horario`).

@@ -24,9 +24,8 @@ export const site = {
   },
 
   nav: [
-    { label: "Destinos", href: "#destinos" },
+    { label: "Destinos y fechas", href: "#destinos" },
     { label: "Workshop y eventos", href: "#experiencias" },
-    { label: "Fechas", href: "#fechas" },
     { label: "Regalos", href: "#regalos" },
     { label: "Encargos", href: "#encargos" },
     { label: "Nosotras", href: "#nosotras" },

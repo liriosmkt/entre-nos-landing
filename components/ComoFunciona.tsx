@@ -70,7 +70,7 @@ export function ComoFunciona() {
         </ol>
 
         <div className="mt-12 text-center">
-          <a href="#la-tarde" className="btn btn-linea-oscura" data-cta="como-funciona:ver-carta">
+          <a href="#destinos" className="btn btn-linea-oscura" data-cta="como-funciona:ver-carta">
             Ver las cartas
           </a>
         </div>

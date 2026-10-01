@@ -47,7 +47,7 @@ export function JsonLd() {
           priceCurrency: "ARS",
           availability:
             estadoDe(f) === "agotado" ? "https://schema.org/SoldOut" : "https://schema.org/LimitedAvailability",
-          url: site.url + "/#fechas",
+          url: site.url + "/#destinos",
         },
       }),
     }));
