@@ -109,14 +109,14 @@ function TarjetaDestino({ d }: { d: Destino }) {
 
 export function Destinos() {
   return (
-    <section id="destinos" className="section-y bg-crema">
+    <section id="fechas" className="section-y bg-crema">
       <div className="container-x">
         <Reveal>
           <SectionHead
-            eyebrow="El mapa"
+            eyebrow="Próximas salidas"
             titulo={
               <>
-                Elegí tu <em>destino</em>
+                Próximas <em>fechas</em>
               </>
             }
             bajada="Viajar también puede suceder alrededor de una mesa. Cada teanner es un país distinto, contado en cinco pasos."

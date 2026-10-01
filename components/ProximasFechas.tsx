@@ -8,19 +8,19 @@ export function ProximasFechas() {
   const fechas = proximasFechas();
 
   return (
-    <section id="fechas" className="grano section-y relative bg-carbon text-crema">
+    <section id="destinos" className="grano section-y relative bg-carbon text-crema">
       <div className="container-x relative">
         <Reveal>
           <SectionHead
             claro
             centrado
-            eyebrow="Próximas salidas"
+            eyebrow="El mapa"
             titulo={
               <>
-                Próximas <em className="text-ambar">fechas</em>
+                Elegí tu <em className="text-ambar">destino</em>
               </>
             }
-            bajada="Tocá una bandera para ver los pasajes disponibles y reservar tu embarque."
+            bajada="Seleccioná un país en el mapa y descubrí las fechas disponibles para tu próximo viaje."
           />
         </Reveal>
 
@@ -38,7 +38,7 @@ export function ProximasFechas() {
 
         <p className="mt-10 flex items-center justify-center gap-3 text-center text-sm text-crema/70">
           <Estrellita className="h-3 w-3 shrink-0 text-ambar" />
-          La dirección te la enviamos al confirmar tu reserva. ¿Sos veggie? Avisanos al reservar.
+          La dirección te la enviamos al confirmar tu reserva. Los lugares son limitados: reservá con tiempo.
         </p>
       </div>
     </section>
