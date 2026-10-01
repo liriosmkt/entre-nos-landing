@@ -67,19 +67,21 @@ export function Viajes() {
             <span className="absolute left-[12%] right-[12%] top-[38%] hidden border-t border-dashed border-caramelo md:block" aria-hidden />
             {t.linea.map((l, i) => (
               <Reveal as="li" key={l.momento} delay={i * 0.1} className="relative">
-                <div className="relative">
-                  <Foto
-                    src={l.foto}
-                    alt={l.alt}
-                    tono="claro"
-                    sizes="(min-width: 768px) 22vw, 45vw"
-                    className={`aspect-[3/4] w-full rounded-t-full shadow-[0_25px_40px_-25px_rgba(58,45,38,.6)] ${i % 2 ? "md:mt-10" : ""}`}
-                  />
-                  <span className="display absolute -bottom-7 left-3 flex h-14 w-14 items-center justify-center rounded-full bg-espresso text-3xl italic leading-none text-crema shadow-lg ring-4 ring-crema md:h-16 md:w-16 md:text-4xl">
-                    {i + 1}
+                <Foto
+                  src={l.foto}
+                  alt={l.alt}
+                  tono="claro"
+                  sizes="(min-width: 768px) 22vw, 45vw"
+                  className={`aspect-[3/4] w-full rounded-t-full shadow-[0_25px_40px_-25px_rgba(58,45,38,.6)] ${i % 2 ? "md:mt-10" : ""}`}
+                />
+                {/* Número fino, con una línea, como en un itinerario */}
+                <div className="mt-5 flex items-center gap-3" aria-hidden>
+                  <span className="display text-2xl italic leading-none text-oliva-oscuro md:text-3xl">
+                    {String(i + 1).padStart(2, "0")}
                   </span>
+                  <span className="h-px flex-1 bg-caramelo" />
                 </div>
-                <p className="display mt-8 text-2xl text-espresso md:text-3xl">{l.momento}</p>
+                <p className="display mt-2 text-2xl text-espresso md:text-3xl">{l.momento}</p>
                 <p className="mt-2 text-sm leading-relaxed text-tinta-suave">
                   <Txt>{l.detalle}</Txt>
                 </p>
