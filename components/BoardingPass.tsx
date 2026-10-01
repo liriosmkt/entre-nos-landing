@@ -50,9 +50,10 @@ export function BoardingPass({ f }: { f: Fecha }) {
         </div>
 
         <div className="mt-6 flex items-end justify-between gap-4">
+          {/* Como en el mapa: los sabores salen del país y llegan a Córdoba */}
           <div>
-            <p className="eyebrow text-tinta-suave">Córdoba</p>
-            <p className="display text-3xl text-espresso">CBA</p>
+            <p className="eyebrow text-tinta-suave">Origen</p>
+            <p className="display text-3xl text-espresso">{codigo[f.destino] ?? f.destino.slice(0, 3).toUpperCase()}</p>
           </div>
           <div className="mb-3 flex flex-1 items-center gap-2 text-caramelo" aria-hidden>
             <span className="h-px flex-1 border-t border-dashed border-caramelo" />
@@ -60,8 +61,8 @@ export function BoardingPass({ f }: { f: Fecha }) {
             <span className="h-px flex-1 border-t border-dashed border-caramelo" />
           </div>
           <div className="text-right">
-            <p className="eyebrow text-tinta-suave">Destino</p>
-            <p className="display text-3xl text-espresso">{codigo[f.destino] ?? f.destino.slice(0, 3).toUpperCase()}</p>
+            <p className="eyebrow text-tinta-suave">Córdoba</p>
+            <p className="display text-3xl text-espresso">CBA</p>
           </div>
         </div>
 
