@@ -266,7 +266,7 @@ const GRILLA = [
 // Silueta de avión mirando hacia +x (rota sola según la dirección del vuelo)
 const AVION =
   "M13 0L5-1.8L-1-10.5H-4L-.8-1.8L-7.5-1.5L-10.5-5.5H-12.5L-10.5 0L-12.5 5.5H-10.5L-7.5 1.5L-.8 1.8L-4 10.5H-1L5 1.8Z";
-const VUELO_MS = 2200;
+const VUELO_MS = 1700;
 
 /** Avión que vuela de Córdoba al destino, dejando la estela. */
 function Vuelo({ d, onLlegada }: { d: string; onLlegada: () => void }) {

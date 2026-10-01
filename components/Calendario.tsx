@@ -4,18 +4,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { paises } from "@/data/paises";
-import { cuposTexto, estadoDe, estadoLabel, fechaCorta, precioTexto, type Fecha } from "@/lib/fechas";
-import { mensajes, waLink } from "@/lib/whatsapp";
+import { estadoDe, estadoLabel, type Fecha } from "@/lib/fechas";
+import { BoardingPass } from "./BoardingPass";
 import { banderas } from "./ui/Banderas";
-import { IconoCerrar, IconoWhatsApp } from "./ui/Iconos";
-import { Txt } from "./ui/Txt";
+import { IconoCerrar } from "./ui/Iconos";
 
 const MESES = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
   "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
 ];
 const DIAS = ["L", "M", "M", "J", "V", "S", "D"];
-const DIAS_LARGO = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
 
 // destino de fechas.json → país (bandera) y cómo se muestra
 const paisDe = (destino: string) => paises.find((p) => p.opciones.some((o) => o.nombre === destino));
@@ -30,15 +28,9 @@ function Bandera({ destino, className }: { destino: string; className: string })
   return B ? <B className={className} /> : <span className={`${className} bg-nude`} />;
 }
 
-/** Ventana emergente con el detalle de la fecha. */
+/** Ventana emergente con el pasaje de la fecha elegida. */
 function Popup({ f, onClose }: { f: Fecha; onClose: () => void }) {
   const cerrar = useRef<HTMLButtonElement>(null);
-  const [y, m, d] = partes(f.fecha);
-  const dia = DIAS_LARGO[new Date(y, m - 1, d).getDay()];
-  const estado = estadoDe(f);
-  const agotado = estado === "agotado";
-  const corta = fechaCorta(f.fecha);
-  const mensaje = agotado ? mensajes.avisarLugar(f.tipo, f.destino, corta) : mensajes.fecha(f.tipo, f.destino, corta);
 
   useEffect(() => {
     const anterior = document.activeElement as HTMLElement | null;
@@ -55,72 +47,36 @@ function Popup({ f, onClose }: { f: Fecha; onClose: () => void }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[60] flex items-end justify-center bg-carbon/60 backdrop-blur-sm sm:items-center sm:p-6"
+      className="fixed inset-0 z-[60] overflow-y-auto bg-carbon/75 backdrop-blur-sm"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
-      <motion.div
-        role="dialog"
-        aria-modal="true"
-        aria-label={`${etiquetaDe(f)}, ${dia} ${d} de ${MESES[m - 1].toLowerCase()}`}
-        className="relative w-full max-w-md rounded-t-3xl bg-crema px-7 pb-8 pt-7 text-tinta shadow-2xl sm:rounded-3xl"
-        initial={{ y: 30, opacity: 0, scale: 0.98 }}
-        animate={{ y: 0, opacity: 1, scale: 1 }}
-        exit={{ y: 20, opacity: 0 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          ref={cerrar}
-          type="button"
-          onClick={onClose}
-          aria-label="Cerrar"
-          className="absolute right-4 top-4 rounded-full p-2 text-espresso hover:bg-hueso"
+      <div className="flex min-h-full items-center justify-center px-4 py-16 sm:p-8">
+        <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Pasaje: ${etiquetaDe(f)}`}
+          className="relative w-full max-w-3xl"
+          initial={{ y: 40, opacity: 0, rotate: -1.5 }}
+          animate={{ y: 0, opacity: 1, rotate: 0 }}
+          exit={{ y: 20, opacity: 0 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          onClick={(e) => e.stopPropagation()}
         >
-          <IconoCerrar className="h-5 w-5" />
-        </button>
-
-        <div className="flex items-center gap-3">
-          <Bandera destino={f.destino} className="h-5 w-7 shadow-sm ring-1 ring-espresso/10" />
-          <p className="eyebrow text-oliva-oscuro">
-            {dia} {d} de {MESES[m - 1].toLowerCase()}
-          </p>
-        </div>
-        <div className="mt-3 flex flex-wrap items-center gap-2 pr-8">
-          <p className="display text-4xl italic text-espresso">{etiquetaDe(f)}</p>
-          {f.ejemplo && (
-            <span className="eyebrow rounded-sm border border-dashed border-cacao px-1.5 py-0.5 text-[0.6rem] text-cacao">Ejemplo</span>
-          )}
-        </div>
-        {f.nota && <p className="mt-2 text-sm text-tinta-suave">{f.nota}</p>}
-
-        <dl className="mt-6 divide-y divide-espresso/10 border-y border-espresso/10 text-sm">
-          {[
-            ["Horario", <Txt key="h">{f.horario}</Txt>],
-            ["Mesa", `${f.cupos} invitados`],
-            ["Precio", <Txt key="p">{precioTexto(f.precio)}</Txt>],
-            ["Lugares", `${estadoLabel[estado]} · ${cuposTexto(f)}`],
-          ].map(([label, valor]) => (
-            <div key={label as string} className="flex items-baseline justify-between gap-6 py-3">
-              <dt className="eyebrow text-[0.6rem] text-tinta-suave">{label}</dt>
-              <dd className="text-right text-espresso">{valor}</dd>
-            </div>
-          ))}
-        </dl>
-
-        <a
-          href={waLink(mensaje)}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-cta={agotado ? `calendario:avisarme:${f.id}` : `calendario:reservar:${f.id}`}
-          className={`btn mt-7 w-full ${agotado ? "btn-linea-oscura" : "btn-espresso"}`}
-        >
-          <IconoWhatsApp className="h-4 w-4 shrink-0" />
-          {agotado ? "Avisarme si se libera un lugar" : "Reservar mi lugar"}
-        </a>
-      </motion.div>
+          <button
+            ref={cerrar}
+            type="button"
+            onClick={onClose}
+            aria-label="Cerrar"
+            className="absolute -top-12 right-0 rounded-full p-2 text-crema hover:bg-crema/10"
+          >
+            <IconoCerrar className="h-6 w-6" />
+          </button>
+          <BoardingPass f={f} />
+        </motion.div>
+      </div>
     </motion.div>
   );
 }
@@ -166,7 +122,7 @@ export function Calendario({ fechas }: { fechas: Fecha[] }) {
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto max-w-4xl">
       {/* Mes */}
       <div className="flex items-center justify-between">
         <button
@@ -209,13 +165,13 @@ export function Calendario({ fechas }: { fechas: Fecha[] }) {
             const delDia = delMes.get(dia) ?? [];
             if (!delDia.length) {
               return (
-                <span key={dia} className="flex h-14 items-start justify-center pt-1 text-sm text-crema/30 sm:h-16">
+                <span key={dia} className="flex h-12 items-start justify-center pt-1 text-sm text-crema/30 sm:h-14">
                   {dia}
                 </span>
               );
             }
             return (
-              <div key={dia} className="flex h-14 flex-col items-center gap-1.5 pt-1 sm:h-16">
+              <div key={dia} className="flex h-12 flex-col items-center gap-1 pt-1 sm:h-14">
                 <span className="text-sm font-medium text-crema">{dia}</span>
                 <span className="flex gap-1">
                   {delDia.map((x) => {

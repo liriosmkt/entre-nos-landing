@@ -72,17 +72,11 @@ export const site = {
 
   laTarde: {
     titulo: "Cómo es la tarde",
-    bajada: "Cada teanner sigue el mismo recorrido; lo que cambia es el destino. Elegí uno y mirá su carta.",
     linea: [
-      { momento: "Llegada", detalle: "[COMPLETAR: horario de llegada]" },
-      { momento: "Bienvenida", detalle: "Un appetizer para arrancar el viaje" },
-      { momento: "Los 5 pasos", detalle: "Dulces y salados, en orden de viaje" },
-      { momento: "Sobremesa", detalle: "Que nunca falte la conversación" },
-    ],
-    datos: [
-      { label: "Duración", valor: "[COMPLETAR: duración]" },
-      { label: "Incluye", valor: "Limonada, aguas infusionadas, té o café de especialidad y tragos típicos del destino" },
-      { label: "Restricciones", valor: "¿Sos veggie o tenés alguna restricción? Contanos al reservar y adaptamos tu menú." },
+      { momento: "Llegada", detalle: "[COMPLETAR: horario de llegada]", foto: "casa-recorrido.jpg", alt: "Las lámparas de papel encendidas en la casa" },
+      { momento: "Bienvenida", detalle: "Un appetizer para arrancar el viaje", foto: "privada-grupo.jpg", alt: "Invitados brindando alrededor de la mesa" },
+      { momento: "Los 5 pasos", detalle: "Dulces y salados, en orden de viaje", foto: "italia-3-bruschetta.jpg", alt: "Bruschetta de stracciatella con peras asadas" },
+      { momento: "Sobremesa", detalle: "Que nunca falte la conversación", foto: "teanner-mesa.jpg", alt: "La mesa compartida durante la sobremesa" },
     ],
     notaMesa:
       "No hay relojes ni mesas que rotan. Solo diez personas compartiendo un momento único, íntimo, sin apuros.",
