@@ -1,19 +1,27 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { reels, testimonios } from "@/data/testimonios";
 import { mensajes } from "@/lib/whatsapp";
 import { IconoFlecha } from "./ui/Iconos";
 import { Txt } from "./ui/Txt";
 import { SectionHead, WaButton } from "./ui/WaButton";
 
+const INTERVALO = 7000;
+
 export function Testimonios() {
-  const pista = useRef<HTMLUListElement>(null);
-  const mover = (dir: 1 | -1) => {
-    const el = pista.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: "smooth" });
-  };
+  const [actual, setActual] = useState(0);
+  const [pausa, setPausa] = useState(false);
+  const toque = useRef(0);
+  const total = testimonios.length;
+  const mover = (dir: 1 | -1) => setActual((i) => (i + dir + total) % total);
+  const t = testimonios[actual];
+
+  useEffect(() => {
+    if (pausa || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setTimeout(() => setActual((i) => (i + 1) % total), INTERVALO);
+    return () => window.clearTimeout(id);
+  }, [actual, pausa, total]);
 
   return (
     <section id="invitados" className="section-y bg-crema" aria-roledescription="carrusel">
@@ -44,34 +52,55 @@ export function Testimonios() {
           </div>
         </div>
 
-        <ul
-          ref={pista}
-          className="carrusel -mx-5 mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 md:mx-0 md:px-0"
-          tabIndex={0}
-          aria-label="Testimonios"
+        {/* De a un testimonio por vez; avanza solo y se pausa al pasar el mouse o enfocar */}
+        <div
+          className="mx-auto mt-12 max-w-3xl"
+          onMouseEnter={() => setPausa(true)}
+          onMouseLeave={() => setPausa(false)}
+          onFocus={() => setPausa(true)}
+          onBlur={() => setPausa(false)}
+          onTouchStart={(e) => (toque.current = e.touches[0].clientX)}
+          onTouchEnd={(e) => {
+            const dx = e.changedTouches[0].clientX - toque.current;
+            if (Math.abs(dx) > 40) mover(dx < 0 ? 1 : -1);
+          }}
         >
-          {testimonios.map((t, i) => (
-            <li
-              key={i}
-              className="w-[85%] shrink-0 snap-start rounded-2xl border border-caramelo/40 bg-hueso p-8 sm:w-[60%] lg:w-[calc((100%-2.5rem)/3)]"
-              aria-roledescription="diapositiva"
-              aria-label={`${i + 1} de ${testimonios.length}`}
-            >
-              <span className="display block h-8 text-6xl leading-none text-caramelo" aria-hidden>
-                “
-              </span>
-              <blockquote className="display mt-5 text-2xl italic leading-snug text-espresso">
-                <Txt>{t.texto}</Txt>
-              </blockquote>
-              <p className="eyebrow mt-6 text-[0.65rem] text-tinta">
+          <figure
+            key={actual}
+            className="fundido rounded-2xl border border-caramelo/40 bg-hueso px-8 py-10 text-center md:px-14 md:py-14"
+            aria-roledescription="diapositiva"
+            aria-label={`${actual + 1} de ${testimonios.length}`}
+            aria-live="polite"
+          >
+            <span className="display block h-8 text-6xl leading-none text-caramelo" aria-hidden>
+              “
+            </span>
+            <blockquote className="display mt-5 text-2xl italic leading-snug text-espresso md:text-3xl">
+              <Txt>{t.texto}</Txt>
+            </blockquote>
+            <figcaption className="mt-8">
+              <p className="eyebrow text-[0.65rem] text-tinta">
                 <Txt>{t.autor}</Txt>
               </p>
               <p className="mt-1 text-sm text-tinta-suave">
                 <Txt>{t.experiencia}</Txt>
               </p>
-            </li>
-          ))}
-        </ul>
+            </figcaption>
+          </figure>
+
+          <div className="mt-6 flex justify-center gap-2">
+            {testimonios.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setActual(i)}
+                aria-label={`Ver testimonio ${i + 1}`}
+                aria-current={i === actual || undefined}
+                className={`h-2 rounded-full transition-all ${i === actual ? "w-8 bg-espresso" : "w-2 bg-espresso/25 hover:bg-espresso/50"}`}
+              />
+            ))}
+          </div>
+        </div>
 
         {/* Reels de Instagram */}
         <div className="mt-14">

@@ -9,10 +9,6 @@ export type Encargo = {
 export const encargosIntro = {
   titulo: "Hay sabores que piden volver a vivirse.",
   bajada: "Llevate una partecita de Entre Nos a tu mesa.",
-  datos: [
-    { label: "Anticipación", valor: "[COMPLETAR: anticipación mínima]" },
-    { label: "Entrega", valor: "[COMPLETAR: retiro o envío]" },
-  ],
 };
 
 // Fotos de la pastelería de la casa para la galería de Encargos (solo imágenes, sin precios)
