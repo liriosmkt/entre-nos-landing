@@ -20,19 +20,21 @@ export function Footer() {
 
         <Ramita className="mx-auto my-16 h-6 w-28 text-salvia" />
 
-        {/* Tres columnas alineadas arriba, cada una con su título: marca, secciones y contacto */}
-        <div className="grid gap-12 border-t border-cacao pt-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr] lg:gap-16">
-          <div className="sm:col-span-2 lg:col-span-1">
+        {/* Tres columnas alineadas arriba, cada una con su título: marca, secciones y contacto.
+            Secciones y contacto toman el ancho de su contenido; la marca ocupa el resto. */}
+        <div className="grid gap-12 border-t border-cacao pt-12 lg:grid-cols-[1fr_auto_auto] lg:gap-16">
+          <div>
             <Logo className="h-11" />
             <p className="eyebrow mt-4 text-crema/75">Sabores del mundo · {site.ciudad}</p>
           </div>
 
           <nav aria-label="Secciones">
             <p className="eyebrow text-caramelo">Secciones</p>
-            <ul className="mt-5 space-y-3">
+            {/* Dos columnas de tres (se completan de arriba hacia abajo) */}
+            <ul className="mt-5 grid grid-flow-col grid-cols-2 grid-rows-3 gap-x-6 gap-y-3 sm:gap-x-12">
               {[...site.nav, { href: "#preguntas", label: "Preguntas frecuentes" }].map((n) => (
                 <li key={n.href}>
-                  <a href={n.href} className="eyebrow whitespace-nowrap text-crema/80 hover:text-ambar">
+                  <a href={n.href} className="eyebrow block leading-snug tracking-[0.12em] text-crema/80 hover:text-ambar sm:whitespace-nowrap sm:tracking-[0.2em]">
                     {n.label}
                   </a>
                 </li>
