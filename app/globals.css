@@ -193,6 +193,25 @@ body {
 .galeria-pista { display: flex; width: max-content; }
 .galeria-grupo { display: flex; gap: 1rem; padding-right: 1rem; }
 
+/* Reels: el embed de Instagram se agranda y se corre para que solo quede visible el video 9:16.
+   El área de media del embed es 4:5, así que un video 9:16 ocupa el 70,3% de su ancho; el encabezado mide 54px.
+   Ancho del iframe = 100% / 0,703 = 142,2% (centrado con left -21,1%). */
+.reel-recorte {
+  --reel-cabecera: 54px;
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  isolation: isolate;
+}
+.reel-recorte iframe {
+  position: absolute;
+  top: calc(var(--reel-cabecera) * -1);
+  left: -21.1%;
+  width: 142.2%;
+  height: calc(100% + var(--reel-cabecera) + 400px);
+  border: 0;
+}
+
 /* Testimonios: una tarjeta apoyada sobre una mesa de madera */
 .mesa {
   background:

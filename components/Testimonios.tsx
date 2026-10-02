@@ -111,16 +111,34 @@ export function Testimonios() {
         <div className="mt-14">
           <p className="eyebrow-seccion text-oliva-oscuro">En reels</p>
           {reels.length > 0 ? (
-            <ul className="mt-6 flex flex-wrap justify-center gap-5">
-              {reels.map((url) => (
-                <li key={url} className="w-full max-w-sm overflow-hidden rounded-xl bg-hueso sm:w-[calc(50%-0.625rem)] lg:w-[calc((100%-2.5rem)/3)]">
-                  <iframe
-                    src={`${url.replace(/\/$/, "")}/embed`}
-                    title="Reel de Instagram"
-                    loading="lazy"
-                    className="aspect-[9/16] w-full"
-                    allowFullScreen
-                  />
+            <ul className="mt-6 flex flex-wrap justify-center gap-6">
+              {reels.map((r) => (
+                <li key={r.url} className="w-full max-w-xs">
+                  <article className="rounded-2xl border border-caramelo/40 bg-hueso p-3 shadow-[0_20px_40px_-28px_rgba(58,45,38,.6)]">
+                    {/* El embed de Instagram se recorta para mostrar solo el video (sin encabezado, barras ni pie) */}
+                    <div className="reel-recorte rounded-xl bg-carbon">
+                      <iframe
+                        src={`${r.url.replace(/\/$/, "")}/embed`}
+                        title={`Reel de ${r.autor}`}
+                        loading="lazy"
+                        scrolling="no"
+                        allowFullScreen
+                      />
+                    </div>
+                    <div className="px-2 pb-2 pt-4">
+                      <p className="eyebrow text-xs text-oliva-oscuro">{r.autor}</p>
+                      <p className="display mt-1 text-xl italic leading-snug text-espresso">{r.titulo}</p>
+                      <a
+                        href={r.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-cta={`reels:${r.autor}`}
+                        className="eyebrow mt-3 inline-block text-[0.7rem] text-cacao hover:text-espresso"
+                      >
+                        Ver en Instagram ›
+                      </a>
+                    </div>
+                  </article>
                 </li>
               ))}
             </ul>

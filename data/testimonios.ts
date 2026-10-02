@@ -24,7 +24,17 @@ export const testimonios: Testimonio[] = [
 ];
 
 // Links a reels de Instagram (ej: "https://www.instagram.com/reel/XXXX/"). Vacío = se muestra un aviso.
-export const reels: string[] = [
-  "https://www.instagram.com/p/DdbyPqxzRnq/",
-  "https://www.instagram.com/reel/DZs7tVpI4gt/",
+export type Reel = { url: string; autor: string; titulo: string };
+
+export const reels: Reel[] = [
+  {
+    url: "https://www.instagram.com/p/DdbyPqxzRnq/",
+    autor: "@majoquinteros",
+    titulo: "Una cafetería escondida en una mansión de Córdoba",
+  },
+  {
+    url: "https://www.instagram.com/reel/DZs7tVpI4gt/",
+    autor: "@cordobagourmet",
+    titulo: "Merienda de 5 pasos a puertas cerradas",
+  },
 ];
