@@ -20,8 +20,8 @@ export function Footer() {
 
         <Ramita className="mx-auto my-16 h-6 w-28 text-salvia" />
 
-        {/* Marca a la izquierda y contacto a la derecha */}
-        <div className="flex flex-col gap-10 border-t border-cacao pt-12 md:flex-row md:items-start md:justify-between">
+        {/* En desktop, marca y contacto juntos hacia el centro, con un espacio medido entre ambos (no a los extremos) */}
+        <div className="flex flex-col gap-10 border-t border-cacao pt-12 md:flex-row md:items-start md:justify-between lg:justify-center lg:gap-40">
           <div>
             <Logo className="h-11" />
             <p className="eyebrow mt-4 text-crema/75">Sabores del mundo · {site.ciudad}</p>
