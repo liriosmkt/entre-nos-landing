@@ -23,12 +23,13 @@ export const site = {
     ogImage: "/images/og-entre-nos.jpg",
   },
 
+  // En el mismo orden en que aparecen las secciones en la página (app/page.tsx)
   nav: [
+    { label: "Nosotras", href: "#nosotras" },
     { label: "Destinos y fechas", href: "#destinos" },
     { label: "Workshop y eventos", href: "#experiencias" },
     { label: "Regalos", href: "#regalos" },
     { label: "Encargos", href: "#encargos" },
-    { label: "Nosotras", href: "#nosotras" },
   ],
 
   hero: {
