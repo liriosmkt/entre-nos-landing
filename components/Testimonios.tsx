@@ -111,9 +111,9 @@ export function Testimonios() {
         <div className="mt-14">
           <p className="eyebrow-seccion text-oliva-oscuro">En reels</p>
           {reels.length > 0 ? (
-            <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-6 flex flex-wrap justify-center gap-5">
               {reels.map((url) => (
-                <li key={url} className="overflow-hidden rounded-xl bg-hueso">
+                <li key={url} className="w-full max-w-sm overflow-hidden rounded-xl bg-hueso sm:w-[calc(50%-0.625rem)] lg:w-[calc((100%-2.5rem)/3)]">
                   <iframe
                     src={`${url.replace(/\/$/, "")}/embed`}
                     title="Reel de Instagram"

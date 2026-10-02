@@ -24,4 +24,7 @@ export const testimonios: Testimonio[] = [
 ];
 
 // Links a reels de Instagram (ej: "https://www.instagram.com/reel/XXXX/"). Vacío = se muestra un aviso.
-export const reels: string[] = [];
+export const reels: string[] = [
+  "https://www.instagram.com/p/DdbyPqxzRnq/",
+  "https://www.instagram.com/reel/DZs7tVpI4gt/",
+];
