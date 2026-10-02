@@ -10,7 +10,7 @@ export function Nosotras() {
     <section id="nosotras" className="section-y bg-crema">
       <div className="container-x">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow text-oliva-oscuro">{n.eyebrow}</p>
+          <p className="eyebrow-seccion text-oliva-oscuro">{n.eyebrow}</p>
           <h2 className="display mt-4 text-5xl text-espresso md:text-7xl">
             {a} <em className="text-caramelo">y</em> {b}
           </h2>

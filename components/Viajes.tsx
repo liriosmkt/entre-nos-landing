@@ -36,7 +36,7 @@ export function Viajes() {
         {/* Próximas fechas: calendario con las banderas de cada destino */}
         <div id="fechas" className="mt-20 scroll-mt-24">
           <Reveal className="text-center">
-            <p className="eyebrow text-ambar">Itinerario</p>
+            <p className="eyebrow-seccion text-ambar">Itinerario</p>
             <h3 className="display mt-4 text-4xl md:text-6xl">
               Próximas <em className="text-ambar">fechas</em>
             </h3>

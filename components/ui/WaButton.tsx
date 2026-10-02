@@ -57,7 +57,7 @@ export function SectionHead({
 }) {
   return (
     <header className={`${centrado ? "mx-auto text-center" : ""} max-w-2xl ${className}`}>
-      <p className={`eyebrow ${claro ? "text-ambar" : "text-oliva-oscuro"}`}>{eyebrow}</p>
+      <p className={`eyebrow-seccion ${claro ? "text-ambar" : "text-oliva-oscuro"}`}>{eyebrow}</p>
       <h2 className={`display mt-4 text-4xl md:text-6xl ${claro ? "text-crema" : "text-espresso"}`}>{titulo}</h2>
       {bajada && (
         <p className={`mt-5 text-base leading-relaxed md:text-lg ${claro ? "text-crema/80" : "text-tinta-suave"}`}>

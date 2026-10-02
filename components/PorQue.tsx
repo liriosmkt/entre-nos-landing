@@ -21,7 +21,7 @@ export function PorQue() {
 
         <Reveal delay={0.1} className="max-w-lg">
           <Ramita className="h-7 text-caramelo" />
-          <p className="eyebrow mt-6 text-oliva-oscuro">{p.eyebrow}</p>
+          <p className="eyebrow-seccion mt-6 text-oliva-oscuro">{p.eyebrow}</p>
           <h2 className="display mt-4 text-4xl text-espresso md:text-5xl">{p.titulo}</h2>
           <p className="display mt-5 text-xl italic leading-snug text-cacao md:text-2xl">{p.bajada}</p>
           <p className="mt-6 leading-relaxed text-tinta-suave md:text-lg">{p.texto}</p>

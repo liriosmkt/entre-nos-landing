@@ -60,7 +60,7 @@ export function ListaEspera() {
     <section id="lista-de-espera" className="section-y bg-crema">
       <div className="container-x">
         <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl bg-espresso p-8 text-crema md:p-14">
-          <p className="eyebrow text-ambar">Lista de espera</p>
+          <p className="eyebrow-seccion text-ambar">Lista de espera</p>
           <h2 className="display mt-4 text-4xl md:text-5xl">{l.titulo}</h2>
           <p className="mt-4 max-w-lg text-crema/80">{l.texto}</p>
 

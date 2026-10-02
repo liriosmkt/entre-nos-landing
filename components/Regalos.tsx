@@ -47,7 +47,7 @@ export function Regalos() {
           <Invitacion />
         </Reveal>
         <Reveal delay={0.1}>
-          <p className="eyebrow text-ambar">Invitaciones Entre Nos</p>
+          <p className="eyebrow-seccion text-ambar">Invitaciones Entre Nos</p>
           {r.destacado && (
             <Sello className="mt-5 text-ambar" rotar={-3}>
               {r.destacado.texto}

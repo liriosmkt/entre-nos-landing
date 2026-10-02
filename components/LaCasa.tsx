@@ -19,7 +19,7 @@ export function LaCasa() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon/80 via-carbon/10 to-transparent" aria-hidden />
       <div className="pointer-events-none absolute inset-x-0 bottom-0">
         <Reveal className="container-x pb-10 md:pb-16">
-          <p className="eyebrow text-ambar">La casa</p>
+          <p className="eyebrow-seccion text-ambar">La casa</p>
           <h2 className="display mt-3 max-w-2xl text-3xl drop-shadow-[0_2px_12px_rgba(58,45,38,.5)] md:text-6xl">{c.titulo}</h2>
           <p className="mt-3 text-crema/85 md:text-lg">{c.texto}</p>
         </Reveal>

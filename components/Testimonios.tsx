@@ -7,7 +7,9 @@ import { IconoFlecha } from "./ui/Iconos";
 import { Txt } from "./ui/Txt";
 import { SectionHead, WaButton } from "./ui/WaButton";
 
-const INTERVALO = 7000;
+const INTERVALO = 8000;
+// Cada tarjeta queda apoyada con un giro distinto, como si alguien la hubiera dejado sobre la mesa
+const GIROS = ["-2deg", "1.5deg", "-1deg"];
 
 export function Testimonios() {
   const [actual, setActual] = useState(0);
@@ -52,9 +54,9 @@ export function Testimonios() {
           </div>
         </div>
 
-        {/* De a un testimonio por vez; avanza solo y se pausa al pasar el mouse o enfocar */}
+        {/* De a un testimonio por vez, como una tarjeta apoyada sobre la mesa; avanza solo y se pausa al pasar el mouse o enfocar */}
         <div
-          className="mx-auto mt-12 max-w-3xl"
+          className="mt-12"
           onMouseEnter={() => setPausa(true)}
           onMouseLeave={() => setPausa(false)}
           onFocus={() => setPausa(true)}
@@ -65,28 +67,31 @@ export function Testimonios() {
             if (Math.abs(dx) > 40) mover(dx < 0 ? 1 : -1);
           }}
         >
-          <figure
-            key={actual}
-            className="fundido rounded-2xl border border-caramelo/40 bg-hueso px-8 py-10 text-center md:px-14 md:py-14"
-            aria-roledescription="diapositiva"
-            aria-label={`${actual + 1} de ${testimonios.length}`}
-            aria-live="polite"
-          >
-            <span className="display block h-8 text-6xl leading-none text-caramelo" aria-hidden>
-              “
-            </span>
-            <blockquote className="display mt-5 text-2xl italic leading-snug text-espresso md:text-3xl">
-              <Txt>{t.texto}</Txt>
-            </blockquote>
-            <figcaption className="mt-8">
-              <p className="eyebrow text-[0.65rem] text-tinta">
-                <Txt>{t.autor}</Txt>
-              </p>
-              <p className="mt-1 text-sm text-tinta-suave">
-                <Txt>{t.experiencia}</Txt>
-              </p>
-            </figcaption>
-          </figure>
+          <div className="mesa flex min-h-[22rem] items-center justify-center overflow-hidden rounded-3xl px-5 py-12 md:min-h-[24rem] md:py-14">
+            <figure
+              key={actual}
+              className="tarjeta-mesa apoyar w-full max-w-sm rounded-md bg-crema px-7 pb-7 pt-6 text-center"
+              style={{ "--giro": GIROS[actual % GIROS.length] } as React.CSSProperties}
+              aria-roledescription="diapositiva"
+              aria-label={`${actual + 1} de ${testimonios.length}`}
+              aria-live="polite"
+            >
+              <span className="display block h-6 text-5xl leading-none text-caramelo" aria-hidden>
+                “
+              </span>
+              <blockquote className="display mt-3 text-xl italic leading-snug text-espresso">
+                <Txt>{t.texto}</Txt>
+              </blockquote>
+              <figcaption className="mt-5 border-t border-dashed border-caramelo/50 pt-4">
+                <p className="eyebrow text-xs text-tinta">
+                  <Txt>{t.autor}</Txt>
+                </p>
+                <p className="mt-1 text-sm text-tinta-suave">
+                  <Txt>{t.experiencia}</Txt>
+                </p>
+              </figcaption>
+            </figure>
+          </div>
 
           <div className="mt-6 flex justify-center gap-2">
             {testimonios.map((_, i) => (
@@ -104,7 +109,7 @@ export function Testimonios() {
 
         {/* Reels de Instagram */}
         <div className="mt-14">
-          <p className="eyebrow text-oliva-oscuro">En reels</p>
+          <p className="eyebrow-seccion text-oliva-oscuro">En reels</p>
           {reels.length > 0 ? (
             <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {reels.map((url) => (

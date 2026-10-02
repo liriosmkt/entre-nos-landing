@@ -103,7 +103,7 @@ function Carta({ d }: { d: Destino }) {
     <div className="grid overflow-hidden rounded-2xl bg-crema text-tinta md:grid-cols-[1fr_1.15fr]">
       <Secuencia key={d.id} d={d} />
       <div className="relative px-6 pb-8 pt-7 md:px-10 md:py-10">
-        <p className="eyebrow text-oliva-oscuro">Teanner · la carta</p>
+        <p className="eyebrow-seccion text-oliva-oscuro">Teanner · la carta</p>
         <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
           <p className="display text-5xl italic text-espresso md:text-6xl">{d.nombre}</p>
           {d.sello && (
