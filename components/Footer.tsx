@@ -20,27 +20,12 @@ export function Footer() {
 
         <Ramita className="mx-auto my-16 h-6 w-28 text-salvia" />
 
-        {/* Tres columnas alineadas arriba, cada una con su título: marca, secciones y contacto.
-            Secciones y contacto toman el ancho de su contenido; la marca ocupa el resto. */}
-        <div className="grid gap-12 border-t border-cacao pt-12 lg:grid-cols-[1fr_auto_auto] lg:gap-16">
+        {/* Marca a la izquierda y contacto a la derecha */}
+        <div className="flex flex-col gap-10 border-t border-cacao pt-12 md:flex-row md:items-start md:justify-between">
           <div>
             <Logo className="h-11" />
             <p className="eyebrow mt-4 text-crema/75">Sabores del mundo · {site.ciudad}</p>
           </div>
-
-          <nav aria-label="Secciones">
-            <p className="eyebrow text-caramelo">Secciones</p>
-            {/* Dos columnas de tres (se completan de arriba hacia abajo) */}
-            <ul className="mt-5 grid grid-flow-col grid-cols-2 grid-rows-3 gap-x-6 gap-y-3 sm:gap-x-12">
-              {[...site.nav, { href: "#preguntas", label: "Preguntas frecuentes" }].map((n) => (
-                <li key={n.href}>
-                  <a href={n.href} className="eyebrow block leading-snug tracking-[0.12em] text-crema/80 hover:text-ambar sm:whitespace-nowrap sm:tracking-[0.2em]">
-                    {n.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
 
           <div>
             <p className="eyebrow text-caramelo">Contacto</p>
@@ -73,7 +58,22 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 border-t border-cacao pt-10 text-center">
+        {/* Secciones en una línea, en serif y separadas por la hojita de la marca.
+            Por debajo de lg se acomodan en varias filas centradas, sin hojitas (quedarían sueltas al cortar la fila). */}
+        <nav aria-label="Secciones" className="mt-12 border-t border-cacao pt-10">
+          <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:gap-x-4">
+            {[...site.nav, { href: "#preguntas", label: "Preguntas frecuentes" }].map((n, i) => (
+              <li key={n.href} className="flex items-center gap-4">
+                {i > 0 && <Ramita className="hidden h-3.5 text-caramelo lg:block" />}
+                <a href={n.href} className="display whitespace-nowrap text-lg text-crema/85 transition-colors hover:text-ambar xl:text-xl">
+                  {n.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="mt-10 border-t border-cacao pt-10 text-center">
           <p className="display text-xl italic text-crema/85 md:text-2xl">{f.frase}</p>
           <p className="mt-6 text-xs text-crema/55">
             © {new Date().getFullYear()} {site.nombre}
