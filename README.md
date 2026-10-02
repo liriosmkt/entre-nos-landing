@@ -122,7 +122,7 @@ Se ven en la web con borde punteado para que sea fácil encontrarlos. Buscar `CO
 - Formato, vigencia y canje de las invitaciones de regalo.
 - Anticipación mínima y retiro/envío de encargos.
 
-**Preguntas frecuentes** (`faqs.ts`): duración/horario, qué incluye, frecuencia de fechas, celiaquía/alergias, chicos, cómo pagar (seña/total), cancelación y cesión de lugar, qué pasa si suspenden, si hace falta saber cocinar para el workshop, invitación de regalo, anticipación y envíos de encargos.
+**Preguntas frecuentes** (`faqs.ts`): duración/horario, si se repiten los destinos, adaptación del menú a cada alimentación, forma de pago y seña, cancelación y cesión de lugar, qué pasa si se suspende la experiencia, si hace falta saber cocinar para el workshop, validez de la invitación de regalo, anticipación y envíos de encargos.
 
 **Prueba social**
 - Testimonios reales con permiso (`testimonios.ts`). **No inventar reseñas.**
