@@ -33,9 +33,15 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: "#3A2D26" };
 
-// Al cargar o recargar, la página siempre arranca en el hero: sin restaurar el scroll anterior
-// y sin saltar al ancla (#encargos, etc.) que quedó en la URL al tocar el menú.
+// En celulares y tablets, al cargar o recargar la página arranca en el hero: sin restaurar el scroll
+// anterior y sin saltar al ancla (#encargos, etc.) que quedó en la URL al tocar el menú.
+// En desktop no hace nada: el navegador vuelve a donde estaba la persona.
 const arrancarArriba = `(function(){try{
+  if (!window.matchMedia("(max-width: 767px), (pointer: coarse)").matches) {
+    // El navegador recuerda este valor por pestaña: devolverlo a "auto" por si quedó en "manual" de una versión anterior
+    if ("scrollRestoration" in history) history.scrollRestoration = "auto";
+    return;
+  }
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   if (location.hash) history.replaceState(null, "", location.pathname + location.search);
   var movio = false;

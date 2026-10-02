@@ -131,7 +131,6 @@ Se ven en la web con borde punteado para que sea fácil encontrarlos. Buscar `CO
 **Técnico**
 - WhatsApp: por defecto se usa el de Vero; los dos contactos (Vero y Pili) están en `site.ts` → `contactos`.
 - Dominio definitivo (`NEXT_PUBLIC_SITE_URL`).
-- Link a políticas de reserva (`site.ts` → footer.politicasHref).
 - Endpoint de la lista de espera (opcional).
 - IDs de GA4 y Meta Pixel (opcional).
 - Fechas reales (reemplazar las 3 de ejemplo).

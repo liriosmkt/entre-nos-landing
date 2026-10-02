@@ -144,6 +144,5 @@ export const site = {
 
   footer: {
     frase: "Que nunca falte la conversación y una rica comida sobre la mesa 🤎",
-    politicasHref: "#", // [COMPLETAR: link a políticas de reserva y cancelación]
   },
 };

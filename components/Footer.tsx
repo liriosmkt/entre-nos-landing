@@ -20,62 +20,61 @@ export function Footer() {
 
         <Ramita className="mx-auto my-16 h-6 w-28 text-salvia" />
 
-        <div className="grid gap-10 border-t border-cacao pt-12 md:grid-cols-3 md:items-start">
-          <div>
+        {/* Tres columnas alineadas arriba, cada una con su título: marca, secciones y contacto */}
+        <div className="grid gap-12 border-t border-cacao pt-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr] lg:gap-16">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Logo className="h-11" />
             <p className="eyebrow mt-4 text-crema/75">Sabores del mundo · {site.ciudad}</p>
           </div>
 
-          <nav aria-label="Secciones" className="md:justify-self-center">
-            <ul className="grid grid-cols-2 gap-x-8 gap-y-3">
-              {site.nav.map((n) => (
+          <nav aria-label="Secciones">
+            <p className="eyebrow text-caramelo">Secciones</p>
+            <ul className="mt-5 space-y-3">
+              {[...site.nav, { href: "#preguntas", label: "Preguntas frecuentes" }].map((n) => (
                 <li key={n.href}>
-                  <a href={n.href} className="eyebrow text-crema/75 hover:text-ambar">
+                  <a href={n.href} className="eyebrow whitespace-nowrap text-crema/80 hover:text-ambar">
                     {n.label}
                   </a>
                 </li>
               ))}
-              <li>
-                <a href="#preguntas" className="eyebrow text-crema/75 hover:text-ambar">
-                  Preguntas
-                </a>
-              </li>
             </ul>
           </nav>
 
-          <div className="flex flex-col gap-3 md:items-end md:justify-self-end md:text-right">
-            {site.contactos.map((c) => (
-              <a
-                key={c.numero}
-                href={`https://wa.me/${c.numero}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cta={`footer:whatsapp-${c.nombre.toLowerCase()}`}
-                className="inline-flex items-center gap-2 text-crema hover:text-ambar"
-              >
-                <IconoWhatsApp className="h-5 w-5" /> {c.nombre} · {c.visible}
-              </a>
-            ))}
-            <a
-              href={`https://instagram.com/${site.instagram}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cta="footer:instagram"
-              className="inline-flex items-center gap-2 text-crema hover:text-ambar"
-            >
-              <IconoInstagram className="h-5 w-5" /> @{site.instagram}
-            </a>
+          <div>
+            <p className="eyebrow text-caramelo">Contacto</p>
+            <ul className="mt-5 space-y-3">
+              {site.contactos.map((c) => (
+                <li key={c.numero}>
+                  <a
+                    href={`https://wa.me/${c.numero}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cta={`footer:whatsapp-${c.nombre.toLowerCase()}`}
+                    className="inline-flex items-center gap-3 text-sm text-crema hover:text-ambar"
+                  >
+                    <IconoWhatsApp className="h-4 w-4 shrink-0" /> {c.nombre} · {c.visible}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a
+                  href={`https://instagram.com/${site.instagram}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cta="footer:instagram"
+                  className="inline-flex items-center gap-3 text-sm text-crema hover:text-ambar"
+                >
+                  <IconoInstagram className="h-4 w-4 shrink-0" /> @{site.instagram}
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <p className="display mt-14 text-center text-2xl italic text-crema/85">{f.frase}</p>
-
-        <div className="mt-10 flex flex-col gap-3 border-t border-cacao pt-6 text-xs leading-relaxed text-crema/60 md:flex-row md:justify-center">
-          <p>
-            <a href={f.politicasHref} className="underline underline-offset-4 hover:text-ambar">
-              Políticas de reserva
-            </a>{" "}
-            · © {new Date().getFullYear()} {site.nombre}
+        <div className="mt-14 border-t border-cacao pt-10 text-center">
+          <p className="display text-xl italic text-crema/85 md:text-2xl">{f.frase}</p>
+          <p className="mt-6 text-xs text-crema/55">
+            © {new Date().getFullYear()} {site.nombre}
           </p>
         </div>
       </div>
