@@ -11,13 +11,14 @@ export const encargosIntro = {
   bajada: "Llevate una partecita de Entre Nos a tu mesa.",
 };
 
-// Fotos de la pastelería de la casa para la galería de Encargos (solo imágenes, sin precios)
+// Fotos de la pastelería de la casa para la galería de Encargos (solo imágenes, sin precios).
+// Usar fotos cuadradas donde el producto se vea entero: la galería las muestra completas, sin recortar.
 export const creaciones: { src: string; alt: string }[] = [
   { src: "pasteleria-pan.jpg", alt: "Pan de masa madre con greñado de espiga" },
   { src: "pasteleria-cookie.jpg", alt: "Cookie con chips de chocolate y café" },
   { src: "pasteleria-torta-flores.jpg", alt: "Torta decorada con flores naturales" },
-  { src: "pasteleria-macarons.jpg", alt: "Macarons rosados" },
-  { src: "pasteleria-lemon-pie.jpg", alt: "Tarta de limón con merengue" },
+  { src: "mexico-pan-de-muertos.jpg", alt: "Masas con almendra sobre una bandeja de madera" },
+  { src: "italia-2-crostata.jpg", alt: "Tartita con crema, curd de limón y hojas de menta" },
   { src: "pasteleria-torta.jpg", alt: "Torta con crema y flores violetas" },
 ];
 

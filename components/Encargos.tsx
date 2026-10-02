@@ -59,7 +59,7 @@ export function Encargos() {
                     alt={copia !== 1 ? "" : c.alt}
                     tono="claro"
                     sizes="(min-width: 1024px) 24rem, (min-width: 640px) 20rem, 16rem"
-                    className="aspect-[4/5] w-full"
+                    className="aspect-square w-full"
                   />
                 </li>
               ))}

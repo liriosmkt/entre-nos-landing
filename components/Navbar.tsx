@@ -89,14 +89,13 @@ export function Navbar() {
           </button>
         </div>
         <ul className="container-x mt-8 flex flex-1 flex-col">
-          {site.nav.map((item, i) => (
+          {site.nav.map((item) => (
             <li key={item.href} className="border-b border-cacao/60">
               <a
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="display flex items-baseline gap-4 py-3.5 text-2xl leading-tight text-crema hover:text-ambar"
+                className="display block py-3.5 text-xl leading-tight text-crema hover:text-ambar"
               >
-                <span className="eyebrow text-caramelo">0{i + 1}</span>
                 {item.label}
               </a>
             </li>
