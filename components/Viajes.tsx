@@ -56,7 +56,7 @@ export function Viajes() {
         <div id="la-tarde" className="relative mt-16 scroll-mt-24 overflow-hidden rounded-[2rem] bg-crema px-5 py-12 text-tinta sm:px-10 md:px-14 md:py-14">
           <Ramita className="pointer-events-none absolute -right-6 -top-4 h-24 rotate-[20deg] text-caramelo/25 md:h-36" />
           <Reveal className="text-center">
-            <p className="eyebrow text-oliva-oscuro">{t.titulo}</p>
+            <p className="eyebrow-seccion text-oliva-oscuro">{t.titulo}</p>
             <h3 className="display mx-auto mt-4 max-w-3xl text-4xl leading-tight text-espresso md:text-6xl">
               Mismo recorrido, <em className="text-caramelo">distinto destino</em>
             </h3>
