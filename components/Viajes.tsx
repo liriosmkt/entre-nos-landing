@@ -34,7 +34,7 @@ export function Viajes() {
         <MapaDestinos fechas={fechas} />
 
         {/* Próximas fechas: calendario con las banderas de cada destino */}
-        <div id="fechas" className="mt-20 scroll-mt-24">
+        <div id="fechas" className="mt-14 scroll-mt-24">
           <Reveal className="text-center">
             <p className="eyebrow-seccion text-ambar">Itinerario</p>
             <h3 className="display mt-4 text-4xl md:text-6xl">
@@ -53,7 +53,7 @@ export function Viajes() {
         </p>
 
         {/* Cómo es la tarde: el mismo recorrido en todos los destinos, en un bloque claro que corta el fondo oscuro */}
-        <div id="la-tarde" className="relative mt-24 scroll-mt-24 overflow-hidden rounded-[2rem] bg-crema px-5 py-14 text-tinta sm:px-10 md:px-14 md:py-20">
+        <div id="la-tarde" className="relative mt-16 scroll-mt-24 overflow-hidden rounded-[2rem] bg-crema px-5 py-12 text-tinta sm:px-10 md:px-14 md:py-14">
           <Ramita className="pointer-events-none absolute -right-6 -top-4 h-24 rotate-[20deg] text-caramelo/25 md:h-36" />
           <Reveal className="text-center">
             <p className="eyebrow text-oliva-oscuro">{t.titulo}</p>

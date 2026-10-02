@@ -102,8 +102,15 @@ body {
 }
 
 @utility section-y {
-  padding-block: 5rem;
-  @media (width >= 48rem) { padding-block: 7.5rem; }
+  padding-block: 3.5rem;
+  @media (width >= 48rem) { padding-block: 5rem; }
+}
+
+/* Dos secciones seguidas con el mismo fondo se leen como una sola: sin el margen de arriba de la segunda
+   (si no, el vacío entre ambas se duplica) */
+main > section.bg-crema + section.bg-crema,
+main > section.bg-hueso + section.bg-hueso {
+  padding-top: 0;
 }
 
 /* Botones */

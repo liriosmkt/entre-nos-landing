@@ -44,7 +44,7 @@ export function Encargos() {
           ))}
         </ul>
 
-        <p className="eyebrow-seccion mt-20 text-center text-oliva-oscuro">De nuestra cocina</p>
+        <p className="eyebrow-seccion mt-14 text-center text-oliva-oscuro">De nuestra cocina</p>
       </div>
 
       {/* Galería de la pastelería de la casa: carrusel infinito (la lista va 3 veces para que el loop no se corte) */}

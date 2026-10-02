@@ -7,7 +7,7 @@ import { WaButton } from "./ui/WaButton";
 export function Footer() {
   const f = site.footer;
   return (
-    <footer className="grano relative bg-carbon pb-28 pt-20 text-crema md:pb-12">
+    <footer className="grano relative bg-carbon pb-28 pt-14 text-crema md:pb-12">
       <div className="container-x relative">
         <div className="text-center">
           <p className="display mx-auto max-w-3xl text-4xl italic leading-tight md:text-6xl">
@@ -18,7 +18,7 @@ export function Footer() {
           </WaButton>
         </div>
 
-        <Ramita className="mx-auto my-16 h-6 w-28 text-salvia" />
+        <Ramita className="mx-auto my-10 h-6 w-28 text-salvia" />
 
         {/* En desktop, marca y contacto juntos hacia el centro, con un espacio medido entre ambos (no a los extremos) */}
         <div className="flex flex-col gap-10 border-t border-cacao pt-12 md:flex-row md:items-start md:justify-between lg:justify-center lg:gap-40">
