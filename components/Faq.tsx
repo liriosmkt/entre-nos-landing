@@ -46,7 +46,7 @@ export function Faq() {
     <section id="preguntas" className="section-y bg-hueso">
       <div className="container-x grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <SectionHead eyebrow="Antes de embarcar" titulo="Preguntas frecuentes" />
+          <SectionHead eyebrow="Antes de sentarte a la mesa" titulo="Preguntas frecuentes" />
           <p className="mt-6 text-tinta-suave">¿Otra duda? Escribinos y te respondemos.</p>
           <WaButton mensaje={mensajes.duda()} cta="faq:otra-duda" variante="linea-oscura" className="mt-6">
             Escribinos
