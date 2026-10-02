@@ -20,17 +20,27 @@ export function Hero() {
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-carbon/55 to-transparent" aria-hidden />
       <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-carbon/80 via-carbon/35 to-transparent" aria-hidden />
 
-      <div className="container-x relative pb-16 pt-32 md:pb-20">
+      {/* En celular el texto va más abajo y los botones más chicos, para que se vea más el video */}
+      <div className="container-x relative pb-7 pt-32 sm:pb-16 md:pb-20">
         <div className="subir">
-          <h1 className="display max-w-3xl text-[2.9rem] drop-shadow-[0_2px_12px_rgba(58,45,38,.45)] sm:text-6xl md:text-7xl">
+          <h1 className="display max-w-3xl text-[2.6rem] leading-[1.05] drop-shadow-[0_2px_12px_rgba(58,45,38,.45)] sm:text-6xl sm:leading-tight md:text-7xl">
             Viajá por el mundo <em className="text-ambar">sin salir</em> de Córdoba
           </h1>
         </div>
-        <div className="subir subir-2 mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <WaButton mensaje={mensajes.general()} cta="hero:reservar" variante="ambar" className="whitespace-nowrap">
+        <div className="subir subir-2 mt-5 flex flex-col items-start gap-2.5 sm:mt-8 sm:flex-row sm:items-center sm:gap-3">
+          <WaButton
+            mensaje={mensajes.general()}
+            cta="hero:reservar"
+            variante="ambar"
+            className="whitespace-nowrap max-sm:min-h-0 max-sm:px-5 max-sm:py-2.5 max-sm:text-[0.68rem]"
+          >
             Reservá tu lugar
           </WaButton>
-          <a href="#fechas" className="btn btn-linea-clara whitespace-nowrap" data-cta="hero:ver-fechas">
+          <a
+            href="#fechas"
+            className="btn btn-linea-clara whitespace-nowrap max-sm:min-h-0 max-sm:px-5 max-sm:py-2.5 max-sm:text-[0.68rem]"
+            data-cta="hero:ver-fechas"
+          >
             Ver próximas fechas
           </a>
         </div>

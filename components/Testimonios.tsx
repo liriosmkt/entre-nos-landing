@@ -28,31 +28,11 @@ export function Testimonios() {
   return (
     <section id="invitados" className="section-y bg-crema" aria-roledescription="carrusel">
       <div className="container-x">
-        <div className="flex items-end justify-between gap-6">
-          <SectionHead
-            eyebrow="Ustedes"
-            titulo="Lo que dicen nuestros invitados"
-            bajada="Cuando algo está hecho con cariño, se nota en los detalles."
-          />
-          <div className="hidden gap-2 md:flex">
-            <button
-              type="button"
-              onClick={() => mover(-1)}
-              aria-label="Testimonio anterior"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-espresso/30 text-espresso hover:bg-espresso hover:text-crema"
-            >
-              <IconoFlecha className="h-5 w-5 rotate-180" />
-            </button>
-            <button
-              type="button"
-              onClick={() => mover(1)}
-              aria-label="Testimonio siguiente"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-espresso/30 text-espresso hover:bg-espresso hover:text-crema"
-            >
-              <IconoFlecha className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
+        <SectionHead
+          eyebrow="Ustedes"
+          titulo="Lo que dicen nuestros invitados"
+          bajada="Cuando algo está hecho con cariño, se nota en los detalles."
+        />
 
         {/* De a un testimonio por vez, como una tarjeta apoyada sobre la mesa; avanza solo y se pausa al pasar el mouse o enfocar */}
         <div
@@ -67,10 +47,19 @@ export function Testimonios() {
             if (Math.abs(dx) > 40) mover(dx < 0 ? 1 : -1);
           }}
         >
-          <div className="mesa flex min-h-[22rem] items-center justify-center overflow-hidden rounded-3xl px-5 py-12 md:min-h-[24rem] md:py-14">
+          {/* Flechas a los costados de la tarjeta, sobre la mesa */}
+          <div className="mesa flex min-h-[22rem] items-center justify-center gap-2 overflow-hidden rounded-3xl px-2 py-12 sm:gap-8 sm:px-5 md:min-h-[24rem] md:gap-14 md:py-14">
+            <button
+              type="button"
+              onClick={() => mover(-1)}
+              aria-label="Testimonio anterior"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-crema/40 bg-carbon/20 text-crema backdrop-blur-sm transition-colors hover:border-crema hover:bg-crema hover:text-espresso sm:h-12 sm:w-12"
+            >
+              <IconoFlecha className="h-4 w-4 rotate-180 sm:h-5 sm:w-5" />
+            </button>
             <figure
               key={actual}
-              className="tarjeta-mesa apoyar w-full max-w-sm rounded-md bg-crema px-7 pb-7 pt-6 text-center"
+              className="tarjeta-mesa apoyar w-full min-w-0 max-w-sm rounded-md bg-crema px-5 pb-6 pt-5 text-center sm:px-7 sm:pb-7 sm:pt-6"
               style={{ "--giro": GIROS[actual % GIROS.length] } as React.CSSProperties}
               aria-roledescription="diapositiva"
               aria-label={`${actual + 1} de ${testimonios.length}`}
@@ -79,7 +68,7 @@ export function Testimonios() {
               <span className="display block h-6 text-5xl leading-none text-caramelo" aria-hidden>
                 “
               </span>
-              <blockquote className="display mt-3 text-xl italic leading-snug text-espresso">
+              <blockquote className="display mt-3 text-lg italic leading-snug text-espresso sm:text-xl">
                 <Txt>{t.texto}</Txt>
               </blockquote>
               <figcaption className="mt-5 border-t border-dashed border-caramelo/50 pt-4">
@@ -91,6 +80,14 @@ export function Testimonios() {
                 </p>
               </figcaption>
             </figure>
+            <button
+              type="button"
+              onClick={() => mover(1)}
+              aria-label="Testimonio siguiente"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-crema/40 bg-carbon/20 text-crema backdrop-blur-sm transition-colors hover:border-crema hover:bg-crema hover:text-espresso sm:h-12 sm:w-12"
+            >
+              <IconoFlecha className="h-4 w-4 sm:h-5 sm:w-5" />
+            </button>
           </div>
 
           <div className="mt-6 flex justify-center gap-2">
