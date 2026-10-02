@@ -6,6 +6,7 @@ import { destinos } from "@/data/destinos";
 import { waLink } from "@/lib/whatsapp";
 import { trackCta } from "@/lib/track";
 import { Ramita } from "./ui/Ornamentos";
+import { Selector } from "./ui/Selector";
 
 type Canal = "whatsapp" | "email";
 type Errores = Partial<Record<"nombre" | "contacto", string>>;
@@ -59,7 +60,8 @@ export function ListaEspera() {
   return (
     <section id="lista-de-espera" className="section-y bg-crema">
       <div className="container-x">
-        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl bg-espresso p-8 text-crema md:p-14">
+        {/* overflow-x-clip (no hidden): recorta la ramita del costado sin cortar la lista desplegable abajo */}
+        <div className="relative mx-auto max-w-4xl overflow-x-clip rounded-3xl bg-espresso p-8 text-crema md:p-14">
           <p className="eyebrow-seccion text-ambar">Lista de espera</p>
           <h2 className="display mt-4 text-4xl md:text-5xl">{l.titulo}</h2>
           <p className="mt-4 max-w-lg text-crema/80">{l.texto}</p>
@@ -137,24 +139,20 @@ export function ListaEspera() {
               </div>
 
               <div>
-                <label htmlFor="le-destino" className="eyebrow text-[0.65rem] text-crema/75">
+                <p id="le-destino-label" className="eyebrow text-[0.65rem] text-crema/75">
                   Avisame cuando vuelva
-                </label>
-                <select
+                </p>
+                <Selector
                   id="le-destino"
                   name="destino"
-                  className="mt-2 w-full border-b border-crema/40 bg-transparent py-3 text-lg text-crema focus:border-ambar focus:outline-none [&>option]:text-tinta"
-                  defaultValue=""
-                >
-                  <option value="">Cualquier destino</option>
-                  {destinos.map((d) => (
-                    <option key={d.id} value={d.nombre}>
-                      {d.nombre}
-                    </option>
-                  ))}
-                  <option value="Workshop Puglia">Workshop Puglia</option>
-                  <option value="Eventos de temporada">Eventos de temporada</option>
-                </select>
+                  labelledBy="le-destino-label"
+                  opciones={[
+                    { valor: "", etiqueta: "Cualquier destino" },
+                    ...destinos.map((d) => ({ valor: d.nombre, etiqueta: d.nombre })),
+                    { valor: "Workshop Puglia", etiqueta: "Workshop Puglia" },
+                    { valor: "Eventos de temporada", etiqueta: "Eventos de temporada" },
+                  ]}
+                />
               </div>
 
               <div className="sm:col-span-2">
