@@ -3,11 +3,22 @@
 import { useEffect, useRef, useState } from "react";
 import { reels, testimonios } from "@/data/testimonios";
 import { mensajes } from "@/lib/whatsapp";
-import { IconoFlecha } from "./ui/Iconos";
 import { Txt } from "./ui/Txt";
 import { SectionHead, WaButton } from "./ui/WaButton";
 
 const INTERVALO = 8000;
+
+// Flecha tipo chevron (‹ ›): dos trazos finos en ángulo, sin círculo ni línea
+function Chevron({ hacia }: { hacia: "izquierda" | "derecha" }) {
+  return (
+    <svg viewBox="0 0 24 24" className="h-7 w-7 sm:h-10 sm:w-10" fill="none" stroke="currentColor" strokeWidth="1.25" aria-hidden>
+      <path d={hacia === "izquierda" ? "M15 4 7 12l8 8" : "m9 4 8 8-8 8"} strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+const claseFlecha =
+  "flex h-11 w-9 shrink-0 items-center justify-center text-crema/80 transition-[color,transform] hover:text-crema sm:h-14 sm:w-12";
 // Cada tarjeta queda apoyada con un giro distinto, como si alguien la hubiera dejado sobre la mesa
 const GIROS = ["-2deg", "1.5deg", "-1deg"];
 
@@ -53,9 +64,9 @@ export function Testimonios() {
               type="button"
               onClick={() => mover(-1)}
               aria-label="Testimonio anterior"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-crema/40 bg-carbon/20 text-crema backdrop-blur-sm transition-colors hover:border-crema hover:bg-crema hover:text-espresso sm:h-12 sm:w-12"
+              className={`${claseFlecha} hover:-translate-x-0.5`}
             >
-              <IconoFlecha className="h-4 w-4 rotate-180 sm:h-5 sm:w-5" />
+              <Chevron hacia="izquierda" />
             </button>
             <figure
               key={actual}
@@ -84,9 +95,9 @@ export function Testimonios() {
               type="button"
               onClick={() => mover(1)}
               aria-label="Testimonio siguiente"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-crema/40 bg-carbon/20 text-crema backdrop-blur-sm transition-colors hover:border-crema hover:bg-crema hover:text-espresso sm:h-12 sm:w-12"
+              className={`${claseFlecha} hover:translate-x-0.5`}
             >
-              <IconoFlecha className="h-4 w-4 sm:h-5 sm:w-5" />
+              <Chevron hacia="derecha" />
             </button>
           </div>
 
