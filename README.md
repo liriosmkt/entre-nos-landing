@@ -75,6 +75,8 @@ Cargar `NEXT_PUBLIC_GA4_ID` y/o `NEXT_PUBLIC_META_PIXEL_ID` en el `.env`. `compo
 
 ## Imágenes
 
+> **Versiones optimizadas:** antes de cada build, `scripts/optimizar-imagenes.mjs` genera copias WebP en varios anchos de cada foto de `public/images` y `public/marca` (en `public/opt`, más `lib/imagenes.json` con las medidas). La página usa esas versiones automáticamente. Al agregar o reemplazar una foto, alcanza con volver a hacer `npm run build` (o `npm run imagenes`) y subir también lo que se genere en `public/opt` y `lib/imagenes.json`.
+
 Mientras no estén, cada foto se muestra como un bloque con degradado de la paleta y el nombre del archivo que va ahí. Al copiar un archivo con ese nombre en `public/images/` y volver a buildear, aparece la foto real. **Solo fotos reales de ellas, nunca de stock.** Exportar en JPG calidad ~80, idealmente < 300 KB.
 
 | Archivo | Dónde | Medida recomendada |

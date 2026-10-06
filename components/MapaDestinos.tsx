@@ -1,16 +1,17 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { destinos, type Destino } from "@/data/destinos";
 import { experiencias } from "@/data/experiencias";
 import { paises, type Opcion, type Pais } from "@/data/paises";
 import { site } from "@/data/site";
 import type { Fecha } from "@/lib/fechas";
+import { img } from "@/lib/img";
+import { useMenosMovimiento } from "@/lib/movimiento";
 import { mensajes } from "@/lib/whatsapp";
 import { banderas } from "./ui/Banderas";
 import { IconoCerrar, IconoHoja, IconoTaza } from "./ui/Iconos";
-import { COSTAS, MAPA, proyectar } from "./ui/mapa-datos";
+import { MAPA, proyectar } from "./ui/mapa-datos";
 import { Ramita, Sello } from "./ui/Ornamentos";
 import { Txt } from "./ui/Txt";
 import { WaButton } from "./ui/WaButton";
@@ -34,7 +35,7 @@ function arco([x1, y1]: [number, number], [x2, y2]: [number, number]) {
 /** Fotos del destino en secuencia. */
 function Secuencia({ d }: { d: Destino }) {
   const [i, setI] = useState(0);
-  const reduce = useReducedMotion();
+  const reduce = useMenosMovimiento();
   const fotos = d.fotos;
 
   useEffect(() => {
@@ -51,8 +52,8 @@ function Secuencia({ d }: { d: Destino }) {
           aria-hidden
           className="block h-16 w-16 bg-cafe/20"
           style={{
-            WebkitMaskImage: `url(${site.basePath}/marca/hoja.png)`,
-            maskImage: `url(${site.basePath}/marca/hoja.png)`,
+            WebkitMaskImage: `url(${site.basePath}/opt/marca/hoja-240.webp)`,
+            maskImage: `url(${site.basePath}/opt/marca/hoja-240.webp)`,
             WebkitMaskSize: "contain",
             maskSize: "contain",
             WebkitMaskRepeat: "no-repeat",
@@ -65,21 +66,30 @@ function Secuencia({ d }: { d: Destino }) {
     );
   }
 
-  const f = fotos[i];
   return (
     <div className="relative aspect-[4/3] overflow-hidden bg-hueso md:aspect-auto md:min-h-full">
-      <AnimatePresence initial={false}>
-        <motion.img
-          key={f.src}
-          src={`${site.basePath}/images/${f.src}`}
-          alt={f.alt}
-          className="absolute inset-0 h-full w-full object-cover"
-          initial={{ opacity: 0, scale: 1.03 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        />
-      </AnimatePresence>
+      {/* Todas las fotos apiladas: la actual se ve y las demás se funden */}
+      {fotos.map((f, n) => {
+        const v = img(`images/${f.src}`);
+        return (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={f.src}
+            src={v.src}
+            srcSet={v.srcSet}
+            sizes="(min-width: 768px) 45vw, 90vw"
+            width={v.width}
+            height={v.height}
+            alt={n === i ? f.alt : ""}
+            aria-hidden={n !== i}
+            loading="lazy"
+            decoding="async"
+            className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-700 ease-out ${
+              n === i ? "scale-100 opacity-100" : "scale-[1.03] opacity-0"
+            }`}
+          />
+        );
+      })}
       {fotos.length > 1 && (
         <div className="absolute inset-x-0 bottom-3 flex justify-center gap-2">
           {fotos.map((x, n) => (
@@ -217,15 +227,7 @@ function Panel({ pais, fechas, onClose }: { pais: Pais; fechas: Fecha[]; onClose
         </div>
       )}
 
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={op.nombre}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.25 }}
-          className="mt-6"
-        >
+      <div key={op.nombre} className="entrar mt-6">
           {d ? <Carta d={d} /> : <CartaWorkshop />}
 
           <div className="mt-6 flex flex-col items-center gap-4 rounded-2xl border border-cacao px-6 py-6 text-center text-crema sm:flex-row sm:justify-between sm:text-left">
@@ -251,17 +253,10 @@ function Panel({ pais, fechas, onClose }: { pais: Pais; fechas: Fecha[]; onClose
               </>
             )}
           </div>
-        </motion.div>
-      </AnimatePresence>
+      </div>
     </div>
   );
 }
-
-// Paralelos y meridianos cada 30°, como en un atlas
-const GRILLA = [
-  ...[-30, 0, 30, 60].map((lat) => `M0 ${proyectar(lat, 0)[1]}H${MAPA.ancho}`),
-  ...[-150, -120, -90, -60, -30, 0, 30, 60, 90, 120, 150].map((lon) => `M${proyectar(0, lon)[0]} 0V${MAPA.alto}`),
-].join("");
 
 // Silueta de avión mirando hacia +x (rota sola según la dirección del vuelo)
 const AVION =
@@ -271,7 +266,7 @@ const VUELO_MS = 1700;
 /** Avión que trae los sabores del destino a Córdoba, dejando la estela. */
 function Vuelo({ d, onLlegada }: { d: string; onLlegada: () => void }) {
   const ruta = useRef<SVGPathElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useMenosMovimiento();
   const [estado, setEstado] = useState<{ t: number; x: number; y: number; a: number; largo: number } | null>(null);
 
   useEffect(() => {
@@ -325,24 +320,20 @@ function Vuelo({ d, onLlegada }: { d: string; onLlegada: () => void }) {
   );
 }
 
-// Bordes del mapa que se funden con el fondo (sin marco ni recorte)
-const fundido = {
-  WebkitMaskImage:
-    "linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent)",
-  maskImage:
-    "linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent)",
-  WebkitMaskComposite: "source-in",
-  maskComposite: "intersect",
-} as const;
-
-export function MapaDestinos({ fechas }: { fechas: Fecha[] }) {
+export function MapaDestinos({ fechas, fondo }: { fechas: Fecha[]; fondo: ReactNode }) {
   const [abierto, setAbierto] = useState<string | null>(null);
   const [hover, setHover] = useState<string | null>(null);
   const caja = useRef<HTMLDivElement>(null);
   const deslizable = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useMenosMovimiento();
   const cantidad = (p: Pais) => fechas.filter((f) => p.opciones.some((o) => o.nombre === f.destino)).length;
   const pais = paises.find((p) => p.id === abierto);
+  // El último país abierto sigue dibujado mientras la caja se cierra
+  const [ultimo, setUltimo] = useState<string | null>(null);
+  useEffect(() => {
+    if (abierto) setUltimo(abierto);
+  }, [abierto]);
+  const mostrado = paises.find((p) => p.id === (abierto ?? ultimo));
 
   // En pantallas chicas el mapa se desliza: arrancar centrado en los destinos
   useEffect(() => {
@@ -380,22 +371,9 @@ export function MapaDestinos({ fechas }: { fechas: Fecha[] }) {
       <div className="relative left-1/2 mt-10 w-screen max-w-[1800px] -translate-x-1/2 md:w-[96vw]">
         <div ref={deslizable} className="overflow-x-auto [scrollbar-width:none] md:overflow-visible [&::-webkit-scrollbar]:hidden">
           <div className="relative w-[240%] sm:w-[160%] md:w-full">
-            <svg viewBox={`0 0 ${MAPA.ancho} ${MAPA.alto}`} className="h-auto w-full" aria-hidden style={fundido}>
-              <defs>
-                {/* Trazo fino, apenas irregular, como dibujado con pluma */}
-                <filter id="pluma" x="-2%" y="-2%" width="104%" height="104%">
-                  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4" />
-                  <feDisplacementMap in="SourceGraphic" scale="2.5" />
-                </filter>
-                <radialGradient id="luz" cx="40%" cy="55%" r="60%">
-                  <stop offset="0%" stopColor="#cdab98" stopOpacity="0.14" />
-                  <stop offset="100%" stopColor="#cdab98" stopOpacity="0" />
-                </radialGradient>
-              </defs>
-              <rect width={MAPA.ancho} height={MAPA.alto} fill="url(#luz)" />
-              <path d={GRILLA} fill="none" className="stroke-crema/10" strokeWidth={0.6} strokeDasharray="1 5" />
-              <path d={COSTAS} filter="url(#pluma)" className="fill-crema/[0.06] stroke-crema/40" strokeWidth={0.8} strokeLinejoin="round" />
-              <path d={COSTAS} transform="translate(1.6 1.2)" className="fill-none stroke-nude/25" strokeWidth={0.5} strokeLinejoin="round" />
+            {fondo}
+            {/* Encima del dibujo fijo: arcos y vuelo (esto sí cambia al interactuar) */}
+            <svg viewBox={`0 0 ${MAPA.ancho} ${MAPA.alto}`} className="relative h-auto w-full" aria-hidden>
               {paises.map((p) => {
                 if (p.id === abierto) return null;
                 const activo = p.id === hover;
@@ -438,7 +416,6 @@ export function MapaDestinos({ fechas }: { fechas: Fecha[] }) {
                   data-cta={`destinos:mapa:${p.id}`}
                   aria-expanded={activo}
                   aria-controls="caja-destino"
-                  aria-label={`${p.nombre}: ${n ? fechasTexto(n) : "sin fecha por ahora"}. Ver la carta`}
                   className="group absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
                   style={pct(proyectar(p.lat, p.lon))}
                 >
@@ -457,6 +434,7 @@ export function MapaDestinos({ fechas }: { fechas: Fecha[] }) {
                     {p.nombre}
                   </span>
                   <span className="eyebrow text-[0.5rem] text-ambar/80 sm:text-[0.58rem]">{fechasTexto(n)}</span>
+                  <span className="sr-only">. Ver la carta</span>
                 </button>
               );
             })}
@@ -466,22 +444,18 @@ export function MapaDestinos({ fechas }: { fechas: Fecha[] }) {
       </div>
 
       <div id="caja-destino" ref={caja} className="mx-auto max-w-5xl scroll-mt-24">
-        <AnimatePresence initial={false}>
-          {pais && (
-            <motion.div
-              key={pais.id}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden"
-            >
+        {/* Se despliega con una transición de alto (grid 0fr → 1fr) */}
+        <div
+          className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out ${pais ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+        >
+          <div className="overflow-hidden" inert={!pais}>
+            {mostrado && (
               <div className="pt-8">
-                <Panel pais={pais} fechas={fechas} onClose={() => setAbierto(null)} />
+                <Panel key={mostrado.id} pais={mostrado} fechas={fechas} onClose={() => setAbierto(null)} />
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

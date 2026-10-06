@@ -1,4 +1,5 @@
 import { site } from "@/data/site";
+import { img } from "@/lib/img";
 
 // Recursos gráficos de la marca: logotipo, hoja del isologo, sello ovalado, estrellita, flechas a mano.
 
@@ -7,7 +8,7 @@ import { site } from "@/data/site";
  * usando la hoja como máscara; el ancho sale de la altura para no deformarla.
  */
 export function Ramita({ className = "", title }: { className?: string; title?: string }) {
-  const url = `url(${site.basePath}/marca/hoja.png)`;
+  const url = `url(${site.basePath}/opt/marca/hoja-240.webp)`;
   return (
     <span
       className={`block ${className}`}
@@ -104,8 +105,29 @@ export function FlechaMano({ className = "" }: { className?: string }) {
 }
 
 /** Logotipo oficial (versión horizontal). `claro` para fondos oscuros. */
-export function Logo({ className = "h-9", tono = "claro" }: { className?: string; tono?: "claro" | "oscuro" }) {
-  const archivo = tono === "claro" ? "logo-horizontal-claro.png" : "logo-horizontal.png";
-  // eslint-disable-next-line @next/next/no-img-element
-  return <img src={`${site.basePath}/marca/${archivo}`} alt="Entre Nos · Sabores del mundo" className={`w-auto ${className}`} />;
+export function Logo({
+  className = "h-9",
+  tono = "claro",
+  prioridad = false,
+}: {
+  className?: string;
+  tono?: "claro" | "oscuro";
+  prioridad?: boolean;
+}) {
+  const i = img(`marca/${tono === "claro" ? "logo-horizontal-claro.png" : "logo-horizontal.png"}`);
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={i.src}
+      srcSet={i.srcSet}
+      sizes="200px"
+      width={i.width}
+      height={i.height}
+      alt="Entre Nos · Sabores del mundo"
+      fetchPriority={prioridad ? "high" : undefined}
+      loading={prioridad ? "eager" : "lazy"}
+      decoding="async"
+      className={`w-auto ${className}`}
+    />
+  );
 }

@@ -3,6 +3,7 @@ import { Playfair_Display, Roboto } from "next/font/google";
 import { site } from "@/data/site";
 import { Analytics } from "@/components/Analytics";
 import { JsonLd } from "@/components/JsonLd";
+import { RevealObserver } from "@/components/ui/RevealObserver";
 import "./globals.css";
 
 // Tipografías del manual de marca
@@ -58,10 +59,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es-AR" className={`${playfair.variable} ${roboto.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: arrancarArriba }} />
+        {/* Sin JavaScript, el contenido se ve igual (sin la animación de entrada) */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
       </head>
       <body>
         <JsonLd />
         {children}
+        <RevealObserver />
         <Analytics />
       </body>
     </html>

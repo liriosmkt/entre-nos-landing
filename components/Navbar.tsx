@@ -35,7 +35,7 @@ export function Navbar() {
       </a>
       <nav className="container-x flex h-16 items-center justify-between text-crema md:h-20" aria-label="Principal">
         <a href="#inicio" aria-label="Entre Nos, volver al inicio">
-          <Logo />
+          <Logo prioridad />
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">

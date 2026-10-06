@@ -7,7 +7,7 @@ export function Nosotras() {
   const n = site.nosotras;
   const [a, b] = n.titulo.split(" y ");
   return (
-    <section id="nosotras" className="section-y bg-crema">
+    <section id="nosotras" className="diferido section-y bg-crema">
       <div className="container-x">
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="eyebrow-seccion text-oliva-oscuro">{n.eyebrow}</p>

@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { paises } from "@/data/paises";
@@ -46,23 +45,13 @@ function Popup({ f, onClose }: { f: Fecha; onClose: () => void }) {
   }, [onClose]);
 
   return (
-    <motion.div
-      className="fixed inset-0 z-[60] overflow-y-auto bg-carbon/75 backdrop-blur-sm"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-    >
+    <div className="aparecer fixed inset-0 z-[60] overflow-y-auto bg-carbon/75 backdrop-blur-sm" onClick={onClose}>
       <div className="flex min-h-full items-center justify-center px-4 py-16 sm:p-8">
-        <motion.div
+        <div
           role="dialog"
           aria-modal="true"
           aria-label={`Pasaje: ${etiquetaDe(f)}`}
-          className="relative w-full max-w-3xl"
-          initial={{ y: 40, opacity: 0, rotate: -1.5 }}
-          animate={{ y: 0, opacity: 1, rotate: 0 }}
-          exit={{ y: 20, opacity: 0 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="entrar relative w-full max-w-3xl"
           onClick={(e) => e.stopPropagation()}
         >
           <button
@@ -75,9 +64,9 @@ function Popup({ f, onClose }: { f: Fecha; onClose: () => void }) {
             <IconoCerrar className="h-6 w-6" />
           </button>
           <BoardingPass f={f} />
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -210,7 +199,7 @@ export function Calendario({ fechas }: { fechas: Fecha[] }) {
       </ul>
 
       {/* La ventana va al body: así ningún contenedor animado la recorta */}
-      {montado && createPortal(<AnimatePresence>{f && <Popup key={f.id} f={f} onClose={cerrar} />}</AnimatePresence>, document.body)}
+      {montado && f && createPortal(<Popup key={f.id} f={f} onClose={cerrar} />, document.body)}
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { SectionHead } from "./ui/WaButton";
 
 export function Encargos() {
   return (
-    <section id="encargos" className="section-y bg-crema">
+    <section id="encargos" className="diferido section-y bg-crema">
       <div className="container-x">
         <Reveal>
           <SectionHead eyebrow="Encargos de pastelería" titulo={encargosIntro.titulo} bajada={encargosIntro.bajada} />
@@ -35,6 +35,7 @@ export function Encargos() {
                   target="_blank"
                   rel="noopener noreferrer"
                   data-cta={`encargos:${e.id}`}
+                  aria-label={`Encargar ${e.nombre} por WhatsApp`}
                   className="btn btn-linea-oscura mt-auto w-full"
                 >
                   <IconoWhatsApp className="h-4 w-4" /> Encargar

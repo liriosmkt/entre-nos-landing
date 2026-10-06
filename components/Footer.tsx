@@ -7,7 +7,7 @@ import { WaButton } from "./ui/WaButton";
 export function Footer() {
   const f = site.footer;
   return (
-    <footer className="grano relative bg-carbon pb-28 pt-14 text-crema md:pb-12">
+    <footer className="diferido grano relative bg-carbon pb-28 pt-14 text-crema md:pb-12">
       <div className="container-x relative">
         <div className="text-center">
           <p className="display mx-auto max-w-3xl text-4xl italic leading-tight md:text-6xl">

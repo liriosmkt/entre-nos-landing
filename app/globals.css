@@ -39,8 +39,31 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
+/* Secciones de más abajo: el navegador no las procesa (estilo, layout, pintado) hasta que se acercan.
+   "auto" en el tamaño recuerda la altura real una vez que se mostraron, así el scroll no salta. */
+.diferido {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+/* Aparición al entrar en pantalla (Reveal + RevealObserver) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+[data-reveal][data-visible] { opacity: 1; transform: none; }
+
+/* Entradas cortas para contenido que cambia (paneles, ventanas) */
+@keyframes entrar { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+.entrar { animation: entrar 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.aparecer { animation: aparecer 0.25s ease-out both; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
@@ -244,6 +267,12 @@ main > section.bg-hueso + section.bg-hueso {
   to { opacity: 1; transform: none; }
 }
 .subir { animation: subir 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+/* Solo desplazamiento, sin opacidad: el título del hero se pinta visible desde el primer cuadro (mejor LCP) */
+@keyframes deslizar {
+  from { transform: translateY(18px); }
+  to { transform: none; }
+}
+.deslizar { animation: deslizar 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .subir-1 { animation-delay: 0.1s; }
 .subir-2 { animation-delay: 0.2s; }
 .subir-3 { animation-delay: 0.3s; }

@@ -1,0 +1,304 @@
+{
+  "images/casa-recorrido-movil.jpg": {
+    "w": 1080,
+    "h": 1350,
+    "anchos": [
+      400,
+      600,
+      800,
+      1080
+    ]
+  },
+  "images/casa-recorrido.jpg": {
+    "w": 1600,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      1200,
+      1600
+    ]
+  },
+  "images/destino-italia.jpg": {
+    "w": 1120,
+    "h": 1400,
+    "anchos": [
+      400,
+      600,
+      800,
+      1120
+    ]
+  },
+  "images/destino-mexico.jpg": {
+    "w": 1120,
+    "h": 1400,
+    "anchos": [
+      400,
+      600,
+      800,
+      1120
+    ]
+  },
+  "images/destino-nueva-york.jpg": {
+    "w": 1120,
+    "h": 1400,
+    "anchos": [
+      400,
+      600,
+      800,
+      1120
+    ]
+  },
+  "images/encargo-carrot-cake.jpg": {
+    "w": 1200,
+    "h": 1200,
+    "anchos": [
+      400,
+      600,
+      800,
+      1200
+    ]
+  },
+  "images/evento-temporada.jpg": {
+    "w": 1167,
+    "h": 1400,
+    "anchos": [
+      400,
+      600,
+      800,
+      1167
+    ]
+  },
+  "images/hero-movil.jpg": {
+    "w": 720,
+    "h": 1280,
+    "anchos": [
+      400,
+      600,
+      720
+    ]
+  },
+  "images/hero.jpg": {
+    "w": 1600,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      1200,
+      1600
+    ]
+  },
+  "images/italia-1-amaretti.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/italia-2-crostata.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/italia-3-bruschetta.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/italia-4-risotto.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/italia-5-tiramisu.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/mexico-pan-de-muertos.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/og-entre-nos.jpg": {
+    "w": 1200,
+    "h": 630,
+    "anchos": [
+      400,
+      600,
+      800,
+      1200
+    ]
+  },
+  "images/pasteleria-cookie.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/pasteleria-lemon-pie.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/pasteleria-macarons.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/pasteleria-pan.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/pasteleria-torta-flores.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/pasteleria-torta.jpg": {
+    "w": 900,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      800,
+      900
+    ]
+  },
+  "images/pili.jpg": {
+    "w": 800,
+    "h": 1000,
+    "anchos": [
+      400,
+      600,
+      800
+    ]
+  },
+  "images/porque-mesa.jpg": {
+    "w": 1440,
+    "h": 1800,
+    "anchos": [
+      400,
+      600,
+      800,
+      1200,
+      1440
+    ]
+  },
+  "images/privada-grupo.jpg": {
+    "w": 1167,
+    "h": 1400,
+    "anchos": [
+      400,
+      600,
+      800,
+      1167
+    ]
+  },
+  "images/teanner-mesa.jpg": {
+    "w": 800,
+    "h": 1000,
+    "anchos": [
+      400,
+      600,
+      800
+    ]
+  },
+  "images/vero.jpg": {
+    "w": 720,
+    "h": 900,
+    "anchos": [
+      400,
+      600,
+      720
+    ]
+  },
+  "marca/hoja.png": {
+    "w": 240,
+    "h": 214,
+    "anchos": [
+      240
+    ]
+  },
+  "marca/logo-horizontal-claro.png": {
+    "w": 720,
+    "h": 146,
+    "anchos": [
+      400,
+      600,
+      720
+    ]
+  },
+  "marca/logo-horizontal.png": {
+    "w": 720,
+    "h": 146,
+    "anchos": [
+      400,
+      600,
+      720
+    ]
+  },
+  "marca/logo-vertical-simple.png": {
+    "w": 520,
+    "h": 188,
+    "anchos": [
+      400,
+      520
+    ]
+  }
+}

@@ -43,7 +43,7 @@ function Item({ pregunta, respuesta }: { pregunta: string; respuesta: string }) 
 
 export function Faq() {
   return (
-    <section id="preguntas" className="section-y bg-hueso">
+    <section id="preguntas" className="diferido section-y bg-hueso">
       <div className="container-x grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHead eyebrow="Antes de sentarte a la mesa" titulo="Preguntas frecuentes" />

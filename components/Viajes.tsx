@@ -2,6 +2,7 @@ import { site } from "@/data/site";
 import { proximasFechas } from "@/lib/fechas";
 import { Calendario } from "./Calendario";
 import { MapaDestinos } from "./MapaDestinos";
+import { MapaFondo } from "./MapaFondo";
 import { Reveal } from "./ui/Motion";
 import { Foto } from "./ui/Foto";
 import { Estrellita, Ramita } from "./ui/Ornamentos";
@@ -15,7 +16,7 @@ export function Viajes() {
   const t = site.laTarde;
 
   return (
-    <section id="destinos" className="grano section-y relative overflow-x-clip bg-carbon text-crema">
+    <section id="destinos" className="diferido grano section-y relative overflow-x-clip bg-carbon text-crema">
       <div className="container-x relative">
         <Reveal>
           <SectionHead
@@ -31,7 +32,7 @@ export function Viajes() {
           />
         </Reveal>
 
-        <MapaDestinos fechas={fechas} />
+        <MapaDestinos fechas={fechas} fondo={<MapaFondo />} />
 
         {/* Próximas fechas: calendario con las banderas de cada destino */}
         <div id="fechas" className="mt-14 scroll-mt-24">

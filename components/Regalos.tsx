@@ -1,9 +1,12 @@
 import { site } from "@/data/site";
+import { img } from "@/lib/img";
 import { mensajes } from "@/lib/whatsapp";
 import { Reveal } from "./ui/Motion";
 import { Estrellita, Sello } from "./ui/Ornamentos";
 import { Txt } from "./ui/Txt";
 import { WaButton } from "./ui/WaButton";
+
+const logoVertical = img("marca/logo-vertical-simple.png");
 
 /** Invitación ilustrada: sobre abierto con tarjeta y sello de lacre. */
 function Invitacion() {
@@ -14,7 +17,17 @@ function Invitacion() {
         <div className="flex h-full flex-col items-center justify-center border border-caramelo/50 px-3">
           <p className="eyebrow text-[0.6rem] text-oliva-oscuro">Invitación</p>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`${site.basePath}/marca/logo-vertical-simple.png`} alt="entre nos" className="mt-2 h-12 w-auto" />
+          <img
+            src={logoVertical.src}
+            srcSet={logoVertical.srcSet}
+            sizes="120px"
+            width={logoVertical.width}
+            height={logoVertical.height}
+            alt="entre nos"
+            loading="lazy"
+            decoding="async"
+            className="mt-2 h-12 w-auto"
+          />
           <p className="hand mt-1 text-base leading-snug text-cacao">un viaje alrededor de la mesa</p>
         </div>
       </div>
@@ -26,7 +39,7 @@ function Invitacion() {
         {/* Sello de lacre */}
         <circle cx="200" cy="168" r="30" fill="#3A2D26" />
         <circle cx="200" cy="168" r="23" fill="none" stroke="#F0ECE5" strokeOpacity=".6" />
-        <image href={`${site.basePath}/marca/hoja.png`} x="186" y="155" width="28" height="25" />
+        <image href={`${site.basePath}/opt/marca/hoja-240.webp`} x="186" y="155" width="28" height="25" />
       </svg>
     </div>
   );
@@ -35,7 +48,7 @@ function Invitacion() {
 export function Regalos() {
   const r = site.regalos;
   return (
-    <section id="regalos" className="grano section-y relative overflow-hidden bg-espresso text-crema">
+    <section id="regalos" className="diferido grano section-y relative overflow-hidden bg-espresso text-crema">
       <span
         aria-hidden
         className="display pointer-events-none absolute -bottom-10 -left-4 select-none whitespace-nowrap text-[22vw] leading-none text-crema/[0.04]"

@@ -12,7 +12,7 @@ export function Experiencias() {
   ));
 
   return (
-    <section id="experiencias" className="section-y bg-hueso">
+    <section id="experiencias" className="diferido section-y bg-hueso">
       <div className="container-x">
         <Reveal>
           <SectionHead

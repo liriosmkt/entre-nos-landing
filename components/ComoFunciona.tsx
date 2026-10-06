@@ -9,7 +9,7 @@ export function ComoFunciona() {
   const signos = ["+", "="];
 
   return (
-    <section id="teanner" className="section-y bg-crema">
+    <section id="teanner" className="diferido section-y bg-crema">
       <div className="container-x">
         <Reveal className="text-center">
           <h2 className="display text-4xl text-espresso md:text-6xl">{c.titulo}</h2>

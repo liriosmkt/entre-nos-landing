@@ -15,6 +15,7 @@ export function Hero() {
         posterMovil={hero.posterMovil}
         label={hero.videoAlt}
         className="absolute inset-0 h-full w-full"
+        prioridad
       />
       {/* Sombra suave: solo arriba (para el menú) y abajo (para el texto) */}
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-carbon/55 to-transparent" aria-hidden />
@@ -22,7 +23,7 @@ export function Hero() {
 
       {/* En celular el texto va más abajo y los botones más chicos, para que se vea más el video */}
       <div className="container-x relative pb-7 pt-32 sm:pb-16 md:pb-20">
-        <div className="subir">
+        <div className="deslizar">
           <h1 className="display max-w-3xl text-[2.6rem] leading-[1.05] drop-shadow-[0_2px_12px_rgba(58,45,38,.45)] sm:text-6xl sm:leading-tight md:text-7xl">
             Viajá por el mundo <em className="text-ambar">sin salir</em> de Córdoba
           </h1>

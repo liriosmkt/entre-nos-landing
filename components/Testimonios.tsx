@@ -37,7 +37,7 @@ export function Testimonios() {
   }, [actual, pausa, total]);
 
   return (
-    <section id="invitados" className="section-y bg-crema" aria-roledescription="carrusel">
+    <section id="invitados" className="diferido section-y bg-crema" aria-roledescription="carrusel">
       <div className="container-x">
         <SectionHead
           eyebrow="Ustedes"
@@ -101,7 +101,7 @@ export function Testimonios() {
             </button>
           </div>
 
-          <div className="mt-6 flex justify-center gap-2">
+          <div className="mt-4 flex justify-center">
             {testimonios.map((_, i) => (
               <button
                 key={i}
@@ -109,8 +109,12 @@ export function Testimonios() {
                 onClick={() => setActual(i)}
                 aria-label={`Ver testimonio ${i + 1}`}
                 aria-current={i === actual || undefined}
-                className={`h-2 rounded-full transition-all ${i === actual ? "w-8 bg-espresso" : "w-2 bg-espresso/25 hover:bg-espresso/50"}`}
-              />
+                className="group flex h-11 min-w-11 items-center justify-center px-2"
+              >
+                <span
+                  className={`block h-2 rounded-full transition-all ${i === actual ? "w-8 bg-espresso" : "w-2 bg-espresso/25 group-hover:bg-espresso/50"}`}
+                />
+              </button>
             ))}
           </div>
         </div>

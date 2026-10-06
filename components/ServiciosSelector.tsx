@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { useState, type ReactNode } from "react";
 import type { Experiencia, Icono } from "@/data/experiencias";
 import { IconoDestino, IconoHoja, IconoMesa, IconoReloj, IconoSobre, IconoTaza } from "./ui/Iconos";
@@ -67,14 +66,9 @@ export function ServiciosSelector({ servicios, fotos }: { servicios: Experiencia
 
       {/* Detalle del servicio elegido */}
       <div id="servicio-detalle" role="tabpanel" aria-live="polite" className="mt-8">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
+        <div
             key={e.id}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3 }}
-            className="grid gap-8 rounded-3xl bg-crema p-6 md:grid-cols-[1.1fr_1fr] md:gap-12 md:p-10"
+            className="entrar grid gap-8 rounded-3xl bg-crema p-6 md:grid-cols-[1.1fr_1fr] md:gap-12 md:p-10"
           >
             <div>
               <p className="display text-lg leading-snug text-espresso md:text-xl">{e.resumen}</p>
@@ -104,8 +98,7 @@ export function ServiciosSelector({ servicios, fotos }: { servicios: Experiencia
                 {e.cta}
               </WaButton>
             </div>
-          </motion.div>
-        </AnimatePresence>
+          </div>
       </div>
     </div>
   );

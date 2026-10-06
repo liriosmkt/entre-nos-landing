@@ -6,7 +6,7 @@ import { VideoFondo } from "./ui/VideoFondo";
 export function LaCasa() {
   const c = site.laCasa;
   return (
-    <section id="la-casa" className="relative overflow-hidden bg-carbon text-crema">
+    <section id="la-casa" className="diferido relative overflow-hidden bg-carbon text-crema">
       <VideoFondo
         escritorio={c.video}
         movil={c.videoMovil}
@@ -14,7 +14,6 @@ export function LaCasa() {
         posterMovil={c.posterMovil}
         label={c.videoAlt}
         className="block aspect-[4/5] w-full md:aspect-auto md:h-[100svh] md:max-h-[62rem]"
-        preload="metadata"
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon/80 via-carbon/10 to-transparent" aria-hidden />
       <div className="pointer-events-none absolute inset-x-0 bottom-0">

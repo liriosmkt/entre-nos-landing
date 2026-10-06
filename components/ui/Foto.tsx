@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import Image from "next/image";
+import { img } from "@/lib/img";
 import { site } from "@/data/site";
 
 type Props = {
@@ -23,16 +23,22 @@ export function Foto({ src, alt, className = "", priority, sizes = "100vw", tono
   const existe = fs.existsSync(path.join(process.cwd(), "public", "images", src));
 
   if (existe) {
+    // WebP en varios anchos: el navegador baja solo el que necesita según `sizes`
+    const i = img(`images/${src}`);
     return (
       <div className={`relative overflow-hidden ${className}`}>
-        <Image
-          src={`${site.basePath}/images/${src}`}
-          alt={alt}
-          fill
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={i.src}
+          srcSet={i.srcSet}
           sizes={sizes}
-          priority={priority}
-          loading={priority ? undefined : "lazy"}
-          className="object-cover"
+          width={i.width}
+          height={i.height}
+          alt={alt}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : undefined}
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
           style={posicion ? { objectPosition: posicion } : undefined}
         />
       </div>
@@ -56,8 +62,8 @@ export function Foto({ src, alt, className = "", priority, sizes = "100vw", tono
         aria-hidden
         className={`block h-14 w-14 ${tono === "oscuro" ? "bg-nude/40" : "bg-cafe/15"}`}
         style={{
-          WebkitMaskImage: `url(${site.basePath}/marca/hoja.png)`,
-          maskImage: `url(${site.basePath}/marca/hoja.png)`,
+          WebkitMaskImage: `url(${site.basePath}/opt/marca/hoja-240.webp)`,
+          maskImage: `url(${site.basePath}/opt/marca/hoja-240.webp)`,
           WebkitMaskSize: "contain",
           maskSize: "contain",
           WebkitMaskRepeat: "no-repeat",

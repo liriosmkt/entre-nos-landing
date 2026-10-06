@@ -58,7 +58,7 @@ export function ListaEspera() {
   }
 
   return (
-    <section id="lista-de-espera" className="section-y bg-crema">
+    <section id="lista-de-espera" className="diferido section-y bg-crema">
       <div className="container-x">
         {/* overflow-x-clip (no hidden): recorta la ramita del costado sin cortar la lista desplegable abajo */}
         <div className="relative mx-auto max-w-4xl overflow-x-clip rounded-3xl bg-espresso p-8 text-crema md:p-14">
