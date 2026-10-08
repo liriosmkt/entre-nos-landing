@@ -121,7 +121,7 @@ export function Selector({
           aria-labelledby={labelledBy}
           aria-activedescendant={`${base}-${activo}`}
           onKeyDown={teclasLista}
-          className="absolute inset-x-0 top-full z-30 mt-2 max-h-[22rem] overflow-y-auto rounded-2xl [scrollbar-color:var(--color-cacao)_transparent] [scrollbar-width:thin] border border-cacao bg-carbon py-2 shadow-[0_24px_40px_-16px_rgba(0,0,0,.6)] focus:outline-none"
+          className="absolute inset-x-0 top-full z-30 mt-2 max-h-[22rem] overflow-y-auto rounded-2xl [scrollbar-color:var(--color-cacao)_transparent] [scrollbar-width:thin] border border-cacao bg-carbon py-2 shadow-[0_24px_40px_-16px_rgba(58,45,38,.6)] focus:outline-none"
         >
           {opciones.map((o, i) => {
             const sel = o.valor === valor;

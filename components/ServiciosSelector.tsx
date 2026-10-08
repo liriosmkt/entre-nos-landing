@@ -46,7 +46,7 @@ export function ServiciosSelector({ servicios, fotos }: { servicios: Experiencia
             >
               <div className="aspect-[4/5] w-full transition-transform duration-700 group-hover:scale-[1.03]">{fotos[i]}</div>
               <div className="absolute inset-0 bg-gradient-to-t from-carbon/95 via-carbon/55 via-45% to-transparent to-75%" aria-hidden />
-              <div className="absolute inset-x-0 bottom-0 p-5 text-crema [text-shadow:0_1px_8px_rgba(28,23,21,.6)] md:p-6">
+              <div className="absolute inset-x-0 bottom-0 p-5 text-crema [text-shadow:0_1px_8px_rgba(58,45,38,.6)] md:p-6">
                 <p className="eyebrow text-xs text-ambar">{s.eyebrow}</p>
                 <p className="display mt-1 text-3xl leading-tight md:text-4xl">{s.titulo}</p>
                 <p className="mt-2 text-base leading-snug text-crema">{s.bajada}</p>
