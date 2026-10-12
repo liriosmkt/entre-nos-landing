@@ -132,7 +132,7 @@ export const site = {
     videoMovil: "casa-recorrido-movil.mp4",
     poster: "casa-recorrido.jpg",
     posterMovil: "casa-recorrido-movil.jpg",
-    videoAlt: "Recorrido por el comedor: las lámparas, la mesa larga puesta y las flores",
+    videoAlt: "Recorrido por la casa: la mesa larga puesta, el salón con las lámparas, las flores y el atardecer",
   },
 
   listaEspera: {
