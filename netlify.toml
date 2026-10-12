@@ -1,0 +1,8 @@
+# Copia de la página en Netlify (para mostrar al cliente). El sitio principal sigue en GitHub Pages.
+# En Netlify la página vive en la raíz del dominio, así que no lleva NEXT_PUBLIC_BASE_PATH.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
