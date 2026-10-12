@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import type { Experiencia, Icono } from "@/data/experiencias";
 import { IconoDestino, IconoHoja, IconoMesa, IconoReloj, IconoSobre, IconoTaza } from "./ui/Iconos";
 import { Estrellita } from "./ui/Ornamentos";
@@ -18,7 +18,22 @@ const iconos: Record<Icono, (p: { className?: string }) => ReactNode> = {
 /** Tres tarjetas grandes con foto; la elegida muestra su detalle corto debajo. */
 export function ServiciosSelector({ servicios, fotos }: { servicios: Experiencia[]; fotos: ReactNode[] }) {
   const [activo, setActivo] = useState(0);
+  const detalle = useRef<HTMLDivElement>(null);
   const e = servicios[activo];
+
+  // Al elegir un servicio, la página baja hasta su descripción (si no se ve entera)
+  const elegir = (i: number) => {
+    setActivo(i);
+    requestAnimationFrame(() => {
+      const el = detalle.current;
+      if (!el) return;
+      const menu = 96; // alto del menú fijo + aire
+      const r = el.getBoundingClientRect();
+      if (r.top >= menu && r.bottom <= window.innerHeight) return;
+      const reducir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: window.scrollY + r.top - menu, behavior: reducir ? "auto" : "smooth" });
+    });
+  };
 
   return (
     <div>
@@ -38,7 +53,7 @@ export function ServiciosSelector({ servicios, fotos }: { servicios: Experiencia
               role="tab"
               aria-selected={sel}
               aria-controls="servicio-detalle"
-              onClick={() => setActivo(i)}
+              onClick={() => elegir(i)}
               data-cta={`experiencias:ver:${s.id}`}
               className={`group relative w-[78%] shrink-0 cursor-pointer snap-center overflow-hidden rounded-3xl text-left transition-all duration-500 md:w-auto ${
                 sel ? "shadow-[0_30px_50px_-25px_rgba(58,45,38,.6)] ring-2 ring-espresso ring-offset-4 ring-offset-hueso" : "opacity-80 hover:opacity-100"
@@ -65,7 +80,7 @@ export function ServiciosSelector({ servicios, fotos }: { servicios: Experiencia
       </div>
 
       {/* Detalle del servicio elegido */}
-      <div id="servicio-detalle" role="tabpanel" aria-live="polite" className="mt-8">
+      <div ref={detalle} id="servicio-detalle" role="tabpanel" aria-live="polite" className="mt-8">
         <div
             key={e.id}
             className="entrar grid gap-8 rounded-3xl bg-crema p-6 md:grid-cols-[1.1fr_1fr] md:gap-12 md:p-10"
