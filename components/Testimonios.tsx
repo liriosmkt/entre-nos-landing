@@ -82,14 +82,20 @@ export function Testimonios() {
               <blockquote className="display mt-3 text-lg italic leading-snug text-espresso sm:text-xl">
                 <Txt>{t.texto}</Txt>
               </blockquote>
-              <figcaption className="mt-5 border-t border-dashed border-caramelo/50 pt-4">
-                <p className="eyebrow text-xs text-tinta">
-                  <Txt>{t.autor}</Txt>
-                </p>
-                <p className="mt-1 text-sm text-tinta-suave">
-                  <Txt>{t.experiencia}</Txt>
-                </p>
-              </figcaption>
+              {(t.autor || t.experiencia) && (
+                <figcaption className="mt-5 border-t border-dashed border-caramelo/50 pt-4">
+                  {t.autor && (
+                    <p className="eyebrow text-xs text-tinta">
+                      <Txt>{t.autor}</Txt>
+                    </p>
+                  )}
+                  {t.experiencia && (
+                    <p className="mt-1 text-sm text-tinta-suave">
+                      <Txt>{t.experiencia}</Txt>
+                    </p>
+                  )}
+                </figcaption>
+              )}
             </figure>
             <button
               type="button"

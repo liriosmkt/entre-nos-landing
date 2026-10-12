@@ -1,25 +1,16 @@
-// Testimonios de ejemplo (redactados para la web). Reemplazar por reseñas reales, con permiso de quien la escribió.
+// Testimonios reales de invitados (solo con redacción y puntuación corregidas).
+// "autor" y "experiencia" son opcionales: si faltan, la tarjeta se muestra sin pie.
 
-export type Testimonio = { texto: string; autor: string; experiencia: string };
+export type Testimonio = { texto: string; autor?: string; experiencia?: string };
 
 export const testimonios: Testimonio[] = [
   {
     texto:
-      "Cada paso fue mejor que el anterior. Se nota que todo es casero y con productos de calidad: la stracciatella, el tiramisú… Me fui pensando en cuándo vuelvo.",
-    autor: "Carolina M.",
-    experiencia: "Teanner Italia",
+      "Gracias, Vero y familia, por tan hermosa noche compartiendo pasiones. La pasamos hermoso. Disfrutamos mucho del grupo y de todo lo que transmitiste, no solo en las recetas. Nos llevaste a Italia y nos olvidamos de todo. ¡Volveré! Saludos para todos.",
   },
   {
     texto:
-      "El lugar es hermoso. Las lámparas encendidas, la mesa larga, la vajilla… Apenas entrás sentís que estás en otro lado. Es íntimo y cálido, como cenar en casa de amigas.",
-    autor: "Julieta R.",
-    experiencia: "Teanner Nueva York",
-  },
-  {
-    texto:
-      "Vero y Pili te reciben como si te conocieran de toda la vida. Nos explicaron cada plato con un cariño enorme y estuvieron atentas a todo. Fui sola y me sentí parte de la mesa.",
-    autor: "Lucía G.",
-    experiencia: "Teanner México",
+      "Muchas gracias, Vero, Pili y tu hijo, que hace esos riquísimos tragos. ¡Hermosa experiencia! Agradezco también habernos encontrado con tan buena gente. ¡Muy lindo grupo! Hasta la próxima. ¡Saludos!",
   },
 ];
 
