@@ -25,6 +25,8 @@ export function Selector({
   const [valor, setValor] = useState(valorInicial);
   const [abierto, setAbierto] = useState(false);
   const [activo, setActivo] = useState(0);
+  const [arriba, setArriba] = useState(false);
+  const [altoMax, setAltoMax] = useState(352);
   const caja = useRef<HTMLDivElement>(null);
   const boton = useRef<HTMLButtonElement>(null);
   const lista = useRef<HTMLUListElement>(null);
@@ -49,6 +51,20 @@ export function Selector({
   }, [abierto, activo]);
 
   const abrir = () => {
+    // Si abajo no entra, se abre hacia el lado con más lugar y se ajusta a ese alto:
+    // las secciones con content-visibility recortan lo que sobresale de su borde
+    const b = boton.current?.getBoundingClientRect();
+    if (b) {
+      const seccion = caja.current?.closest("section")?.getBoundingClientRect();
+      // arriba tampoco puede quedar debajo del menú fijo
+      const menu = document.querySelector("header")?.getBoundingClientRect().bottom ?? 0;
+      const abajo = Math.min(window.innerHeight, seccion?.bottom ?? Infinity) - b.bottom - 16;
+      const encima = b.top - Math.max(menu, seccion?.top ?? 0) - 16;
+      const alto = Math.min(352, opciones.length * 44 + 16); // 22rem como máximo
+      const haciaArriba = abajo < alto && encima > abajo;
+      setArriba(haciaArriba);
+      setAltoMax(Math.max(160, Math.min(352, haciaArriba ? encima : abajo)));
+    }
     setActivo(Math.max(0, opciones.findIndex((o) => o.valor === valor)));
     setAbierto(true);
   };
@@ -121,7 +137,8 @@ export function Selector({
           aria-labelledby={labelledBy}
           aria-activedescendant={`${base}-${activo}`}
           onKeyDown={teclasLista}
-          className="absolute inset-x-0 top-full z-30 mt-2 max-h-[22rem] overflow-y-auto rounded-2xl [scrollbar-color:var(--color-cacao)_transparent] [scrollbar-width:thin] border border-cacao bg-carbon py-2 shadow-[0_24px_40px_-16px_rgba(58,45,38,.6)] focus:outline-none"
+          style={{ maxHeight: altoMax }}
+          className={`absolute inset-x-0 z-30 ${arriba ? "bottom-full mb-2" : "top-full mt-2"} overflow-y-auto rounded-2xl [scrollbar-color:var(--color-cacao)_transparent] [scrollbar-width:thin] border border-cacao bg-carbon py-2 shadow-[0_24px_40px_-16px_rgba(58,45,38,.6)] focus:outline-none`}
         >
           {opciones.map((o, i) => {
             const sel = o.valor === valor;
